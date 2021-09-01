@@ -11,4 +11,35 @@ class SearchTest {
 		fail("Not yet implemented");
 	}
 
+	@Test
+	void testBinary() {
+		fail("Not yet implemented");
+	}
+	
+	@Test
+	void linear_firstElement_returnIndex0() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void linear_middleElement_returnIndexOfElement() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void linear_lastElement_returnLastIndex() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void linear_elementNotInArray_returnMinusOne() {
+		fail("Not yet implemented");
+	}
+	
+	@Test
+	void linear_emptyArray_returnMinusOne() {
+		fail("Not yet implemented");
+	}
+
+
 }

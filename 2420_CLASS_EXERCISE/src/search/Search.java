@@ -16,5 +16,17 @@ public class Search {
 		
 		return 0;//TODO
 	}
+	
+	/**
+	 * 
+	 * If Key is not inclued in the array, the method returns -1
+	 * @param numbers
+	 * @param key
+	 * @return
+	 */
+	
+	public static int binary(int[] numbers, int key) {
+		return 0;//TODO
+	}
 
 }

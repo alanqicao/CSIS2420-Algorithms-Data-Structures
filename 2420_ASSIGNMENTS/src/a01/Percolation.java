@@ -10,6 +10,10 @@ public class Percolation {
 	 * Create a NbyN grid, with, with all sites blacked.
 	 * @param N size of the gird
 	 */
+	
+	private int size;
+	private int[] grid;
+	
 		public Percolation(int N){
 			
 			//TODO
