@@ -4,18 +4,26 @@ package a01;
  * @author Alan
  *
  */
+import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
+	
+	
+	private int N;
+	private int[] grid;
+	
 	/**
 	 * Create a NbyN grid, with, with all sites blacked.
 	 * @param N size of the gird
 	 */
-	
-	private int size;
-	private int[] grid;
-	
 		public Percolation(int N){
 			
+			if(N<=0) {
+				
+				throw new java.lang.IllegalArgumentException("N must be greater than 0");
+			}
+			
+			this.N = N;
 			//TODO
 		}
 		
@@ -25,7 +33,7 @@ public class Percolation {
 		 * @param j index of the column
 		 */
 		public void open(int i, int j){
-			
+			if (i < 0 || i >= N) throw new IndexOutOfBoundsException("row index " + i + " must be between 0 and " + (N-1));
 			//TODO
 		}
 		
@@ -36,7 +44,7 @@ public class Percolation {
 		 * @return True if the site is open
 		 */
 		public boolean isOpen(int i, int j){
-			
+			if (i < 0 || i >= N) throw new IndexOutOfBoundsException("row index " + i + " must be between 0 and " + (N-1));
 			return false;//TODO
 		}
 		
@@ -47,7 +55,7 @@ public class Percolation {
 		 * @return True if full.
 		 */
 		public boolean isFull(int i, int j) {
-			
+			if (i < 0 || i >= N) throw new IndexOutOfBoundsException("row index " + i + " must be between 0 and " + (N-1));
 			return false;//TODO
 		}
 		
