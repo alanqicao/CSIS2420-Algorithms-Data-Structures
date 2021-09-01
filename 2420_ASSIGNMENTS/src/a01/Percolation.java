@@ -12,7 +12,7 @@ public class Percolation {
 	private int N;
 	private int[] grid;
 	private WeightedQuickUnionUF wUnionFind;
-	private WeightedQuickUnionUF wUnionFoundSupport;
+	//private WeightedQuickUnionUF wUnionFoundSupport;
 
 	/**
 	 * Create a NbyN grid, with, with all sites blacked.
@@ -32,13 +32,14 @@ public class Percolation {
 		
 		wUnionFind = new WeightedQuickUnionUF((N * N) + 2);
 		//try to avoid backwash.
-		wUnionFoundSupport = new WeightedQuickUnionUF((N * N )+1);
+		
 		
 		//Connect top virtual site to top row sites.
 		
 		for(int i = 1; i< N + 1; i++) {
+			
 			wUnionFind.union(i, 0);
-			wUnionFoundSupport.union(i, 0);
+			
 		}
 		
 		//Connect bottom virtual site to bottom row sites.
@@ -54,7 +55,7 @@ public class Percolation {
 			grid[i] = 0;
 		}
 
-		// TODO
+		
 	}
 
 	/**
@@ -64,9 +65,9 @@ public class Percolation {
 	 * @param j index of the column
 	 */
 	public void open(int i, int j) {
-		if (i < 0 || i >= N)
-			throw new IndexOutOfBoundsException("row index " + i + " must be between 0 and " + (N - 1));
-		// TODO
+		isValidRow(i,j);
+		
+		
 	}
 
 	/**
@@ -77,8 +78,7 @@ public class Percolation {
 	 * @return True if the site is open
 	 */
 	public boolean isOpen(int i, int j) {
-		if (i < 0 || i >= N)
-			throw new IndexOutOfBoundsException("row index " + i + " must be between 0 and " + (N - 1));
+		isValidRow(i,j);
 		return false;// TODO
 	}
 
@@ -90,8 +90,8 @@ public class Percolation {
 	 * @return True if full.
 	 */
 	public boolean isFull(int i, int j) {
-		if (i < 0 || i >= N)
-			throw new IndexOutOfBoundsException("row index " + i + " must be between 0 and " + (N - 1));
+		isValidRow(i,j);
+		
 		return false;// TODO
 	}
 
@@ -104,6 +104,13 @@ public class Percolation {
 
 		return false;// TODO
 
+	}
+	
+	private void isValidRow(int i, int j) {
+		
+		if (i < 0 || i >= N)
+			throw new IndexOutOfBoundsException("row index " + i + " must be between 0 and " + (N - 1));
+		
 	}
 
 }
