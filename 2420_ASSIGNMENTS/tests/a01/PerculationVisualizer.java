@@ -69,7 +69,7 @@ public class PerculationVisualizer {
 
     public static void main(String[] args) throws InterruptedException {
         String[] fileNames = {
-           // TODO add input files to test with - e.g. Input10.txt
+          "testFiles/sedgewick60.txt"
         };
         
         for (String filename : fileNames) {
