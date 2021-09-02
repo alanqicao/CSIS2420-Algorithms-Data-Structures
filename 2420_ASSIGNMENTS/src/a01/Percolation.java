@@ -17,6 +17,7 @@ public class Percolation {
 	private final int endPoint;
 	
 
+
 	/**
 	 * Create a NbyN grid, with, with all sites blacked.
 	 * 
@@ -31,14 +32,18 @@ public class Percolation {
 
 		this.N = N;
 		
+
 		topPoint =(N*N);
 		endPoint=(N*N)+1;
+
 		
 		// Initialize virtual site
 		
+
 		myUnionFind = new WeightedQuickUnionUF((N * N) + 2);
 		//try to avoid backwash.
 		myBackwash = new WeightedQuickUnionUF((N * N )+1);
+
 		
 //		//Connect top virtual site to top row sites.
 //		for(int i=0; i<N;i++) {
@@ -52,6 +57,7 @@ public class Percolation {
 
 
 		
+
 	}
 /**
  * Converted i and j to One Dimension number
@@ -63,6 +69,7 @@ public class Percolation {
 		int convertedOneDimension;
 		convertedOneDimension = (N*x)+y;
 		return convertedOneDimension;
+
 	}
 	
 	/**
@@ -86,6 +93,7 @@ public class Percolation {
 	 * @param j index of the column
 	 */
 	public void open(int i, int j) {
+
 		//check validate of the data.
 		checkValidate(i, j);
 		//Open the box inside grid.
@@ -126,6 +134,7 @@ public class Percolation {
 			myUnionFind.union(xyToOneDimension(i,j+1),xyToOneDimension(i,j));
 			myBackwash.union(xyToOneDimension(i,j+1),xyToOneDimension(i,j));
 		}
+
 		
 		
 	}
@@ -138,9 +147,11 @@ public class Percolation {
 	 * @return True if the site is open
 	 */
 	public boolean isOpen(int i, int j) {
+
 		checkValidate(i,j);
 		
 		return grid[i][j];
+
 	}
 
 	/**
@@ -151,6 +162,7 @@ public class Percolation {
 	 * @return True if full.
 	 */
 	public boolean isFull(int i, int j) {
+
 		checkValidate(i,j);
 		
 		if(!isOpen(i,j)) {
@@ -159,6 +171,7 @@ public class Percolation {
 		
 		
 		return myBackwash.connected(topPoint,xyToOneDimension(i,j));
+
 	}
 
 	/**
@@ -171,6 +184,13 @@ public class Percolation {
 
 		return myUnionFind.connected(topPoint, endPoint);
 
+	}
+	
+	private void isValidRow(int i, int j) {
+		
+		if (i < 0 || i >= N)
+			throw new IndexOutOfBoundsException("row index " + i + " must be between 0 and " + (N - 1));
+		
 	}
 
 }
