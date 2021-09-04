@@ -69,16 +69,16 @@ public class PerculationVisualizer {
 
     public static void main(String[] args) throws InterruptedException {
         String[] fileNames = {
-        		"testFiles/eagle25.txt",
-        		"testFiles/greeting57.txt",
-        		"testFiles/heart25.txt",
-        		"testFiles/input1.txt",
-        		"testFiles/input10_no.txt",
-        		"testFiles/input2.txt",
+//        		"testFiles/eagle25.txt",
+//        		"testFiles/greeting57.txt",
+//        		"testFiles/heart25.txt",
+//        		"testFiles/input1.txt",
+//        		"testFiles/input10_no.txt",
+//        		"testFiles/input2.txt",
         		"testFiles/input10.txt",
-        		"testFiles/input2_no.txt",
-        		"testFiles/input20.txt",
-        		"testFiles/input3.txt"
+//        		"testFiles/input2_no.txt",
+//        		"testFiles/input20.txt",
+//        		"testFiles/input3.txt"
         		
         };
         

@@ -24,18 +24,63 @@ class PercolationTest {
 	}
 
 	@Test
-	void testIsOpen() {
-		fail("Not yet implemented");
+	void open_shoulOpen_returnTrue() {
+		percolation.open(1,1);
+		assertTrue(percolation.isOpen(1, 1));
 	}
 
 	@Test
-	void testIsFull() {
-		fail("Not yet implemented");
+	void percolates_shoulPercolates_returnTrue() {
+			percolation.open(0, 2);
+			percolation.open(1, 2);
+	        percolation.open(2, 2);
+	        percolation.open(3, 2);
+	        percolation.open(4, 2);
+	        percolation.open(5, 2);
+	        percolation.open(6, 2);
+	        percolation.open(7, 2);
+	        percolation.open(8, 2);
+	        assertTrue(percolation.percolates());
 	}
+	
+	@Test
+	void percolates_shoulNotPercolates_returnFalse() {
+			percolation.open(0, 0);
+			percolation.open(0, 1);
+	        percolation.open(0, 2);
+	        percolation.open(0, 3);
+	        percolation.open(0, 4);
+	        percolation.open(0, 5);
+	        percolation.open(0, 6);
+	        percolation.open(0, 7);
+	        percolation.open(0, 8);
+	        assertFalse(percolation.percolates());
+	}
+	
+	
+	@Test
+	void isFull_shoulBeFull_returnTrue() {
+		percolation.open(0, 0);
+		percolation.open(0, 1);
+		assertTrue(percolation.isFull(0, 1));
+	}
+	
+	
+	@Test
+	void isFull_shoulNotBeFull_returnFlase() {
+		percolation.open(2, 1);
+		
+		assertFalse(percolation.isFull(2, 1));
+	}
+	
 
 	@Test
-	void testPercolates() {
-		fail("Not yet implemented");
+	void isOpen_shoulNotOpen_returnFalse() {
+		assertFalse(percolation.isOpen(8, 8));
 	}
+
+
+
+
 
 }

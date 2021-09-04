@@ -3,6 +3,7 @@ package a01;
 /**
  * Models a perolation sysytem
  * @author Qi Cao
+ * @author Danny
  *
  */
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
@@ -13,8 +14,8 @@ public class Percolation {
 	private boolean[][] grid;
 	private WeightedQuickUnionUF myUnionFind;
 	private WeightedQuickUnionUF myBackwash;
-	private final int topPoint;
-	private final int endPoint;
+	private int topPoint;
+	private int endPoint;
 	
 
 
