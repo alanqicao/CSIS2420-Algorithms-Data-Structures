@@ -2,7 +2,7 @@ package a01;
 
 /**
  * Models a perolation sysytem
- * @author Alan
+ * @author Qi Cao
  *
  */
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
@@ -45,17 +45,23 @@ public class Percolation {
 		myBackwash = new WeightedQuickUnionUF((N * N )+1);
 
 		
-//		//Connect top virtual site to top row sites.
-//		for(int i=0; i<N;i++) {
-//			myUnionFind.union(i, topPoint);
-//			myBackwash.union(i, topPoint);
-//			myUnionFind.union(topPoint-i-1, endPoint);
-//		}
+		//Connect top virtual site to top row sites.
+	for(int i=0; i<N;i++) {
+		myUnionFind.union(i, topPoint);
+		myBackwash.union(i, topPoint);
+		myUnionFind.union(topPoint-i-1, endPoint);
+	}
 		
 		// create grid.
 		grid = new boolean[N][N];
 
-
+		// Initialize all grid open
+		
+		for(int gridRow = 0; gridRow<N;gridRow++) {
+			for(int gridColumn = 0; gridColumn < N; gridColumn++) {
+				grid[gridRow][gridColumn] =false;
+			}
+		}
 		
 
 	}
@@ -186,11 +192,6 @@ public class Percolation {
 
 	}
 	
-	private void isValidRow(int i, int j) {
-		
-		if (i < 0 || i >= N)
-			throw new IndexOutOfBoundsException("row index " + i + " must be between 0 and " + (N - 1));
-		
-	}
+
 
 }
