@@ -1,23 +1,33 @@
 package a01;
 
 /**
- * Models a perolation sysytem
+ * Models a percolation system.
+ * 
  * @author Qi Cao
  * @author Danny
- *
  */
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
 
+	//Length/width of the grid
 	private int N;
-	private boolean[][] grid;
-	private WeightedQuickUnionUF myUnionFind;
-	private WeightedQuickUnionUF myBackwash;
-	private int topPoint;
-	private int endPoint;
 	
+	//Grid of booleans representing open and closed spots.
+	private boolean[][] grid;
+	
+	//Weighted quick union UF grid to make connections.
 
+	private WeightedQuickUnionUF myUnionFind;
+	
+	//Weighted quick union UF grid to account for backwash.
+	private WeightedQuickUnionUF myBackwash;
+	
+	//Index of start node
+	private final int topPoint;
+	
+	//Index of end node
+	private final int endPoint;
 
 	/**
 	 * Create a NbyN grid, with, with all sites blacked.
@@ -26,71 +36,19 @@ public class Percolation {
 	 */
 	public Percolation(int N) {
 
-		if (N <= 0) {
-
-			throw new java.lang.IllegalArgumentException("N must be greater than 0");
-		}
-
+		//set fields
 		this.N = N;
-		
-
 		topPoint =(N*N);
 		endPoint=(N*N)+1;
-
 		
-		// Initialize virtual site
-		
-
+		//Initialize quickunion to see if things connect
 		myUnionFind = new WeightedQuickUnionUF((N * N) + 2);
+		
 		//try to avoid backwash.
 		myBackwash = new WeightedQuickUnionUF((N * N )+1);
-
 		
-		//Connect top virtual site to top row sites.
-	for(int i=0; i<N;i++) {
-		myUnionFind.union(i, topPoint);
-		myBackwash.union(i, topPoint);
-		myUnionFind.union(topPoint-i-1, endPoint);
-	}
-		
-		// create grid.
+		//create grid of booleans to see if filled or not.
 		grid = new boolean[N][N];
-
-		// Initialize all grid open
-		
-		for(int gridRow = 0; gridRow<N;gridRow++) {
-			for(int gridColumn = 0; gridColumn < N; gridColumn++) {
-				grid[gridRow][gridColumn] =false;
-			}
-		}
-		
-
-	}
-/**
- * Converted i and j to One Dimension number
- * @param x index of  row
- * @param y index of  column
- * @return number represent the one dimension x and y.
- */
-	private int xyToOneDimension(int x, int y) {
-		int convertedOneDimension;
-		convertedOneDimension = (N*x)+y;
-		return convertedOneDimension;
-
-	}
-	
-	/**
-	 * Check if given row and column are validate, return exception if they are.
-	 * @param i index of row
-	 * @param j index of column
-	 */
-	private void checkValidate(int i, int j) {
-		if (i < 0 || i >= N)
-			throw new IndexOutOfBoundsException("row index " + i + " must be between 0 and " + (N - 1));
-		
-		if (j < 0 || j >= N)
-			throw new IndexOutOfBoundsException("colum index " + j + " must be between 0 and " + (N - 1));
-
 	}
 	
 	/**
@@ -98,52 +56,47 @@ public class Percolation {
 	 * 
 	 * @param i index of the
 	 * @param j index of the column
+	 * @author Qi Cao
 	 */
 	public void open(int i, int j) {
 
 		//check validate of the data.
-		checkValidate(i, j);
+		validate(i, j);
 		//Open the box inside grid.
 		grid[i][j] = true;
 		
 		
 		//Check 4 direction if they are open, if yes connect them.
-		//Check if it is at top row, if yes 
 		
 		//check above
 		if(i==0) {
-			myUnionFind.union(xyToOneDimension(i,j), topPoint);
-			myBackwash.union(xyToOneDimension(i,j), topPoint);
+			myUnionFind.union(twoDToOneD(i,j), topPoint);
+			myBackwash.union(twoDToOneD(i,j), topPoint);
 		}else if(isOpen(i-1,j)) {
-				myUnionFind.union(xyToOneDimension(i-1,j),xyToOneDimension(i,j));
-				myBackwash.union(xyToOneDimension(i-1,j),xyToOneDimension(i,j));
-			
+				myUnionFind.union(twoDToOneD(i-1,j),twoDToOneD(i,j));
+				myBackwash.union(twoDToOneD(i-1,j),twoDToOneD(i,j));
 		}
 		
 		//check below
 		if(i==(N-1)) {
-			myUnionFind.union(xyToOneDimension(i, j),endPoint);
+			myUnionFind.union(twoDToOneD(i, j),endPoint);
 		}else if(isOpen(i+1,j)) {
-			myUnionFind.union(xyToOneDimension(i+1,j),xyToOneDimension(i,j));
-			myBackwash.union(xyToOneDimension(i+1,j),xyToOneDimension(i,j));
+			myUnionFind.union(twoDToOneD(i+1,j),twoDToOneD(i,j));
+			myBackwash.union(twoDToOneD(i+1,j),twoDToOneD(i,j));
 		}
 		
 		
 		//check left
-		
 		if(j-1 >= 0 && grid[i][j-1]) {
-			myUnionFind.union(xyToOneDimension(i,j-1),xyToOneDimension(i,j));
-			myBackwash.union(xyToOneDimension(i,j-1),xyToOneDimension(i,j));
+			myUnionFind.union(twoDToOneD(i,j-1),twoDToOneD(i,j));
+			myBackwash.union(twoDToOneD(i,j-1),twoDToOneD(i,j));
 		}
 		
 		//check right
 		if(j+1 < N && grid[i][j+1]) {
-			myUnionFind.union(xyToOneDimension(i,j+1),xyToOneDimension(i,j));
-			myBackwash.union(xyToOneDimension(i,j+1),xyToOneDimension(i,j));
-		}
-
-		
-		
+			myUnionFind.union(twoDToOneD(i,j+1),twoDToOneD(i,j));
+			myBackwash.union(twoDToOneD(i,j+1),twoDToOneD(i,j));
+		}		
 	}
 
 	/**
@@ -151,48 +104,74 @@ public class Percolation {
 	 * 
 	 * @param i index of row
 	 * @param j index of column
-	 * @return True if the site is open
+	 * @return True if the site is open, false otherwise.
+	 * @author Qi Cao
 	 */
 	public boolean isOpen(int i, int j) {
-
-		checkValidate(i,j);
+		//validate coordinates
+		validate(i,j);
 		
+		//return boolean from grid, true if open.
 		return grid[i][j];
-
 	}
 
 	/**
 	 * Check is site (row i, column j) full.
 	 * 
-	 * @param i index of row
-	 * @param j index of column
-	 * @return True if full.
+	 * @param i Index of row.
+	 * @param j Index of column.
+	 * @return True if full, false otherwise.
+	 * @author Qi Cao
 	 */
 	public boolean isFull(int i, int j) {
+		//validate coordinates
+		validate(i,j);
 
-		checkValidate(i,j);
-		
-		if(!isOpen(i,j)) {
-			return false;
-		}
-		
-		
-		return myBackwash.connected(topPoint,xyToOneDimension(i,j));
-
+		//return weather the top and this point is connected.
+		return myBackwash.connected(topPoint,twoDToOneD(i,j));
 	}
 
 	/**
-	 * Check does the system percolate.
+	 * Check does the system percolates.
 	 * 
-	 * @return true if percolate
+	 * @return True if percolates, false otherwise.
+	 * @author Qi Cao
+	 * @author Danny
 	 */
 	public boolean percolates() {
-		
-
+		//determine if top and bottom are connected.
 		return myUnionFind.connected(topPoint, endPoint);
-
 	}
 	
-
-
+	/**
+	 * Private method that converts 2d coordinates into 1d coordinates
+	 * Given we are working with an array with size NxN, the formula 
+	 * we're using is n * i + j, since n*i gets us the row values and
+	 * then adding j gets us to what column we're supposed to be on.
+	 * 
+	 * @param i The row value of the site.
+	 * @param j The column value of the site.
+	 * @return An integer representing (i, j) on a 1D plane.
+	 * @author Danny
+	 */
+	private int twoDToOneD(int i, int j) {
+		validate(i, j);
+		return N * i + j;
+	}
+	
+	/**
+	 * Determines if given coordinates are valid or not.
+	 * 
+	 * @param i The row value of the site.
+	 * @param j The column value of the site.
+	 * @throws IndexOutOfBoundsException If i and j are out of bounds.
+	 * @author Danny
+	 */
+	private void validate(int i, int j) throws IndexOutOfBoundsException {
+		//see if i and j are outside of the NxN grid.
+		if((i < 0 || i >= N) || (j < 0 || j >= N)) {
+			throw new IndexOutOfBoundsException("Coordinates (" + i + ", " + j + ")"
+					+ " out of bounds");
+		}
+	}
 }

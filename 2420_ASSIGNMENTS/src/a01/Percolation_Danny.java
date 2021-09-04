@@ -7,7 +7,7 @@ import edu.princeton.cs.algs4.*;
  * @author Danny
  * @author Chi
  */
-public class Percolation2 {
+public class Percolation_Danny {
 	
 	//Weighted quick union UF grid to make connections.
 	private WeightedQuickUnionUF UFGrid;
@@ -30,7 +30,7 @@ public class Percolation2 {
 	 * 
 	 * @param N Size of the NxN grid.
 	 */
-	public Percolation2(int N) {
+	public Percolation_Danny(int N) {
 	
 		//Initialize n.
 		n = N;

@@ -78,6 +78,9 @@ class PercolationTest {
 	void isOpen_shoulNotOpen_returnFalse() {
 		assertFalse(percolation.isOpen(8, 8));
 	}
+	
+	
+	
 
 
 
