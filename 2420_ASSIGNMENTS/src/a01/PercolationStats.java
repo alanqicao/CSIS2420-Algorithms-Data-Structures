@@ -3,6 +3,8 @@
  */
 package a01;
 
+import edu.princeton.cs.algs4.StdRandom;
+
 /**
  * percolation probability experiments estimation
  * @author Qi Cao
@@ -12,6 +14,7 @@ public class PercolationStats {
 	
 	private Percolation myPerco;
 	private double[] experiments;
+	private int counterOpenSites;
 	
 	/**
 	 * // perform T independent experiments on an NbyN grid
@@ -24,8 +27,28 @@ public class PercolationStats {
 			throw new IllegalArgumentException("Grid size or experiment count must be greater than 0");
 		}
 		
+		experiments = new double[T];
 		
-		myPerco = new Percolation(N);
+		
+		for(int i = 0; i < T; i++ ) {
+			
+			myPerco = new Percolation(N);
+			counterOpenSites = 0;
+			
+			
+			while(!myPerco.percolates()) {
+				
+				int randomRow = StdRandom.uniform(N);
+				int randomColunm = StdRandom.uniform(N);
+				
+				if(!myPerco.isOpen(randomRow, randomColunm)) {
+					myPerco.open(randomRow, randomColunm);
+				};
+				counterOpenSites++;
+			}
+			
+		}
+		
 		
 		
 		
