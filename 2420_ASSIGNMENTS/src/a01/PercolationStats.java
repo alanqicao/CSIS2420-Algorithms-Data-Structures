@@ -38,7 +38,7 @@ public class PercolationStats {
 		//Set the number of experiments run to T
 		experiments = new double[T];
 
-		//Run   the experiment T times
+		//Run the experiment T times
 		for (int i = 0; i < T; i++) {
 
 			//Initialize new experiment
