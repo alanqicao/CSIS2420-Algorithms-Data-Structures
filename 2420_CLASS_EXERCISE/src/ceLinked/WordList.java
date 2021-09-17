@@ -10,7 +10,7 @@ package ceLinked;
 public class WordList {
 	private Node head; // first node of the list or null
 	private Node tail; // last node of the list or null
-	private static int n;     // number of words in the list
+	private int n;     // number of words in the list
 
 	/**
 	 * Node of LinkedList that stores the item and a
@@ -50,7 +50,7 @@ public class WordList {
 	 * @param newItem
 	 */
 	public void prepend(String newItem) {		
-		// TODO 2
+		
 		Node newNode = new Node();
 		newNode.item = newItem;
 		
@@ -95,10 +95,10 @@ public class WordList {
 	public boolean contains(String item) {	
 		Node current= head;
 		while(current!=null) {
-			if(current.item==item) {
+			if(current.item.equals(item)) {
 				return true;
 			}
-			
+			current=current.next;
 		}
 		return false; 
 	}
@@ -107,7 +107,7 @@ public class WordList {
 	 * Returns the number of elements in the list
 	 * @return the number of elements
 	 */
-	public static int size() {
+	public int size() {
 		
 		return n;
 	}
@@ -137,38 +137,36 @@ public class WordList {
 	public static void main(String[] args) {
 		WordList list = new WordList();
 		System.out.println("size: " + list.size());
-		// TODO 1
+
 		// Dynamically determine whether the list is empty. If so, print 
 		// 'The list is empty.' otherwise print 'The list is not empty.'
 		
-		if(list.isEmpty()) {
-			System.out.println("The list is empty");
-		}else System.out.println("The list is not empty.");
-		 
-		System.out.println("");
-		list.append("ape");
-		System.out.println("TODO 2: preped 'ape");
-		System.out.println("list: " + list);
-		list.append("auk");
-		System.out.println("list: " + list);
-		System.out.println(size());
-		System.out.println();
-		System.out.println("TODO 3: ");
+		System.out.print("TODO 1: ");
+		System.out.println(list.isEmpty()? "The list is empty":"The list is not empty.");
 		list.append("ant");
-		list.append("bat");
+		list.append("bat");	
 		list.append("cow");
 		list.append("dog");
-		System.out.println("Index of dog");
-
 		
-		System.out.println("list: " + list);
+		list.prepend("ape");
+		System.out.printf("\nTODO 2: prepend 'ape'\nlist: %s\n",list);
+		list.prepend("auk");
+		System.out.printf("\nTODO 2: prepend 'auk'\nlist: %s\nsize: %d\n",list,list.size());
+		
+		System.out.printf("\nTODO 3: indexOf\nIndex of dog: %d\nIndex of auk: %d\nIndex of yak: %d\n",list.indexOf("dog"),list.indexOf("auk"),list.indexOf("yak"));
+		
+		System.out.printf("\nTODO 4: contains");
+		System.out.printf(list.contains("cow")? "\n%s is included in the list.\n":"\n%s is not included in the list.\n","cow");
+		System.out.printf(list.contains("yak")? "%s is included in the list.\n":"%s is not included in the list.\n","yak");
+		
+		
 
-		if(list.isEmpty()) {
-			System.out.println("The list is empty");
-		}else System.out.println("The list is not empty.");
+		System.out.printf("\nlist: %s\n", list);
 
-
+		System.out.println("size: " + list.size());
 		
 	}
+	
+	
 
 }
