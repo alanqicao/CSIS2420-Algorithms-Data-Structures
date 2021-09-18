@@ -157,43 +157,32 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 	 * @return An iterator of the data structure.
 	 */
 	public Iterator<Item> iterator(){
-		return new CustomIterator(arrayItems);	   
+		return new CustomIterator();	   
 	}
 	
 	//Private class that creates an iterator for this class.
 	private class CustomIterator implements Iterator<Item> {
 		
-		Item[] randomizedArray;
-		int pointer;
+		private int index; //current member we are pointing to 
+		private int[] pointers;// shuffled indexes
 		
-	    // constructor
-	    CustomIterator(Item[] arrayItems) {
-	    	randomizedArray = arrayItems;
-	    	StdRandom.shuffle(randomizedArray);
-	    	pointer = 0;
-	    }
-	      
-	    // Checks if the next element exists
-	    public boolean hasNext() {
-	    	try {
-	    		return randomizedArray[pointer] != null;
-	    	} catch(IndexOutOfBoundsException e) {
-	    		return false;
-	    	}
-	    }
-	      
-	    // moves the cursor/iterator to next element
-	    public Item next() {
-	    	
-	    	if(!hasNext()) {
-	    		throw new NoSuchElementException("Queue is empty");
-	    	}
-    	
-	    	Item returned = randomizedArray[pointer];
-	    	pointer++;
-	    	return returned;
-	    }
-	      
+		private CustomIterator() {
+			pointers = StdRandom.permutation(length);
+			index = -1;
+		}
+		
+		public boolean hasNext() {
+			return index < pointers.length - 1;
+		}
+		
+		public Item next() {
+			if (index >= pointers.length - 1)
+				throw new NoSuchElementException();
+
+			return (Item) arrayItems[pointers[++index]];
+		}
+		
+		
 	    // Used to remove an element. Implement only if needed
 	    public void remove() {
 	       throw new UnsupportedOperationException("Unsupported Operation");
@@ -223,6 +212,8 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 		System.out.println(rq.isEmpty());
 		System.out.println(rq.length);
 		System.out.println(rq.size());
+		
+		
 		
 	}
 }
