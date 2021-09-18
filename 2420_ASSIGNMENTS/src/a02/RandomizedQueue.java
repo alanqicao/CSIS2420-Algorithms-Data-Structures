@@ -1,53 +1,59 @@
-/**
- * 
- */
 package a02;
 
 import java.util.Iterator;
+
 import java.util.NoSuchElementException;
 
 import edu.princeton.cs.algs4.StdRandom;
 
 /**
- * @author Qi Cao
+ * A randomized queue is similar to a stack or queue, except
+ * that the item removed is chosen uniformly at random from
+ * items in the data structure.
+ * 
+ * @author Danny
+ * @author Chi
  *
+ * @param <Item> Object being stored in the data structure.
  */
 public class RandomizedQueue<Item> implements Iterable<Item> {
 
+	//Array to store the items in.
 	private Item[] arrayItems;
+	
+	//Integer that tells us how many items there are
 	private int length;
 
 	/**
-	 * construct an empty randomized queue
+	 * Construct an empty randomized queue.
 	 */
 	@SuppressWarnings("unchecked")
 	public RandomizedQueue() {
+		
 		// create new array with any size
 		arrayItems = (Item[]) new Object[2];
+		
 		// set length to 0
 		length = 0;
 
 	}
 
 	/**
-	 * is the queue empty?
+	 * Determines if the queue is empty.
 	 * 
-	 * @return
+	 * @return True if array is empty, false otherwise.
 	 */
 	public boolean isEmpty() {
-		// return if array is empty
 		return length == 0;
 	}
 
 	/**
-	 * return the number of items on the queue
+	 * Return the number of items on the queue.
 	 * 
-	 * @return
+	 * @return The total items on the queue.
 	 */
 	public int size() {
-
 		return length;
-
 	}
 
 	/**
@@ -56,105 +62,179 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 	 * @param item
 	 */
 	public void enqueue(Item item) {
-		// check
+		// check if argument is null
 		if (item == null) {
-
+			
 			throw new NullPointerException("Item can not be null");
 		}
 
-		if (length >= arrayItems.length) {
-
+		//determine if array needs to be resized
+		if (length == arrayItems.length) {
 			resize(arrayItems.length * 2);
 		}
 
+		//add item to back of array
 		arrayItems[length] = item;
 
+		//increment length
 		length++;
 	}
 
 	/**
-	 * resize a array
+	 * Resizes an array.
 	 * 
-	 * @param a integer that is the size need to resize array
+	 * @param An integer that is the size needed to resize array.
 	 */
 	@SuppressWarnings("unchecked")
 	private void resize(int n) {
 
+		//create new array
 		Object[] newArray = new Object[n];
 
+		//iterate through old array and copy it to new array
 		for (int i = 0; i < length; i++) {
 			newArray[i] = arrayItems[i];
-			arrayItems = (Item[]) newArray;
 		}
+		
+		this.arrayItems = (Item[]) newArray;
 	}
 
 	/**
-	 * delete and return a random item
+	 * Delete and return a random item from the data structure.
 	 * 
-	 * @return
+	 * @return A randomly selected item from the data structure.
 	 */
 	public Item dequeue() {
 
-		if (length <= 0) {
+		if (isEmpty()) {
 			throw new NoSuchElementException("RandomizedQueue is empty");
 		}
 
-		// StdRandom.shuffle(array, 0, length) why can not use this?
-
-		int randomNumber = StdRandom.uniform(0, length);
-
+		//shuffle the array
+		StdRandom.shuffle(arrayItems);
 		
-		Item item = (Item) arrayItems[randomNumber];
-
-		arrayItems[randomNumber] = arrayItems[length];
-
+		//set the returned item to the last item in the now shuffled array
+		//(this makes it completely random what is returned).
+		Item item = (Item) arrayItems[--length];
+		
+	
+		//Set the last item to null (delete it).
 		arrayItems[length] = null;
+		//decrement the length
+		//--length;
+		
 
-		--length;
-
-		if (length > 0 && length < length / 4) {
-			resize(length / 2);
+		//resize if necessary
+		if ( arrayItems.length > 0 && length < arrayItems.length / 4 ) {
+			resize(arrayItems.length / 2);
 		}
 
+		//Return the item
 		return item;
+		
+
 
 	}
 
 	/**
-	 * return (but do not delete) a random item
+	 * Returns (but does not delete) a random item from the data structure.
 	 * 
-	 * @return
+	 * @return A random item from the data structure.
 	 */
 	public Item sample() {
-		if(length == 0) {
+		
+		//Determine if this array is empty
+		if(this.isEmpty()) {
 			throw new NoSuchElementException("RandominzeQueue is empty");
 		}
-		int randomNumber = StdRandom.uniform(0, length);
-
 		
-		Item item = (Item) arrayItems[randomNumber];
-
-		return item;
+		//get random number between zero and length
+		int randomNumber = StdRandom.uniform(0, length);
+		
+		//return the value of the random index
+		return arrayItems[randomNumber];
 	}
 
 	/**
-	    * return an independent iterator over items in random order
-	    */
-	   public Iterator<Item> iterator(){
-		   
-		return null;
-		   
-	   }
-	   
-	   
-	   
-
-	/**
-	 * unit testing
+	 * Returns an independent iterator over items in random order
 	 * 
-	 * @param args
+	 * @return An iterator of the data structure.
+	 */
+	public Iterator<Item> iterator(){
+		return new CustomIterator(arrayItems);	   
+	}
+	
+	//Private class that creates an iterator for this class.
+	private class CustomIterator implements Iterator<Item> {
+		Item[] randomizedArray;
+		int pointer;
+		
+	    // constructor
+	   private CustomIterator(Item[] arrayItems) {
+	    	randomizedArray = arrayItems;
+	    	StdRandom.shuffle(randomizedArray);
+	    	//StdRandom.permutation(length);
+	    	pointer = 0;
+	    }
+	      
+	    // Checks if the next element exists
+	   @Override
+	    public boolean hasNext() {
+	  
+	    
+//	    	if(randomizedArray[pointer] != null)
+//	    		return true;
+//	    	
+//	    		return false;
+	    
+	    	
+	    	
+	    	return (pointer<randomizedArray.length);
+	    
+	    }
+	      
+	    // moves the cursor/iterator to next element
+	   @Override
+	    public Item next() {
+	    	
+	    	if(!hasNext()) {
+	    		throw new NoSuchElementException("Queue is empty");
+	    	}
+    	
+	    	Item returned = randomizedArray[pointer];
+	    	pointer++;
+	    	return returned;
+	    }
+	      
+	    // Used to remove an element. Implement only if needed
+	   @Override
+	    public void remove() {
+	       throw new UnsupportedOperationException("Unsupported Operation");
+	    }
+	} 
+	   
+	/**
+	 * Unit testing.
+	 * 
+	 * @param [NOT USED]
 	 */
 	public static void main(String[] args) {
-
+		RandomizedQueue<String> rq = new RandomizedQueue<String>();
+		
+		//add items to rq
+		rq.enqueue("ant");
+		rq.enqueue("bat");
+		rq.enqueue("cat");
+//		rq.enqueue("dog");
+		rq.dequeue();
+		rq.dequeue();
+		rq.dequeue();
+		System.out.println(rq.isEmpty());
+		
+		for(String s : rq) {
+			  System.out.println(s);
+		}
+		
+		System.out.println(rq.length);
 	}
 }
