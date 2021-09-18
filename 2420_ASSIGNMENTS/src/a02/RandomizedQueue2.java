@@ -16,7 +16,7 @@ import edu.princeton.cs.algs4.StdRandom;
  *
  * @param <Item> Object being stored in the data structure.
  */
-public class RandomizedQueue<Item> implements Iterable<Item> {
+public class RandomizedQueue2<Item> implements Iterable<Item> {
 
 	//Array to store the items in.
 	private Item[] arrayItems;
@@ -28,7 +28,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 	 * Construct an empty randomized queue.
 	 */
 	@SuppressWarnings("unchecked")
-	public RandomizedQueue() {
+	public RandomizedQueue2() {
 		
 		// create new array with any size
 		arrayItems = (Item[]) new Object[2];
@@ -64,6 +64,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 	public void enqueue(Item item) {
 		// check if argument is null
 		if (item == null) {
+			
 			throw new NullPointerException("Item can not be null");
 		}
 
@@ -105,30 +106,33 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 	 */
 	public Item dequeue() {
 
-		if (this.isEmpty()) {
+		if (isEmpty()) {
 			throw new NoSuchElementException("RandomizedQueue is empty");
 		}
 
 		//shuffle the array
-		StdRandom.shuffle(this.arrayItems);
+		StdRandom.shuffle(arrayItems);
 		
 		//set the returned item to the last item in the now shuffled array
 		//(this makes it completely random what is returned).
-		Item item = (Item) arrayItems[--this.length];
-
+		Item item = (Item) arrayItems[--length];
+		
+	
 		//Set the last item to null (delete it).
-		arrayItems[this.length] = null;
-
+		arrayItems[length] = null;
 		//decrement the length
 		//--length;
+		
 
 		//resize if necessary
-		if ( (length > 0) && (length < (length / 4)) ) {
-			resize(length / 2);
+		if ( arrayItems.length > 0 && length < arrayItems.length / 4 ) {
+			resize(arrayItems.length / 2);
 		}
 
 		//Return the item
 		return item;
+		
+
 
 	}
 
@@ -166,22 +170,31 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 		int pointer;
 		
 	    // constructor
-	    CustomIterator(Item[] arrayItems) {
+	   private CustomIterator(Item[] arrayItems) {
 	    	randomizedArray = arrayItems;
 	    	StdRandom.shuffle(randomizedArray);
+	    	//StdRandom.permutation(length);
 	    	pointer = 0;
 	    }
 	      
 	    // Checks if the next element exists
+	   @Override
 	    public boolean hasNext() {
-	    	try {
-	    		return randomizedArray[pointer] != null;
-	    	} catch(IndexOutOfBoundsException e) {
-	    		return false;
-	    	}
+	  
+	    
+//	    	if(randomizedArray[pointer] != null)
+//	    		return true;
+//	    	
+//	    		return false;
+	    
+	    	
+	    	
+	    	return (pointer<randomizedArray.length);
+	    
 	    }
 	      
 	    // moves the cursor/iterator to next element
+	   @Override
 	    public Item next() {
 	    	
 	    	if(!hasNext()) {
@@ -194,6 +207,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 	    }
 	      
 	    // Used to remove an element. Implement only if needed
+	   @Override
 	    public void remove() {
 	       throw new UnsupportedOperationException("Unsupported Operation");
 	    }
@@ -215,10 +229,12 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 		rq.dequeue();
 		rq.dequeue();
 		rq.dequeue();
-		rq.dequeue();
-		for(String s : rq) {		
+		System.out.println(rq.isEmpty());
+		
+		for(String s : rq) {
 			  System.out.println(s);
 		}
-		System.out.println(rq.isEmpty());
+		
+		System.out.println(rq.length);
 	}
 }
