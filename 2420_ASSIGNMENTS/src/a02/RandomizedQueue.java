@@ -123,7 +123,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 		//--length;
 
 		//resize if necessary
-		if ( (length > 0) && (length < (length / 4)) ) {
+		if ( arrayItems.length > 0 && length < arrayItems.length / 4 ) {
 			resize(length / 2);
 		}
 
@@ -162,6 +162,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 	
 	//Private class that creates an iterator for this class.
 	private class CustomIterator implements Iterator<Item> {
+		
 		Item[] randomizedArray;
 		int pointer;
 		
@@ -220,5 +221,8 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 			  System.out.println(s);
 		}
 		System.out.println(rq.isEmpty());
+		System.out.println(rq.length);
+		System.out.println(rq.size());
+		
 	}
 }
