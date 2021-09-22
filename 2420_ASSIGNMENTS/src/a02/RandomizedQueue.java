@@ -167,15 +167,19 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 		private int[] pointers;// shuffled indexes
 		
 		private CustomIterator() {
+			
 			pointers = StdRandom.permutation(length);
 			index = -1;
 		}
 		
 		public boolean hasNext() {
+			
 			return index < pointers.length - 1;
+			
 		}
 		
 		public Item next() {
+			
 			if (index >= pointers.length - 1)
 				throw new NoSuchElementException();
 

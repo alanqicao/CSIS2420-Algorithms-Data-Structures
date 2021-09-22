@@ -64,7 +64,6 @@ public class RandomizedQueue2<Item> implements Iterable<Item> {
 	public void enqueue(Item item) {
 		// check if argument is null
 		if (item == null) {
-			
 			throw new NullPointerException("Item can not be null");
 		}
 
@@ -106,33 +105,30 @@ public class RandomizedQueue2<Item> implements Iterable<Item> {
 	 */
 	public Item dequeue() {
 
-		if (isEmpty()) {
+		if (this.isEmpty()) {
 			throw new NoSuchElementException("RandomizedQueue is empty");
 		}
 
 		//shuffle the array
-		StdRandom.shuffle(arrayItems);
+		StdRandom.shuffle(this.arrayItems);
 		
 		//set the returned item to the last item in the now shuffled array
 		//(this makes it completely random what is returned).
-		Item item = (Item) arrayItems[--length];
-		
-	
+		Item item = (Item) arrayItems[--this.length];
+
 		//Set the last item to null (delete it).
-		arrayItems[length] = null;
+		arrayItems[this.length] = null;
+
 		//decrement the length
 		//--length;
-		
 
 		//resize if necessary
 		if ( arrayItems.length > 0 && length < arrayItems.length / 4 ) {
-			resize(arrayItems.length / 2);
+			resize(length / 2);
 		}
 
 		//Return the item
 		return item;
-		
-
 
 	}
 
@@ -161,53 +157,41 @@ public class RandomizedQueue2<Item> implements Iterable<Item> {
 	 * @return An iterator of the data structure.
 	 */
 	public Iterator<Item> iterator(){
-		return new CustomIterator(arrayItems);	   
+		return new CustomIterator();	   
 	}
-	
 	//Private class that creates an iterator for this class.
-	private class CustomIterator implements Iterator<Item> {
+	private class CustomIterator<Item> implements Iterator<Item> {
 		Item[] randomizedArray;
 		int pointer;
 		
 	    // constructor
-	   private CustomIterator(Item[] arrayItems) {
-	    	randomizedArray = arrayItems;
+	    @SuppressWarnings("unchecked")
+		CustomIterator() {
+	    	randomizedArray = (Item[]) arrayItems;
 	    	StdRandom.shuffle(randomizedArray);
-	    	//StdRandom.permutation(length);
 	    	pointer = 0;
 	    }
 	      
 	    // Checks if the next element exists
-	   @Override
 	    public boolean hasNext() {
-	  
-	    
-//	    	if(randomizedArray[pointer] != null)
-//	    		return true;
-//	    	
+//	    	try {
+//	    		return randomizedArray[pointer] != null;
+//	    	} catch(IndexOutOfBoundsException e) {
 //	    		return false;
-	    
-	    	
-	    	
-	    	return (pointer<randomizedArray.length);
-	    
+//	    	}
+	    	return pointer<randomizedArray.length-1;
 	    }
 	      
 	    // moves the cursor/iterator to next element
-	   @Override
 	    public Item next() {
-	    	
-	    	if(!hasNext()) {
-	    		throw new NoSuchElementException("Queue is empty");
-	    	}
-    	
-	    	Item returned = randomizedArray[pointer];
+	    	if(pointer>randomizedArray.length-1)
+	    		throw new NoSuchElementException();
+	    	 Item returned = randomizedArray[pointer];
 	    	pointer++;
 	    	return returned;
 	    }
 	      
 	    // Used to remove an element. Implement only if needed
-	   @Override
 	    public void remove() {
 	       throw new UnsupportedOperationException("Unsupported Operation");
 	    }
@@ -226,15 +210,10 @@ public class RandomizedQueue2<Item> implements Iterable<Item> {
 		rq.enqueue("bat");
 		rq.enqueue("cat");
 		rq.enqueue("dog");
-		rq.dequeue();
-		rq.dequeue();
-		rq.dequeue();
-		System.out.println(rq.isEmpty());
 		
 		for(String s : rq) {
-			  System.out.println(s);
+			for(String s2 : rq)
+			  System.out.println(s2);
 		}
-		
-		System.out.println(rq.length);
 	}
 }
