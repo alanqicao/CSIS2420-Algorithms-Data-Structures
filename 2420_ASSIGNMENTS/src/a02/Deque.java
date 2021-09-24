@@ -179,6 +179,7 @@ public class Deque<Item> implements Iterable<Item> {
 	public static void main(String[] args) {
 
 		System.out.printf("Testing add last add fist \n");
+		
 		Deque<Integer> intergers = new Deque<>();
 
 		// intergers.addFirst(5);
@@ -207,7 +208,9 @@ public class Deque<Item> implements Iterable<Item> {
 		}
 
 		Iterator<Integer> itemIterator2 = intergers.iterator();
+		
 		System.out.println("\niterator: ");
+		
 		while (itemIterator2.hasNext()) {
 			System.out.println(itemIterator2.next());
 		}
