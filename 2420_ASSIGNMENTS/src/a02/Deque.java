@@ -50,34 +50,26 @@ public class Deque<Item> implements Iterable<Item> {
 		if (item == null) {
 			throw new NullPointerException("Can not add null item");
 		}
-		
-		 Node newNode = new Node(); 
-		 newNode.item = item;
-		 
-		 if (isEmpty()) { 
-			 head = newNode; 
-			 tail = newNode; 
-			 } else {
-				 newNode.next = head; 
-				 head = newNode; 
-				 }
-		 size++;
-		 
-		
-		/*
+
+		Node newNode = new Node();
+		newNode.item = item;
+
 		Node oldHead = head;
-		head = new Node();
-		head.item = item;
-		head.next = oldHead;
+		head = newNode;
 
 		if (size == 0) {
-			head = tail;
+
+			newNode.next = null;
+			tail = newNode;
+
 		} else {
+			
+			head.next = oldHead;
 			oldHead.previous = head;
 		}
-
 		size++;
-		*/
+
+
 	}
 
 	// insert the item at the end
@@ -86,37 +78,22 @@ public class Deque<Item> implements Iterable<Item> {
 		if (item == null) {
 			throw new NullPointerException("Can not add null item");
 		}
-		
-		 Node newNode = new Node();
-		 newNode.item = item;
-		  
-		  if (size ==0) 		  
-		  { 
-			  newNode.next= null;
-			  head = newNode; 
-			  tail = newNode; 
-		  	} 
-		  else 
-		  {	
-			  Node oldTail = tail;
-			  tail = newNode;
-			  oldTail.next = tail; 
-			  tail.previous = oldTail;
-			   }
-		 
-		/*
-		Node newNode = tail;
-		tail = new Node();
-		tail.item = item;
+
+		Node newNode = new Node();
+		newNode.item = item;
 
 		if (size == 0) {
-			head = tail;
+			newNode.next = null;
+			head = newNode;
+			tail = newNode;
 		} else {
-
-			newNode.next = tail;
+			Node oldTail = tail;
+			tail = newNode;
+			oldTail.next = tail;
+			tail.previous = oldTail;
 		}
-		tail.previous = newNode;
-		*/
+
+	
 		size++;
 	}
 
@@ -201,7 +178,7 @@ public class Deque<Item> implements Iterable<Item> {
 	// unit testing
 	public static void main(String[] args) {
 
-		System.out.printf("Testing add first add last \n");
+		System.out.printf("Testing add last add fist \n");
 		Deque<Integer> intergers = new Deque<>();
 
 		// intergers.addFirst(5);
