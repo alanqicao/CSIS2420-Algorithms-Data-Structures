@@ -214,7 +214,7 @@ public class RandomizedQueue_QiCao2<Item> implements Iterable<Item> {
 			  System.out.println(s);
 		}
 		System.out.println(rq.isEmpty());
-		System.out.println(rq.length);
+		//System.out.println(rq.length);
 		System.out.println(rq.size());
 		
 		
