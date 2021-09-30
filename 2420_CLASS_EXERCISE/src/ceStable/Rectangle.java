@@ -3,6 +3,8 @@
  */
 package ceStable;
 
+import java.util.Comparator;
+
 /**
  * Represents a rectangle that is defined by its length and width.
  * <br/>
@@ -14,6 +16,8 @@ public class Rectangle implements Comparable<Rectangle>{
 	
 	private int length;
 	private int width;
+	
+	public static final Comparator<Rectangle> BY_AREA = new CompareByArea();
 	
 	
 	public Rectangle(int length, int width) {
@@ -66,7 +70,19 @@ public class Rectangle implements Comparable<Rectangle>{
 		// return Integer.compare(this.length, other.length)
 	}
 	
-	
+	private static class CompareByArea implements Comparator<Rectangle>{
+
+		@Override
+		public int compare(Rectangle r1, Rectangle r2) {
+			
+			
+			
+			return Integer.compare(r1.area(), r2.area());
+		}
+		
+		
+		
+	}
 	
 	
 	
