@@ -74,16 +74,8 @@ public class Rectangle implements Comparable<Rectangle>{
 
 		@Override
 		public int compare(Rectangle r1, Rectangle r2) {
-			
-			
-			
+	
 			return Integer.compare(r1.area(), r2.area());
-		}
-		
-		
-		
-	}
-	
-	
-	
+		}			
+	}	
 }
