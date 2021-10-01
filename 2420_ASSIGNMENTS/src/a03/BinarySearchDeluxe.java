@@ -1,10 +1,25 @@
 package a03;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 
+/**
+ * Binary search class that search first and last index match the key
+ * @author Qi Cao
+ *
+ */
 public class BinarySearchDeluxe {
 
-	// Return the index of the first key in a[] that equals the search key, or -1 if no such key.
+	
+	/**
+	 * Binary Search the index of first key equals the search key, return -1 if not find.
+	 * @param <Key> The class of the objects in the array.
+	 * @param a the array to be searched.
+	 * @param key the value key to be searched for.
+	 * @param comparator .
+	 * @return Index of the search key, if not fined return -1.
+	 */
     public static <Key> int firstIndexOf(Key[] a, Key key, Comparator<Key> comparator) {
     	
     	if(a == null || key == null || comparator == null) {
@@ -49,6 +64,14 @@ public class BinarySearchDeluxe {
     }
 
     // Return the index of the last key in a[] that equals the search key, or -1 if no such key.
+    /**
+     * Binary Search the index of last key equals the search key, return -1
+     * @param <Key> The class of the objects in the array.
+     * @param a the array to be searched.
+     * @param key the value key to be searched for.
+     * @param comparator
+     * @return Index of the search key, if not fined return -1.
+     */
     public static <Key> int lastIndexOf(Key[] a, Key key, Comparator<Key> comparator) {
     	
     	if(a == null || key == null || comparator == null) {
@@ -93,5 +116,18 @@ public class BinarySearchDeluxe {
 
     	return lastIndex;
     }
-
+    
+    /**
+     * Testing
+     * @param args
+     */
+    public static void main(String[] args) {
+    	
+    	Integer[] testArray= {
+    			1,8,56,46,45,32,94,5,7,6,2,55,62,43,85,69,78,
+    	};
+    	
+    	//Arrays.sort(testArray);
+    	System.out.println(BinarySearchDeluxe.firstIndexOf(testArray,94, Collections.reverseOrder()));
+    }
 }
