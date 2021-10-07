@@ -43,12 +43,6 @@ public class BinarySearchDeluxe {
     		}
     	}
     	
-    	
-		if (firstIndex == -1) {
-			
-		return firstIndex;
-		
-		}	
 		
 		if (firstIndex != -1) {
 			for (int i = 0; i < a.length - 1; i++) {
@@ -95,12 +89,6 @@ public class BinarySearchDeluxe {
     	}
     	
     	
-		if (lastIndex == -1) {
-			
-		return lastIndex;
-		
-		}
-		
 
 		if (lastIndex != -1) {
 			for (int i = a.length - 1; i > 0; i--) {

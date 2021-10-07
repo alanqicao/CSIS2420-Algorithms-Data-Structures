@@ -9,7 +9,7 @@ import edu.princeton.cs.algs4.StdOut;
 
 
 /**
- * Immutable data type class that provides autocomplete functionality
+ * Immutable data type class that provides auto complete functionality
  * 
  * @author Qi Cao, Samuel Bailey
  *
@@ -18,7 +18,11 @@ public class Autocomplete {
 	
 	private final Term[] terms;
 	
-    // Initialize the data structure from the given array of terms.
+    
+	/**
+	 * Initialize the data structure from the given array of terms.
+	 * @param terms array of Term type data
+	 */
     public Autocomplete(Term[] terms) {
     	
     	if(terms==null) {
@@ -34,7 +38,12 @@ public class Autocomplete {
     	Arrays.parallelSort(this.terms);
     }
 
-    // Return all terms that start with the given prefix, in descending order of weight.
+   
+    /**
+     * Find all match terms that start with the given prefix.
+     * @param prefix the string that we are searching for.
+     * @return all match item return in descending order of weight.
+     */
     public Term[] allMatches(String prefix) {
     	
     	if(prefix == null) {
@@ -55,11 +64,12 @@ public class Autocomplete {
     	Term[] resultTerms = new Term[lastIndexOfMatched-firstIndexOfMatched+1];
     	
     	//check if not found
-    	if(firstIndexOfMatched <= 0 || lastIndexOfMatched <=0) {
+    	if(firstIndexOfMatched <= 0 || lastIndexOfMatched <= 0) {
     		Term[] notFound = new Term[0];
     		return notFound;
     		
     	}else {
+    		
     	//if found 
     	//putting the matched result in to new array  
     	
@@ -79,7 +89,12 @@ public class Autocomplete {
     	}
     }
 
-    // Return the number of terms that start with the given prefix.
+   
+    /**
+     * Calculate total number of matched item.
+     * @param prefix the string that we are searching for.
+     * @return The total number of terms that start with the given prefix.
+     */
     public int numberOfMatches(String prefix) {
     	
     	if(prefix == null) {
@@ -89,7 +104,7 @@ public class Autocomplete {
     	//create a new object Term base on given prefix for searching 
     	Term searchBasePrefix = new Term(prefix,0);
     	
-    	//find first and last index    	
+    	//search find first and last index    	
     	//search first index of the Terms array that match the search base,from a sorted array.
     	int firstIndexOfMatched = BinarySearchDeluxe.firstIndexOf(terms,searchBasePrefix,Term.byPrefixOrder(prefix.length()));
     	
@@ -105,6 +120,10 @@ public class Autocomplete {
     	
     }
     
+    /**
+     * Testing
+     * @param args
+     */
     public static void main(String[] args) {
     	
     	Term[] testing = new Term[7];
