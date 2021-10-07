@@ -5,6 +5,9 @@ package ceStable;
 
 import java.util.Arrays;
 
+import edu.princeton.cs.algs4.Insertion;
+import edu.princeton.cs.algs4.Merge;
+import edu.princeton.cs.algs4.Selection;
 import edu.princeton.cs.algs4.StdOut;
 
 /**
@@ -19,9 +22,7 @@ public class StableApp {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		
-		Rectangle r = new Rectangle(4,2);
-		StdOut.println("r: "+r);
+
 		
 		Rectangle [] rectangles = {
 				new Rectangle(4,2),
@@ -40,15 +41,27 @@ public class StableApp {
 		//print elements of rectangle array
 		//sort it 
 		// print it again
-		
-		System.out.println(Arrays.toString(rectangles));
+		System.out.println("Demo not Stable Sort");
+		System.out.println("=====================");
+		System.out.println("rectangle: "+Arrays.toString(rectangles));
 		
 		Arrays.parallelSort(rectangles);
 		
 		System.out.println("Sorted by length"+Arrays.toString(rectangles));
+		Selection.sort(rectangles, Rectangle.BY_AREA);
+		System.out.println("[4 x 6 ], [2x12] show length in revers order");
+		System.out.println();
+		//but with sort by length first
+		//sort array base on area, 
+		//Arrays.parallelSort(rectangles,Rectangle.BY_AREA);
 		
-		//sort array base on area
-		Arrays.parallelSort(rectangles,Rectangle.BY_AREA);
+		
+		System.out.println("Demo Stable Sort");
+		System.out.println("=====================");
+		System.out.println("rectangle: "+Arrays.toString(rectangles));
+		Arrays.parallelSort(rectangles);
+		System.out.println("Sorted by length"+Arrays.toString(rectangles));
+		Insertion.sort(rectangles, Rectangle.BY_AREA);;
 		
 		System.out.println("Sorted by area"+Arrays.toString(rectangles));
 		

@@ -5,11 +5,11 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * 
+ * Binary search class that search first and last index match the key
  * @author Qi Cao
  *
  */
-public class BinarySearchDeluxe_QiCao {
+public class BinarySearchDeluxe_QiCao2 {
 
 	
 	/**
@@ -27,41 +27,38 @@ public class BinarySearchDeluxe_QiCao {
     	}
     	
     	int start = 0;
-    	int end = a.length-1;
+    	int end = a.length;
     	int mid = 0;
     	int firstIndex = -1;
     	
 		while (start <= end) {
 			
-			mid = start+(end-start) / 2;
+			mid = (start + end) / 2;
 			
-//			if (mid >= a.length) {
-//				mid -= 1;
-//			} else if (mid < 0) {
-//				mid += 1;
-//			}
-//			
-			if (comparator.compare(a[mid], key) < 0) {
-				end = mid - 1;
-			} else if (comparator.compare(a[mid], key) > 0) {
-				start = mid + 1;
-			} else if(comparator.compare(a[mid], key)==0){
-				return mid;
+			if (mid >= a.length) {
+				mid -= 1;
+			} else if (mid < 0) {
+				mid += 1;
 			}
-			else {
+			
+			if (comparator.compare(a[mid], key) < 0) {
+				start = mid + 1;
+			} else if (comparator.compare(a[mid], key) > 0) {
+				end = mid - 1;
+			} else {
 				firstIndex = mid;
-				//break;
+				break;
 			}
 		}
 
-//		if (firstIndex != -1) {
-//			for (int i = 0; i < a.length - 1; i++) {
-//				if (a[i] == a[firstIndex]) {
-//					firstIndex = i;
-//					break;
-//				}
-//			}
-//		}
+		if (firstIndex != -1) {
+			for (int i = 0; i < a.length - 1; i++) {
+				if (a[i] == a[firstIndex]) {
+					firstIndex = i;
+					break;
+				}
+			}
+		}
     	
     	return firstIndex;
     }
@@ -127,11 +124,10 @@ public class BinarySearchDeluxe_QiCao {
     public static void main(String[] args) {
     	
     	Integer[] testArray= {
-    			1,8,56,46,45,32,94,5,7,6,2,55,62,43,85,69,78,99,
+    			1,8,56,46,45,32,94,5,7,6,2,55,62,43,85,69,78,
     	};
     	
-    	Arrays.sort(testArray);
-    	System.out.println("first index of: "+BinarySearchDeluxe_QiCao2.firstIndexOf(testArray,7,Collections.reverseOrder()));
+    	//Arrays.sort(testArray);
+    	System.out.println(BinarySearchDeluxe_QiCao2.firstIndexOf(testArray,94, Collections.reverseOrder()));
     }
-    
 }

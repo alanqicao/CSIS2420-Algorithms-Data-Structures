@@ -6,7 +6,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Users/Alan/Downloads/algs4.jar">
+	<classpathentry kind="lib" path="/Volumes/GoogleDrive/My Drive/SLCC/Fall2021/CISI2420/Code/2420_Midterm1/lib/algs4.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>

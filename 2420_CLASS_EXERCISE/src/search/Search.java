@@ -1,5 +1,7 @@
 package search;
 
+import java.lang.reflect.Array;
+
 /**
  * Prvides algorithms to search keys in arrays of numbers.
  * 
@@ -57,13 +59,74 @@ public class Search {
 	 * 
 	 * If Key is not inclued in the array, the method returns -1
 	 * 
+	 * Must be sort it befour binary search
+	 * 
 	 * @param numbers
 	 * @param key
 	 * @return
 	 */
 
 	public static int binary(int[] numbers, int key) {
-		return 0;// TODO
+		
+		return 0;
+		
+	}
+	
+	public static boolean binaryRecursive(int[] numbers, int key,int left, int right) {
+		
+		//recursive
+		
+		if(left > right) {
+			
+		  return false;	//when left move to right or other way it stop
+		  
+		}
+		
+		int mid = ( left + right ) / 2; // to prvent index overflow, left+(right-left)/2
+		
+		if(numbers[mid]==key) {
+			
+			return true;  //if just happen key is mid 
+			
+		}else if(key < numbers[mid]) {
+			
+			return binaryRecursive(numbers,key,left,mid - 1);
+			
+		}else {
+			
+			return binaryRecursive(numbers,key,mid + 1,right);
+			
+		}
+		
+		
+	}
+	
+	public static boolean binaryIterative(int[] numbers, int key) {
+		
+		//Iterative
+		
+		int left = 0;
+		int right = numbers.length-1;
+		
+		while(left <= right) {
+		
+		int mid = ( left + right ) / 2; // to prvent index overflow, left+(right-left)/2
+		
+		if(numbers[mid]==key) {
+			return true;  //if just happen key is mid 
+		}else if(key < numbers[mid]) {
+			
+			right = mid - 1;
+			
+		}else {
+			
+			left = mid + 1;
+			
+		}
+		
+		}
+		
+		return false;
 	}
 
 }

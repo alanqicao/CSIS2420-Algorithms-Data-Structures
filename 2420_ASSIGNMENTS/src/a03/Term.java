@@ -5,9 +5,9 @@ import java.util.Comparator;
 
 
 /**
- * Immutable Data type class that represents an auto complete term
+ * Immutable Data type class that represents an auto-complete term
  * 
- * @author Qi Cao
+ * @author Qi Cao, Samuel Bailey
  *
  */
 public class Term implements Comparable<Term>{
@@ -47,7 +47,7 @@ public class Term implements Comparable<Term>{
     }
 
     /**
-	 * Sort Term by prefix order
+	 * Sort Term lexicographically using a prefix of <code>r</code> letters
 	 * 
 	 * @param r first r characters want to be sort in prefix.
 	 * @return Sorted type Term by prefix order
@@ -95,10 +95,6 @@ public class Term implements Comparable<Term>{
 		return weight + "\t" + query;
     }
     
-    /**
-	 *  Testing
-	 * @param args
-	 */
 	public static void main(String[] args) {
 	
 		
