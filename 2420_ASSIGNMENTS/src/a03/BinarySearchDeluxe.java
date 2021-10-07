@@ -21,41 +21,36 @@ public class BinarySearchDeluxe {
 	 * @return The index of the first occurrence of <code>key</code>
 	 */
     public static <Key> int firstIndexOf(Key[] a, Key key, Comparator<Key> comparator) {
+    	
     	if(a == null || key == null || comparator == null) {
     		throw new NullPointerException("Data cannot be null");
     	}
+    	
     	int start = 0;
-    	int end = a.length;
-    	int mid = 0;
-    	int firstIndex = -1;
+    	int end = a.length-1;
+
+    	if(comparator.compare(a[start], key)==0) {
+    		return 0;
+    	}
     	
     	while(start <= end) {
-    		mid = (start + end)/2;
-    		if(mid >= a.length) {
-    			mid -= 1;
-    		}else if(mid < 0) {
-    			mid += 1;
-    		}
+    		
+    		int mid = start + (end - start )/2;
+    		 		
     		if(comparator.compare(a[mid], key) < 0) {
-    			start = mid + 1;
-    		}else if(comparator.compare(a[mid], key) > 0) {
     			end = mid - 1;
+    		}else if(comparator.compare(a[mid], key) > 0) {
+    			start = mid + 1;
+    		}else if(comparator.compare(a[mid-1], a[mid])==0){
+    			end = mid -1;
     		}else {
-    			firstIndex = mid;
-    			break;
+    			return mid;
     		}
     	}
     	
-		if (firstIndex != -1) {
-			for (int i = 0; i < a.length - 1; i++) {
-				if (a[i] == a[firstIndex]) {
-					firstIndex = i;
-					break;
-				}
-			}
-		}
+
     	
-    	return firstIndex;
+    	return -1;
     }
 
 	/**
@@ -68,41 +63,35 @@ public class BinarySearchDeluxe {
 	 * @return The index of the last occurrence of <code>key</code>
 	 */
     public static <Key> int lastIndexOf(Key[] a, Key key, Comparator<Key> comparator) {
+    	
     	if(a == null || key == null || comparator == null) {
     		throw new NullPointerException("Data cannot be null");
     	}
+    	
     	int start = 0;
-    	int end = a.length;
-    	int mid = 0;
-    	int lastIndex = -1;
+    	int end = a.length-1;
+
+    	if(comparator.compare(a[end], key)==0) {
+    		return end;
+    	}
     	
     	while(start <= end) {
-    		mid = (start + end)/2;
-    		if(mid >= a.length) {
-    			mid -= 1;
-    		}else if(mid < 0) {
-    			mid += 1;
-    		}
+    		
+    		int mid = start + (end - start )/2;
+    		 		
     		if(comparator.compare(a[mid], key) < 0) {
-    			start = mid + 1;
-    		}else if(comparator.compare(a[mid], key) > 0) {
     			end = mid - 1;
+    		}else if(comparator.compare(a[mid], key) > 0) {
+    			start = mid + 1;
+    		}else if(comparator.compare(a[mid+1], a[mid])==0){
+    			end = mid +1;
     		}else {
-    			lastIndex = mid;
-    			break;
+    			return mid;
     		}
     	}
     	
-		if (lastIndex != -1) {
-			for (int i = a.length - 1; i > 0; i--) {
-				if (a[i] == a[lastIndex]) {
-					lastIndex = i;
-					break;
-				}
-			}
-		}
-    	
-    	return lastIndex;
-    }
 
+    	
+    	return -1;
+    }
 }
