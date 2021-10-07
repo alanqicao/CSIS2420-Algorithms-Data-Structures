@@ -49,13 +49,18 @@ public class Autocomplete {
     	//search last index of the Terms array that match the search base,from a sorted array.
     	int lastIndexOfMatched = BinarySearchDeluxe.lastIndexOf(terms,searchBasePrefix,Term.byPrefixOrder(prefix.length()));
     	
-    	if(firstIndexOfMatched == -1 || lastIndexOfMatched == -1) {
-    		
-    	}
+    	
     	
     	//create a empty array to hold the result.
     	Term[] resultTerms = new Term[lastIndexOfMatched-firstIndexOfMatched+1];
     	
+    	//check if not found
+    	if(firstIndexOfMatched <= 0 || lastIndexOfMatched <=0) {
+    		Term[] notFound = new Term[0];
+    		return notFound;
+    		
+    	}else {
+    	//if found 
     	//putting the matched result in to new array  
     	
     	int indexCounter= firstIndexOfMatched;
@@ -70,6 +75,8 @@ public class Autocomplete {
     	
     	//return result
     	return resultTerms;
+    	
+    	}
     }
 
     // Return the number of terms that start with the given prefix.
@@ -90,10 +97,12 @@ public class Autocomplete {
     	int lastIndexOfMatched = BinarySearchDeluxe.lastIndexOf(terms,searchBasePrefix,Term.byPrefixOrder(prefix.length()));
     	
     	//calculate total matches
-    	int totalMatches = lastIndexOfMatched - firstIndexOfMatched + 1;
+    	if(lastIndexOfMatched <= 0 && firstIndexOfMatched <= 0) {
+    		return 0;
+    	}else
+    		return lastIndexOfMatched - firstIndexOfMatched + 1;
     	
-    	//return total number		
-    	return totalMatches;
+    	
     }
     
     public static void main(String[] args) {
