@@ -18,6 +18,9 @@ public class Board {
 	private int [][] twoDimenArray;
 	//target board
 	private Board targetBoard;
+	
+	//target board one DimenArray
+	private int [] targetOneDArray;
 	//empty spot
 	private int emptySpot;
 	
@@ -96,6 +99,35 @@ public class Board {
 		
 		int manDistance = 0;
 		
+		int givenX;
+		int givenY;
+		
+		int targetX;
+		int targetY;
+		
+		
+		for(int i = 0; i<oneDimenArray.length; i++) {
+			
+			if(oneDimenArray[i] == 0 ||targetOneDArray[i] == 0) {
+				
+			}else {
+			givenX = oneDimenArray[i] % N;
+			givenY = oneDimenArray[i] / N;
+			
+			targetX = targetOneDArray[i] % N;
+			targetY = targetOneDArray[i] / N;
+			
+			// (given x - targetx) + (give y - target y)
+			
+			manDistance += Math.abs(targetX-givenX) + Math.abs(targetY-givenY);
+			
+			}
+		}
+		
+		
+				
+				
+		/*
 		int [][] goalBoard = goalBoard(N);
 		
 		for(int row = 0; row < N; row++) {
@@ -113,8 +145,10 @@ public class Board {
 				}
 			}
 		}
+		*/
 		
-		return 0;
+		
+		return manDistance;
 	}
 	
 	/**
@@ -143,6 +177,16 @@ public class Board {
 		}
 		
 		goalBoard[n-1][n-1] =0;
+		
+		targetOneDArray = new int[n*n];
+		
+		counter= 0;
+		
+		for(int i = 0; i<goalBoard.length;i++) {
+			for(int j = 0 ; j<goalBoard[i].length;j++) {
+				targetOneDArray[counter++]= goalBoard[i][j];
+			}
+		}
 		
 		return goalBoard;
 	}
@@ -220,6 +264,9 @@ public class Board {
 		System.out.println("Old board: "+Arrays.deepToString(testArray2D));
 		//testing generate goal board
 		System.out.println("generate goal board: "+Arrays.deepToString(testBorad.goalBoard(3)));
+		//testing Manhattan distance expect 10
+		System.out.println("Man distances: "+testBorad.manhattan());
+		
 		
 	}
 
