@@ -31,6 +31,10 @@ public class Board {
 	 * @param blocks
 	 */
 	public Board(int[][] blocks) {
+		
+		if(blocks == null) {
+			throw new NullPointerException("blocks cannot be null");
+		}
 
 		// row size
 		this.N = blocks.length;
@@ -59,6 +63,10 @@ public class Board {
 		}
 
 		goalBoard();
+		
+		if(isSolvable() == false) {
+			throw new IllegalArgumentException("blocks cannot be sovle");
+		}
 	}
 
 	/**
@@ -202,15 +210,32 @@ public class Board {
 		}
 	}
 
-	/**
-	 * does this board equal y?
-	 * 
-	 * @return
-	 */
+
+	@Override
 	public boolean equals(Object y) {
-
-		return false;
-
+		if (this == y)
+			return true;
+		if (y == null)
+			return false;
+		if (getClass() != y.getClass())
+			return false;
+		Board other = (Board) y;
+		if (N != other.N)
+			return false;
+		if (emptySpot != other.emptySpot)
+			return false;
+		if (!Arrays.equals(oneDimenArray, other.oneDimenArray))
+			return false;
+		if (targetBoard == null) {
+			if (other.targetBoard != null)
+				return false;
+		} else if (!targetBoard.equals(other.targetBoard))
+			return false;
+		if (!Arrays.equals(targetOneDArray, other.targetOneDArray))
+			return false;
+		if (!Arrays.deepEquals(twoDimenArray, other.twoDimenArray))
+			return false;
+		return true;
 	}
 
 	/**
@@ -247,8 +272,8 @@ public class Board {
 	 */
 	public static void main(String[] args) {
 
-		int[] testArray1D = { 1, 2, 3, 4, 5, 6, 0, 8, 9, 10, 7, 11, 13, 14, 15, 12 };
-		int[][] testArray2D = new int[4][4];
+		int[] testArray1D = { 1,2,3,4,5,6,8,7,0};
+		int[][] testArray2D = new int[3][3];
 
 		int counter = 0;
 
