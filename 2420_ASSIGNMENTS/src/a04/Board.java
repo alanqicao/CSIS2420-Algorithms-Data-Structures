@@ -6,6 +6,7 @@ package a04;
 import java.util.Arrays;
 
 import edu.princeton.cs.algs4.Queue;
+import edu.princeton.cs.algs4.Stack;
 
 /**
  * @author Qi Cao
@@ -14,9 +15,9 @@ import edu.princeton.cs.algs4.Queue;
 public class Board {
 
 	private int N;
-	// one dimansion array
+	// one dimension array
 	private int[] oneDimenArray;
-	// two dimansion array
+	// two dimension array
 	private int[][] twoDimenArray;
 	// target board
 	private Board targetBoard;
@@ -32,15 +33,15 @@ public class Board {
 	 * @param blocks
 	 */
 	public Board(int[][] blocks) {
-		
-		if(blocks == null) {
+
+		if (blocks == null) {
 			throw new NullPointerException("blocks cannot be null");
 		}
 
 		// row size
 		this.N = blocks.length;
 
-		// convert two dimansion to one dimansion
+		// convert two dimension to one dimension
 		this.oneDimenArray = new int[N * N];
 
 		int counter = 0;
@@ -55,7 +56,7 @@ public class Board {
 			}
 		}
 
-		// copy two diman array blocks to class field
+		// copy two dimension array blocks to class field
 		this.twoDimenArray = new int[blocks.length][blocks.length];
 		for (int i = 0; i < blocks.length; i++) {
 			for (int j = 0; j < blocks.length; j++) {
@@ -64,8 +65,8 @@ public class Board {
 		}
 
 		goalBoard();
-		
-		if(isSolvable() == false) {
+
+		if (isSolvable() == false) {
 			throw new IllegalArgumentException("blocks cannot be sovle");
 		}
 	}
@@ -115,10 +116,10 @@ public class Board {
 
 		int indexGiven;
 		int indexTarget;
-		
+
 		int givenX;
 		int givenY;
-	
+
 		int targetX;
 		int targetY;
 
@@ -127,15 +128,16 @@ public class Board {
 			if (oneDimenArray[i] == 0) {
 
 			} else {
+				// index position in one dimension array
 				indexGiven = i;
-				indexTarget = oneDimenArray[i]-1;
-				
+				indexTarget = oneDimenArray[i] - 1;
+				//convert one dimension array index position to Two dimension array position
 				givenX = indexGiven % N;
 				givenY = indexGiven / N;
 
 				targetX = indexTarget % N;
 				targetY = indexTarget / N;
-
+				// math for manhattan
 				manDistance += Math.abs(targetX - givenX) + Math.abs(targetY - givenY);
 
 			}
@@ -194,20 +196,19 @@ public class Board {
 		int inversion = 0;
 
 		for (int i = 0; i < oneDimenArray.length; i++) {
-			if(oneDimenArray[i]== 0) {
-				
-			}else {
-			for (int j = i ; j < oneDimenArray.length; j++) {
-				if (oneDimenArray[i] > oneDimenArray[j] && oneDimenArray[j]!=0) {
+			if (oneDimenArray[i] == 0) {
 
-					inversion++;
+			} else {
+				for (int j = i; j < oneDimenArray.length; j++) {
+					if (oneDimenArray[i] > oneDimenArray[j] && oneDimenArray[j] != 0) {
+
+						inversion++;
+					}
 				}
-			}
 			}
 		}
 
 		if (N % 2 != 0) {
-			
 
 			return inversion % 2 == 0;
 			// maybe a bug for inversion
@@ -216,11 +217,9 @@ public class Board {
 
 		else {
 
-		
 			return inversion + emptySpotRow % 2 != 0;
 		}
 	}
-
 
 	@Override
 	public boolean equals(Object y) {
@@ -255,13 +254,75 @@ public class Board {
 	 * @return
 	 */
 	public Iterable<Board> neighbors() {
+
+		Stack<Board> neighbors = new Stack<Board>();
 		
-		Queue<Board> neighbors = new Queue<Board>();
+		//loop through two dimension Array
+		for(int i = 0; i < N; i++) {			
+			for(int j = 0; j < N;j++) {
+				
+				//find 0 position in two dimension array
+				if(this.twoDimenArray[i][j] == 0) {
+					
+					//move 0 UP one position and add to neighbors
+					if(i > 0) {
+						//copy old board to a new board
+						Board newBoard = new Board(this.twoDimenArray);
+						//move the value above 0 down to 0
+						newBoard.twoDimenArray[i][j]= twoDimenArray[i-1][j];
+						//move 0 up
+						newBoard.twoDimenArray[i-1][j] = 0;
+						//add new board to queue
+						neighbors.push(newBoard);
+					}	
+					//move 0 left one position and add to neighbors
+					if(j > 0) {
+						//copy old board to a new board
+						Board newBoard = new Board(this.twoDimenArray);
+						//move the value of left 0 right to 0 position
+						newBoard.twoDimenArray[i][j]= twoDimenArray[i][j-1];
+						//move 0 to left
+						newBoard.twoDimenArray[i][j-1] = 0;
+						//add new board to queue
+						neighbors.push(newBoard);
+					}
+					//move 0 down one position and add to neighbors
+					if(i < N-1) {
+						//copy old board to a new board
+						Board newBoard = new Board(this.twoDimenArray);
+						//move the value blow 0 up to 0
+						newBoard.twoDimenArray[i][j]= twoDimenArray[i+1][j];
+						//move 0 down
+						newBoard.twoDimenArray[i+1][j] = 0;
+						//add new board to queue
+						neighbors.push(newBoard);
+					}
+					
+					//move 0 to the right one position and add to neighbors
+					if(j < N-1) {
+						//copy old board to a new board
+						Board newBoard = new Board(this.twoDimenArray);
+						//move the value of right 0 left to 0 position
+						newBoard.twoDimenArray[i][j]= twoDimenArray[i][j+1];
+						//move 0 to right
+						newBoard.twoDimenArray[i][j+1] = 0;
+						//add new board to queue
+						neighbors.push(newBoard);
+					}
+					
+
+					
+
+			
+					
+			
+			
+				}
+			}
+		}
 		
 		
-		
-		
-		return null;
+		return neighbors;
 
 	}
 
@@ -286,10 +347,10 @@ public class Board {
 	 * 
 	 * @param args
 	 */
-	
+
 	public static void main(String[] args) {
 
-		int[] testArray1D = { 1,0,3,4,2,5,7,8,6};
+		int[] testArray1D = { 8, 1, 3, 4, 2, 0, 7, 6, 5 };
 		int[][] testArray2D = new int[3][3];
 
 		int counter = 0;
@@ -312,7 +373,7 @@ public class Board {
 		System.out.println("Man distances: " + testBorad.manhattan());
 		// testing isSolvable expect false
 		System.out.println("isSolvable: " + testBorad.isSolvable());
-		//testing is goal?
+		// testing is goal?
 		System.out.println("Is Goal?: " + testBorad.isGoal());
 		
 		
