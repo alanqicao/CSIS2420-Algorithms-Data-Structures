@@ -5,6 +5,8 @@ package a04;
 
 import java.util.Arrays;
 
+import edu.princeton.cs.algs4.Queue;
+
 /**
  * @author Qi Cao
  *
@@ -18,11 +20,10 @@ public class Board {
 	private int[][] twoDimenArray;
 	// target board
 	private Board targetBoard;
-
 	// target board one DimenArray
 	private int[] targetOneDArray;
 	// empty spot in witch row
-	private int emptySpot;
+	private int emptySpotRow;
 
 	/**
 	 * construct a board from an N-by-N array of blocks (where blocks[i][j] = block
@@ -48,7 +49,7 @@ public class Board {
 			for (int j = 0; j < blocks[i].length; j++) {
 				if (blocks[i][j] == 0) {
 
-					emptySpot = i;
+					emptySpotRow = i;
 				}
 				oneDimenArray[counter++] = blocks[i][j];
 			}
@@ -112,22 +113,28 @@ public class Board {
 
 		int manDistance = 0;
 
+		int indexGiven;
+		int indexTarget;
+		
 		int givenX;
 		int givenY;
-
+	
 		int targetX;
 		int targetY;
 
 		for (int i = 0; i < oneDimenArray.length; i++) {
 
-			if (oneDimenArray[i] == 0 || targetOneDArray[i] == 0) {
+			if (oneDimenArray[i] == 0) {
 
 			} else {
-				givenX = oneDimenArray[i] % N;
-				givenY = oneDimenArray[i] / N;
+				indexGiven = i;
+				indexTarget = oneDimenArray[i]-1;
+				
+				givenX = indexGiven % N;
+				givenY = indexGiven / N;
 
-				targetX = targetOneDArray[i] % N;
-				targetY = targetOneDArray[i] / N;
+				targetX = indexTarget % N;
+				targetY = indexTarget / N;
 
 				manDistance += Math.abs(targetX - givenX) + Math.abs(targetY - givenY);
 
@@ -186,17 +193,21 @@ public class Board {
 
 		int inversion = 0;
 
-		for (int i = 0; i < oneDimenArray.length - 1; i++) {
-			for (int j = i + 1; j < oneDimenArray.length; j++) {
-				if (oneDimenArray[i] > oneDimenArray[j]) {
+		for (int i = 0; i < oneDimenArray.length; i++) {
+			if(oneDimenArray[i]== 0) {
+				
+			}else {
+			for (int j = i ; j < oneDimenArray.length; j++) {
+				if (oneDimenArray[i] > oneDimenArray[j] && oneDimenArray[j]!=0) {
 
 					inversion++;
 				}
 			}
+			}
 		}
 
 		if (N % 2 != 0) {
-			System.out.println("odd board inversion: " + inversion);
+			
 
 			return inversion % 2 == 0;
 			// maybe a bug for inversion
@@ -205,8 +216,8 @@ public class Board {
 
 		else {
 
-			System.out.printf("\neven bord sum: %d\n", inversion + emptySpot);
-			return inversion + emptySpot % 2 != 0;
+		
+			return inversion + emptySpotRow % 2 != 0;
 		}
 	}
 
@@ -222,7 +233,7 @@ public class Board {
 		Board other = (Board) y;
 		if (N != other.N)
 			return false;
-		if (emptySpot != other.emptySpot)
+		if (emptySpotRow != other.emptySpotRow)
 			return false;
 		if (!Arrays.equals(oneDimenArray, other.oneDimenArray))
 			return false;
@@ -244,7 +255,12 @@ public class Board {
 	 * @return
 	 */
 	public Iterable<Board> neighbors() {
-
+		
+		Queue<Board> neighbors = new Queue<Board>();
+		
+		
+		
+		
 		return null;
 
 	}
@@ -270,9 +286,10 @@ public class Board {
 	 * 
 	 * @param args
 	 */
+	
 	public static void main(String[] args) {
 
-		int[] testArray1D = { 1,2,3,4,5,6,8,7,0};
+		int[] testArray1D = { 1,0,3,4,2,5,7,8,6};
 		int[][] testArray2D = new int[3][3];
 
 		int counter = 0;
@@ -295,6 +312,10 @@ public class Board {
 		System.out.println("Man distances: " + testBorad.manhattan());
 		// testing isSolvable expect false
 		System.out.println("isSolvable: " + testBorad.isSolvable());
+		//testing is goal?
+		System.out.println("Is Goal?: " + testBorad.isGoal());
+		
+		
 
 	}
 
