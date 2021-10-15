@@ -34,9 +34,9 @@ public class Board {
 	 */
 	public Board(int[][] blocks) {
 
-		if (blocks == null) {
-			throw new NullPointerException("blocks cannot be null");
-		}
+//		if (blocks == null) {
+//			throw new NullPointerException("blocks cannot be null");
+//		}
 
 		// row size
 		this.N = blocks.length;
@@ -66,9 +66,6 @@ public class Board {
 
 		goalBoard();
 
-		if (isSolvable() == false) {
-			throw new IllegalArgumentException("blocks cannot be sovle");
-		}
 	}
 
 	/**
@@ -196,11 +193,12 @@ public class Board {
 		int inversion = 0;
 
 		for (int i = 0; i < oneDimenArray.length; i++) {
+			
 			if (oneDimenArray[i] == 0) {
 
 			} else {
 				for (int j = i; j < oneDimenArray.length; j++) {
-					if (oneDimenArray[i] > oneDimenArray[j] && oneDimenArray[j] != 0) {
+					if ( oneDimenArray[j] < oneDimenArray[i] && oneDimenArray[j] != 0  ) {
 
 						inversion++;
 					}
@@ -212,12 +210,15 @@ public class Board {
 
 			return inversion % 2 == 0;
 			// maybe a bug for inversion
-
+			
 		}
 
 		else {
-
-			return inversion + emptySpotRow % 2 != 0;
+//			System.out.println("even board size: inversion + emptyspotRow %2: "+(inversion + emptySpotRow) % 2);
+//			System.out.println("sum= 7 = "+(inversion + emptySpotRow));
+//			System.out.println("blak row: 1 = "+emptySpotRow);
+//			System.out.println("inversions: 6 = "+inversion);
+			return (inversion + emptySpotRow) % 2 != 0;
 		}
 	}
 
@@ -230,21 +231,17 @@ public class Board {
 		if (getClass() != y.getClass())
 			return false;
 		Board other = (Board) y;
-		if (N != other.N)
-			return false;
-		if (emptySpotRow != other.emptySpotRow)
-			return false;
-		if (!Arrays.equals(oneDimenArray, other.oneDimenArray))
-			return false;
-		if (targetBoard == null) {
-			if (other.targetBoard != null)
-				return false;
-		} else if (!targetBoard.equals(other.targetBoard))
-			return false;
-		if (!Arrays.equals(targetOneDArray, other.targetOneDArray))
-			return false;
-		if (!Arrays.deepEquals(twoDimenArray, other.twoDimenArray))
-			return false;
+//		for(int i = 0; i<oneDimenArray.length;i++) {
+//			if(this.oneDimenArray[i]!=other.oneDimenArray[i])
+//				return false;
+//		}
+		for(int i=0; i<twoDimenArray.length;i++) {
+			for(int j = 0; j<twoDimenArray.length; j++) {
+				if(this.twoDimenArray[i][j]!=other.twoDimenArray[i][j]) {
+					return false;
+				}
+			}
+		}
 		return true;
 	}
 
@@ -347,8 +344,8 @@ public class Board {
 
 	public static void main(String[] args) {
 
-		int[] testArray1D = { 8, 1, 3, 4, 2, 0, 7, 6, 5 };
-		int[][] testArray2D = new int[3][3];
+		int[] testArray1D = { 1, 2, 3, 4, 5, 0, 6, 8, 9,10,7,11,13,14,15,12 };
+		int[][] testArray2D = new int[4][4];
 
 		int counter = 0;
 
@@ -374,15 +371,15 @@ public class Board {
 		System.out.println("Is Goal?: " + testBorad.isGoal());
 		
 		
-		// old twoD array	
-		System.out.println("\nOld board: \n\n" + testBorad.toString());
-		
-		//neighbors	
-		System.out.println("neighbors: \n");
-		for(Board e: testBorad.neighbors()) {
-			System.out.println(e.toString());
-		}
-		
+//		// old twoD array	
+//		System.out.println("\nOld board: \n\n" + testBorad.toString());
+//		
+//		//neighbors	
+//		System.out.println("neighbors: \n");
+//		for(Board e: testBorad.neighbors()) {
+//			System.out.println(e.toString());
+//		}
+//		
 
 	}
 
