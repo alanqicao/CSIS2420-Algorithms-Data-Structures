@@ -6,11 +6,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/caose_000/Google Drive/SLCC/Fall2021/CISI2420/homework/Homework2/A02 Randomized Queues &amp; Dequeues-1.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="lib/algs4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

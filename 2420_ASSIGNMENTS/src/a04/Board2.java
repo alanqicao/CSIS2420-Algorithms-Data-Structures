@@ -12,7 +12,7 @@ import edu.princeton.cs.algs4.Stack;
  * @author Qi Cao
  *
  */
-public class Board {
+public class Board2 {
 
 	private int N;
 	// one dimension array
@@ -20,11 +20,13 @@ public class Board {
 	// two dimension array
 	private int[][] twoDimenArray;
 	// target board
-	private Board targetBoard;
+	private Board2 targetBoard;
 	// target board one DimenArray
 	private int[] targetOneDArray;
-	// empty spot in witch row
+	// empty spot in  row
 	private int emptySpotRow;
+	// empty spot in column
+	private int emptySpotColumn;
 
 	/**
 	 * construct a board from an N-by-N array of blocks (where blocks[i][j] = block
@@ -32,7 +34,7 @@ public class Board {
 	 * 
 	 * @param blocks
 	 */
-	public Board(int[][] blocks) {
+	public Board2(int[][] blocks) {
 
 		if (blocks == null) {
 			throw new NullPointerException("blocks cannot be null");
@@ -51,6 +53,7 @@ public class Board {
 				if (blocks[i][j] == 0) {
 
 					emptySpotRow = i;
+					emptySpotColumn = j;
 				}
 				oneDimenArray[counter++] = blocks[i][j];
 			}
@@ -229,7 +232,7 @@ public class Board {
 			return false;
 		if (getClass() != y.getClass())
 			return false;
-		Board other = (Board) y;
+		Board2 other = (Board2) y;
 		if (N != other.N)
 			return false;
 		if (emptySpotRow != other.emptySpotRow)
@@ -253,72 +256,57 @@ public class Board {
 	 * 
 	 * @return
 	 */
-	public Iterable<Board> neighbors() {
+	public Iterable<Board2> neighbors() {
 
-		Queue<Board> neighbors = new Queue<Board>();
+		Stack<Board2> neighbors = new Stack<Board2>();
 		
-		//loop through two dimension Array
-		for(int i = 0; i < N; i++) {			
-			for(int j = 0; j < N;j++) {
-				
-				//find 0 position in two dimension array
-				if(this.twoDimenArray[i][j] == 0) {
 					
+					//move 0 UP one position and add to neighbors
+					if(emptySpotRow > 0) {
+						//copy old board to a new board
+						Board2 newBoard = new Board2(this.twoDimenArray);
+						//move the value above 0 down to 0
+						newBoard.twoDimenArray[newBoard.emptySpotRow][newBoard.emptySpotColumn]= twoDimenArray[newBoard.emptySpotRow-1][newBoard.emptySpotColumn];
+						//move 0 up
+						newBoard.twoDimenArray[--newBoard.emptySpotRow][newBoard.emptySpotColumn] = 0;
+						//add new board to queue
+						neighbors.push(newBoard);
+					}	
 					//move 0 to the right one position and add to neighbors
-					if(j < N-1) {
+					if(emptySpotColumn < N-1) {
 						//copy old board to a new board
-						Board newBoard = new Board(this.twoDimenArray);
+						Board2 newBoard = new Board2(this.twoDimenArray);
 						//move the value of right 0 left to 0 position
-						newBoard.twoDimenArray[i][j]= twoDimenArray[i][j+1];
+						newBoard.twoDimenArray[newBoard.emptySpotRow][newBoard.emptySpotColumn]= twoDimenArray[newBoard.emptySpotRow][newBoard.emptySpotColumn+1];
 						//move 0 to right
-						newBoard.twoDimenArray[i][j+1] = 0;
+						newBoard.twoDimenArray[newBoard.emptySpotRow][++newBoard.emptySpotColumn] = 0;
 						//add new board to queue
-						neighbors.enqueue(newBoard);
-					}
-					
-					//move 0 left one position and add to neighbors
-					if(j > 0) {
-						//copy old board to a new board
-						Board newBoard = new Board(this.twoDimenArray);
-						//move the value of left 0 right to 0 position
-						newBoard.twoDimenArray[i][j]= twoDimenArray[i][j-1];
-						//move 0 to left
-						newBoard.twoDimenArray[i][j-1] = 0;
-						//add new board to queue
-						neighbors.enqueue(newBoard);
+						neighbors.push(newBoard);
 					}
 					
 					//move 0 down one position and add to neighbors
-					if(i < N-1) {
+					if(emptySpotRow < N-1) {
 						//copy old board to a new board
-						Board newBoard = new Board(this.twoDimenArray);
+						Board2 newBoard = new Board2(this.twoDimenArray);
 						//move the value blow 0 up to 0
-						newBoard.twoDimenArray[i][j]= twoDimenArray[i+1][j];
+						newBoard.twoDimenArray[newBoard.emptySpotRow][newBoard.emptySpotColumn]= twoDimenArray[newBoard.emptySpotRow+1][newBoard.emptySpotColumn];
 						//move 0 down
-						newBoard.twoDimenArray[i+1][j] = 0;
+						newBoard.twoDimenArray[++newBoard.emptySpotRow][newBoard.emptySpotColumn] = 0;
 						//add new board to queue
-						neighbors.enqueue(newBoard);
-					}	
+						neighbors.push(newBoard);
+					}
 					
-					//move 0 UP one position and add to neighbors
-					if(i > 0) {
+					//move 0 left one position and add to neighbors
+					if(emptySpotColumn > 0) {
 						//copy old board to a new board
-						Board newBoard = new Board(this.twoDimenArray);
-						//move the value above 0 down to 0
-						newBoard.twoDimenArray[i][j]= twoDimenArray[i-1][j];
-						//move 0 up
-						newBoard.twoDimenArray[i-1][j] = 0;
+						Board2 newBoard = new Board2(this.twoDimenArray);
+						//move the value of left 0 right to 0 position
+						newBoard.twoDimenArray[newBoard.emptySpotRow][newBoard.emptySpotColumn]= twoDimenArray[newBoard.emptySpotRow][newBoard.emptySpotColumn-1];
+						//move 0 to left
+						newBoard.twoDimenArray[newBoard.emptySpotRow][--newBoard.emptySpotColumn] = 0;
 						//add new board to queue
-						neighbors.enqueue(newBoard);
-					}	
-
-
-			
-				}
-			}
-		}
-		
-		
+						neighbors.push(newBoard);
+					}
 		return neighbors;
 
 	}
@@ -358,12 +346,12 @@ public class Board {
 			}
 		}
 
-		Board testBorad = new Board(testArray2D);
+		Board2 testBorad = new Board2(testArray2D);
 
 		// testing Hamming distances expect 5
 		System.out.println("Hamming distances: " + testBorad.hamming());
-		// old twoD array
-		System.out.println("Old board: " + Arrays.deepToString(testArray2D));
+	
+		
 		// Print target borad
 		System.out.println("target board: " + Arrays.deepToString(testBorad.goalBoard()));
 		// testing Manhattan distance expect 10
@@ -374,14 +362,15 @@ public class Board {
 		System.out.println("Is Goal?: " + testBorad.isGoal());
 		
 		
-		// old twoD array	
-		System.out.println("\nOld board: \n\n" + testBorad.toString());
 		
-		//neighbors	
-		System.out.println("neighbors: \n");
-		for(Board e: testBorad.neighbors()) {
+		// old twoD array	
+		System.out.println("Old board: " + testBorad.toString());
+		
+		//neighbors		
+		for(Board2 e: testBorad.neighbors()) {
 			System.out.println(e.toString());
 		}
+		
 		
 
 	}
