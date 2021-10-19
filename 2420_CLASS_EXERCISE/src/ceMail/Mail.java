@@ -29,19 +29,21 @@ public class Mail implements Comparable<Mail>{
 	 * @return mail code;
 	 */
 	private String randomMailCode() {
-		int random = StdRandom.uniform(26);
-		char c = (char) ('A'+random);
+		
+		
 		
 		StringBuilder str = new StringBuilder();
 		
 		for(int i = 0; i<5;i++) {
-			str.append(c);
+			
+			str.append((char) ('A'+StdRandom.uniform(26)));
 		}
 		
 		
 		char[] code =new char[5];
 		
 		for(int j=0; j<code.length;j++) {
+			
 			code[j] = (char) ('A'+StdRandom.uniform(26));
 		}
 		//return String.valuOf(code)
@@ -65,7 +67,7 @@ public class Mail implements Comparable<Mail>{
 
 	@Override
 	public int compareTo(Mail other) {
-		if(this.type== other.type) {
+		if(this.type == other.type) {
 			return this.mailCode.compareTo(other.mailCode);
 		}else
 		return	this.type.compareTo(other.type);
