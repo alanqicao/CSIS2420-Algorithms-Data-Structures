@@ -3,6 +3,12 @@ package ceMail;
 
 import edu.princeton.cs.algs4.MinPQ;
 
+
+/**
+ * 
+ * @author Qi Cao
+ *
+ */
 public class DemoHeap {
 
 		
