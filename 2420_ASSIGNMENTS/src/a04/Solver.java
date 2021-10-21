@@ -4,11 +4,13 @@
 package a04;
 
 import edu.princeton.cs.algs4.MinPQ;
+import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.Stack;
 import edu.princeton.cs.algs4.StdOut;
 
 /**
- * @author caose_000
+ * 
+ * @author Qi Cao
  *
  */
 public class Solver {
@@ -28,6 +30,7 @@ public class Solver {
 		 if(!initial.isSolvable()) {
 			 throw new IllegalArgumentException("Board can not be solved");
 		 }
+		 
 		 if(initial == null){
 			 throw new NullPointerException();
 		 }
@@ -36,16 +39,18 @@ public class Solver {
 		 this.initialBoard = initial;
 		 this.boards = new MinPQ<>();
 		 this.solutions = new Stack<>();
-		 boards.insert(new BoardCompare(initial,null));
+		 boards.insert(new BoardCompare(initialBoard,null));
 		 
 		 
 		 //find neighbors,
 		 //store in neighbors pool
-		 //put back new neighbors in minPQ
+
 			do{				
 				BoardCompare searchNode = boards.delMin();
-				solutions.push(searchNode.board);
-				moves++;
+				
+				solutions.push(searchNode.board);//bug
+				if(searchNode.previous != null)
+					moves++;//bug
 				
 					for (Board el : searchNode.board.neighbors()) {
 
@@ -55,8 +60,7 @@ public class Solver {
 						}
 
 					}
-					
-				
+		
 			}while(!solutions.peek().isGoal());
 
 		 //repeat find neighbors
@@ -98,7 +102,13 @@ public class Solver {
 	  */
 	 public Iterable<Board> solution(){
 		 
-		 return solutions;
+		 Stack<Board> solutionsCopy = new Stack<>();
+		 
+		 for(Board el: solutions) {
+			 solutionsCopy.push(el);
+		 }
+		 
+		 return solutionsCopy;
 	 }
 
 	/**
