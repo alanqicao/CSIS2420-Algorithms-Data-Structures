@@ -55,7 +55,7 @@ public class Solver {
 					for (Board el : searchNode.board.neighbors()) {
 
 						if (searchNode.previous == null || !el.equals(searchNode.previous.board)) {
-							boards.insert(new BoardCompare(el, searchNode.previous));						
+							boards.insert(new BoardCompare(el, searchNode));						
 							
 						}
 
