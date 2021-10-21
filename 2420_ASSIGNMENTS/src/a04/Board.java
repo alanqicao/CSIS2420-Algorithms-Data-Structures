@@ -6,7 +6,7 @@ package a04;
 import java.util.Arrays;
 
 import edu.princeton.cs.algs4.Queue;
-import edu.princeton.cs.algs4.Stack;
+
 
 /**
  * @author Qi Cao
@@ -25,6 +25,8 @@ public class Board {
 	private int[] targetOneDArray;
 	// empty spot in witch row
 	private int emptySpotRow;
+	
+	Integer manDistanceInteger = 0;
 
 	/**
 	 * construct a board from an N-by-N array of blocks (where blocks[i][j] = block
@@ -33,10 +35,6 @@ public class Board {
 	 * @param blocks
 	 */
 	public Board(int[][] blocks) {
-
-//		if (blocks == null) {
-//			throw new NullPointerException("blocks cannot be null");
-//		}
 
 		// row size
 		this.N = blocks.length;
@@ -65,6 +63,7 @@ public class Board {
 		}
 
 		goalBoard();
+		manhattan();
 
 	}
 
@@ -139,7 +138,7 @@ public class Board {
 
 			}
 		}
-
+		manDistanceInteger = manDistance;
 		return manDistance;
 	}
 
@@ -209,15 +208,11 @@ public class Board {
 		if (N % 2 != 0) {
 
 			return inversion % 2 == 0;
-			// maybe a bug for inversion
-			
+			// maybe a bug for inversion			
 		}
 
 		else {
-//			System.out.println("even board size: inversion + emptyspotRow %2: "+(inversion + emptySpotRow) % 2);
-//			System.out.println("sum= 7 = "+(inversion + emptySpotRow));
-//			System.out.println("blak row: 1 = "+emptySpotRow);
-//			System.out.println("inversions: 6 = "+inversion);
+
 			return (inversion + emptySpotRow) % 2 != 0;
 		}
 	}
@@ -231,10 +226,7 @@ public class Board {
 		if (getClass() != y.getClass())
 			return false;
 		Board other = (Board) y;
-//		for(int i = 0; i<oneDimenArray.length;i++) {
-//			if(this.oneDimenArray[i]!=other.oneDimenArray[i])
-//				return false;
-//		}
+		
 		for(int i=0; i<twoDimenArray.length;i++) {
 			for(int j = 0; j<twoDimenArray.length; j++) {
 				if(this.twoDimenArray[i][j]!=other.twoDimenArray[i][j]) {
@@ -307,10 +299,7 @@ public class Board {
 						newBoard.twoDimenArray[i-1][j] = 0;
 						//add new board to queue
 						neighbors.enqueue(newBoard);
-					}	
-
-
-			
+					}				
 				}
 			}
 		}
@@ -357,29 +346,29 @@ public class Board {
 
 		Board testBorad = new Board(testArray2D);
 
-		// testing Hamming distances expect 5
+		// testing Hamming distances 
 		System.out.println("Hamming distances: " + testBorad.hamming());
 		// old twoD array
 		System.out.println("Old board: " + Arrays.deepToString(testArray2D));
 		// Print target borad
 		System.out.println("target board: " + Arrays.deepToString(testBorad.goalBoard()));
-		// testing Manhattan distance expect 10
+		// testing Manhattan distance 
 		System.out.println("Man distances: " + testBorad.manhattan());
-		// testing isSolvable expect false
+		// testing isSolvable 
 		System.out.println("isSolvable: " + testBorad.isSolvable());
 		// testing is goal?
 		System.out.println("Is Goal?: " + testBorad.isGoal());
 		
 		
-//		// old twoD array	
-//		System.out.println("\nOld board: \n\n" + testBorad.toString());
-//		
-//		//neighbors	
-//		System.out.println("neighbors: \n");
-//		for(Board e: testBorad.neighbors()) {
-//			System.out.println(e.toString());
-//		}
-//		
+		// old twoD array	
+		System.out.println("\nOld board: \n\n" + testBorad.toString());
+		
+		//neighbors	
+		System.out.println("neighbors: \n");
+		for(Board e: testBorad.neighbors()) {
+			System.out.println(e.toString());
+		}
+	
 
 	}
 
