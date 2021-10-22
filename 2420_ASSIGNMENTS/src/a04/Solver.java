@@ -4,7 +4,6 @@
 package a04;
 
 import edu.princeton.cs.algs4.MinPQ;
-import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.Stack;
 import edu.princeton.cs.algs4.StdOut;
 
@@ -41,44 +40,33 @@ public class Solver {
 		 this.solutions = new Stack<>();
 		 boards.insert(new BoardCompare(initialBoard,null));
 
-		 
-		 //find neighbors,
-		 //store in neighbors pool
-		 if(initialBoard.isGoal()) {
-			
-			 solutions.push(initialBoard);
-			 
-		 }else {
-		 
-		 while(!boards.min().board.isGoal()){	
-			 
-				BoardCompare searchNode = boards.delMin();
-				
-				solutions.push(searchNode.board);
-				moves++;
+			// find neighbors,
+			// store in neighbors pool
+			if (initialBoard.isGoal()) {
+				solutions.push(initialBoard);
+			} else {
+
+				while (!boards.min().board.isGoal()) {
+
+					BoardCompare searchNode = boards.delMin();
+					solutions.push(searchNode.board);
+					moves++;
 
 					for (Board el : searchNode.board.neighbors()) {
 
 						if (searchNode.previous == null || !el.equals(searchNode.previous.board)) {
-							boards.insert(new BoardCompare(el,searchNode));	
-							
-						
-
+							boards.insert(new BoardCompare(el, searchNode));
 						}
-						
-					
 					}
-					
-					if(boards.min().board.isGoal()) {
-						
+
+					if (boards.min().board.isGoal()) {
 						solutions.push(boards.min().board);
 					}
-			};
-		 }
-
-	 }
+				}				
+			}
+		}
 	 
-	 //helper class implements comparable for board with integer compare mahantom
+	 //helper class implements comparable for board with integer compare mahattan
 	 private class BoardCompare implements Comparable<BoardCompare>{
 		 
 		 private Board board;
@@ -87,23 +75,20 @@ public class Solver {
 		 
 		 public BoardCompare(Board board,BoardCompare previous ) {
 			 this.board = board;
-			 this.previous = previous;
-			 
-			 
+			 this.previous = previous;		 
 		 }
+		 		 
 		@Override
-		public int compareTo(BoardCompare other) {
-			
-			return this.board.manhattan()-other.board.manhattan(); 
-		}
-		 
+		public int compareTo(BoardCompare other) {			
+			return this.board.manhattan() - other.board.manhattan(); 
+		}		 
 	 }
+	 
 	 /**
 	  * min number of moves to solve initial board
 	  * @return
 	  */
-	 public int moves() {
-		 
+	 public int moves() {		 
 		 return moves;
 	 }
 	 

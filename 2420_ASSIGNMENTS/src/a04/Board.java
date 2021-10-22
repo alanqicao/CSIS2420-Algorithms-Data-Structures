@@ -51,9 +51,9 @@ public class Board {
 			}
 		}
 
-		goalBoard();
-		hamming();
+		goalBoard();		
 		manhattan();
+		hamming();
 	}
 
 	private void convertOneDimension(int[][] blocks) {
@@ -157,7 +157,7 @@ public class Board {
 	 */
 	public boolean isGoal() {
 
-		return manhattan() == 0 || hamming() == 0;
+		return manhattan() == 0 && hamming() == 0;
 	}
 
 	// generate goal board
@@ -169,9 +169,7 @@ public class Board {
 
 		for (int row = 0; row < N; row++) {
 			for (int column = 0; column < N; column++) {
-
 				goalBoard[row][column] = counter++;
-
 			}
 		}
 
@@ -270,7 +268,8 @@ public class Board {
 						//move 0 to right
 						newBoard.twoDimenArray[i][j+1] = 0;
 						//update oneDimenarray
-						newBoard.convertOneDimension(newBoard.twoDimenArray);						
+						newBoard.convertOneDimension(newBoard.twoDimenArray);
+						newBoard.hamming();
 						//add new board to queue
 						neighbors.enqueue(newBoard);
 					}
@@ -285,6 +284,7 @@ public class Board {
 						newBoard.twoDimenArray[i][j-1] = 0;
 						//update oneDimenarray
 						newBoard.convertOneDimension(newBoard.twoDimenArray);
+						newBoard.hamming();
 						//add new board to queue
 						neighbors.enqueue(newBoard);
 					}
@@ -299,6 +299,7 @@ public class Board {
 						newBoard.twoDimenArray[i+1][j] = 0;
 						//update oneDimenarray
 						newBoard.convertOneDimension(newBoard.twoDimenArray);
+						newBoard.hamming();
 						//add new board to queue
 						neighbors.enqueue(newBoard);
 					}	
@@ -313,6 +314,7 @@ public class Board {
 						newBoard.twoDimenArray[i-1][j] = 0;
 						//update oneDimenarray
 						newBoard.convertOneDimension(newBoard.twoDimenArray);
+						newBoard.hamming();
 						//add new board to queue
 						neighbors.enqueue(newBoard);
 					}				
