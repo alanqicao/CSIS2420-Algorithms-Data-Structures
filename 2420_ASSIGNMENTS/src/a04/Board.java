@@ -26,7 +26,7 @@ public class Board {
 	// empty spot in witch row
 	private int emptySpotRow;
 	
-	Integer manDistanceInteger = 0;
+	int manDistance;
 
 	/**
 	 * construct a board from an N-by-N array of blocks (where blocks[i][j] = block
@@ -107,9 +107,7 @@ public class Board {
 	 * @return
 	 */
 	public int manhattan() {
-
-		int manDistance = 0;
-
+		manDistance = 0;
 		int indexGiven;
 		int indexTarget;
 
@@ -138,7 +136,7 @@ public class Board {
 
 			}
 		}
-		manDistanceInteger = manDistance;
+
 		return manDistance;
 	}
 

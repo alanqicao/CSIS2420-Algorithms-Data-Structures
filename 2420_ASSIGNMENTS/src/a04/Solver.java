@@ -39,30 +39,40 @@ public class Solver {
 		 this.initialBoard = initial;
 		 this.boards = new MinPQ<>();
 		 this.solutions = new Stack<>();
-		 boards.insert(new BoardCompare(initialBoard,null));
-		 
+		 boards.insert(new BoardCompare(initialBoard,0,null));
+		 System.out.println(boards.min().board.manhattan());
 		 
 		 //find neighbors,
 		 //store in neighbors pool
-
-			do{				
+		 if(initialBoard.isGoal()) {
+			
+			 solutions.push(initialBoard);
+			 
+		 }else {
+		 
+		 while(!boards.min().board.isGoal()){	
+			 
 				BoardCompare searchNode = boards.delMin();
 				
 				solutions.push(searchNode.board);//bug
-				if(searchNode.previous != null)
-					moves++;//bug
 				
+			
+
 					for (Board el : searchNode.board.neighbors()) {
 
 						if (searchNode.previous == null || !el.equals(searchNode.previous.board)) {
-							boards.insert(new BoardCompare(el, searchNode));						
-							
+							boards.insert(new BoardCompare(el, searchNode.moves+1,searchNode));						
+						//	System.out.println("if loop:"+boards.min().board.manhattan());
 						}
 
 					}
-		
-			}while(!solutions.peek().isGoal());
-
+					
+					if(boards.min().board.isGoal()) {
+						this.moves= searchNode.moves;
+					}
+				//	System.out.println("while loop:"+boards.min().board.manhattan());
+			};
+		 }
 		 //repeat find neighbors
 		 //counter++
 		 //find solution
@@ -74,16 +84,18 @@ public class Solver {
 		 
 		 private Board board;
 		 private BoardCompare previous;
+		 private int moves;
 		 
-		 public BoardCompare(Board board,BoardCompare previous ) {
+		 public BoardCompare(Board board,int moves,BoardCompare previous ) {
 			 this.board = board;
 			 this.previous = previous;
+			 this.moves=moves;
 			 
 		 }
 		@Override
 		public int compareTo(BoardCompare other) {
-		
-			return this.board.manDistanceInteger.compareTo(other.board.manDistanceInteger);
+			
+			return this.board.manhattan()-other.board.manhattan(); 
 		}
 		 
 	 }
@@ -118,7 +130,7 @@ public class Solver {
 	public static void main(String[] args) {
 		
 		 // create initial board from file
-		int[] testArray1D = { 0,1,3,4,2,5,7,8,6 };
+		int[] testArray1D = {0,1,3,4,2,5,7,8,6};
 		int[][] testArray2D = new int[3][3];
 
 		int counter = 0;
