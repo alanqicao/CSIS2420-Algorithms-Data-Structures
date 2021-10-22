@@ -32,15 +32,15 @@ public class Solver {
 		 }
 		 
 		 if(initial == null){
-			 throw new NullPointerException();
+			 throw new NullPointerException("Initial borad can not be null");
 		 }
 		 
 		 //init board, init MinPQ
 		 this.initialBoard = initial;
 		 this.boards = new MinPQ<>();
 		 this.solutions = new Stack<>();
-		 boards.insert(new BoardCompare(initialBoard,0,null));
-		 System.out.println(boards.min().board.manhattan());
+		 boards.insert(new BoardCompare(initialBoard,null));
+
 		 
 		 //find neighbors,
 		 //store in neighbors pool
@@ -54,28 +54,27 @@ public class Solver {
 			 
 				BoardCompare searchNode = boards.delMin();
 				
-				solutions.push(searchNode.board);//bug
-				
-			
+				solutions.push(searchNode.board);
+				moves++;
 
 					for (Board el : searchNode.board.neighbors()) {
 
 						if (searchNode.previous == null || !el.equals(searchNode.previous.board)) {
-							boards.insert(new BoardCompare(el, searchNode.moves+1,searchNode));						
-						//	System.out.println("if loop:"+boards.min().board.manhattan());
-						}
+							boards.insert(new BoardCompare(el,searchNode));	
+							
+						
 
+						}
+						
+					
 					}
 					
 					if(boards.min().board.isGoal()) {
-						this.moves= searchNode.moves;
+						
+						solutions.push(boards.min().board);
 					}
-				//	System.out.println("while loop:"+boards.min().board.manhattan());
 			};
 		 }
-		 //repeat find neighbors
-		 //counter++
-		 //find solution
 
 	 }
 	 
@@ -84,12 +83,12 @@ public class Solver {
 		 
 		 private Board board;
 		 private BoardCompare previous;
-		 private int moves;
 		 
-		 public BoardCompare(Board board,int moves,BoardCompare previous ) {
+		 
+		 public BoardCompare(Board board,BoardCompare previous ) {
 			 this.board = board;
 			 this.previous = previous;
-			 this.moves=moves;
+			 
 			 
 		 }
 		@Override

@@ -26,7 +26,8 @@ public class Board {
 	// empty spot in witch row
 	private int emptySpotRow;
 	
-	int manDistance;
+	private int manDistance;
+	private int totalHamming;
 
 	/**
 	 * construct a board from an N-by-N array of blocks (where blocks[i][j] = block
@@ -40,6 +41,22 @@ public class Board {
 		this.N = blocks.length;
 
 		// convert two dimension to one dimension
+		convertOneDimension(blocks);
+
+		// copy two dimension array blocks to class field
+		this.twoDimenArray = new int[blocks.length][blocks.length];
+		for (int i = 0; i < blocks.length; i++) {
+			for (int j = 0; j < blocks.length; j++) {
+				this.twoDimenArray[i][j] = blocks[i][j];
+			}
+		}
+
+		goalBoard();
+		hamming();
+		manhattan();
+	}
+
+	private void convertOneDimension(int[][] blocks) {
 		this.oneDimenArray = new int[N * N];
 
 		int counter = 0;
@@ -53,18 +70,6 @@ public class Board {
 				oneDimenArray[counter++] = blocks[i][j];
 			}
 		}
-
-		// copy two dimension array blocks to class field
-		this.twoDimenArray = new int[blocks.length][blocks.length];
-		for (int i = 0; i < blocks.length; i++) {
-			for (int j = 0; j < blocks.length; j++) {
-				this.twoDimenArray[i][j] = blocks[i][j];
-			}
-		}
-
-		goalBoard();
-		manhattan();
-
 	}
 
 	/**
@@ -85,8 +90,10 @@ public class Board {
 	public int hamming() {
 
 		// Hamming move
-		int totalHamming = 0;
-
+		totalHamming = 0;
+		if(targetOneDArray.equals(oneDimenArray)) {
+			return totalHamming = 0;
+		}
 		for (int i = 1; i < oneDimenArray.length + 1; i++) {
 
 			if (oneDimenArray[i - 1] == 0) {
@@ -108,6 +115,9 @@ public class Board {
 	 */
 	public int manhattan() {
 		manDistance = 0;
+		if(targetOneDArray.equals(oneDimenArray)) {
+			return manDistance = 0;
+		}
 		int indexGiven;
 		int indexTarget;
 
@@ -147,7 +157,7 @@ public class Board {
 	 */
 	public boolean isGoal() {
 
-		return manhattan() == 0 && hamming() == 0;
+		return manhattan() == 0 || hamming() == 0;
 	}
 
 	// generate goal board
@@ -259,6 +269,8 @@ public class Board {
 						newBoard.twoDimenArray[i][j]= twoDimenArray[i][j+1];
 						//move 0 to right
 						newBoard.twoDimenArray[i][j+1] = 0;
+						//update oneDimenarray
+						newBoard.convertOneDimension(newBoard.twoDimenArray);						
 						//add new board to queue
 						neighbors.enqueue(newBoard);
 					}
@@ -271,6 +283,8 @@ public class Board {
 						newBoard.twoDimenArray[i][j]= twoDimenArray[i][j-1];
 						//move 0 to left
 						newBoard.twoDimenArray[i][j-1] = 0;
+						//update oneDimenarray
+						newBoard.convertOneDimension(newBoard.twoDimenArray);
 						//add new board to queue
 						neighbors.enqueue(newBoard);
 					}
@@ -283,6 +297,8 @@ public class Board {
 						newBoard.twoDimenArray[i][j]= twoDimenArray[i+1][j];
 						//move 0 down
 						newBoard.twoDimenArray[i+1][j] = 0;
+						//update oneDimenarray
+						newBoard.convertOneDimension(newBoard.twoDimenArray);
 						//add new board to queue
 						neighbors.enqueue(newBoard);
 					}	
@@ -295,6 +311,8 @@ public class Board {
 						newBoard.twoDimenArray[i][j]= twoDimenArray[i-1][j];
 						//move 0 up
 						newBoard.twoDimenArray[i-1][j] = 0;
+						//update oneDimenarray
+						newBoard.convertOneDimension(newBoard.twoDimenArray);
 						//add new board to queue
 						neighbors.enqueue(newBoard);
 					}				
