@@ -63,4 +63,13 @@ public class Demoreturnlterable {
 		return stack;
 			
 	}
+	
+	//-----------------------------------------------------------------------------
+	//practice 2
+	// practices how to transform a stack that has been passed as an argument.
+	
+	public static void transform2(Stack<String> s) {
+		
+		
+	}
 }
