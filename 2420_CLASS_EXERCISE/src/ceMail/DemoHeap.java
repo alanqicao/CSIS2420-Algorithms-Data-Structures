@@ -20,11 +20,9 @@ public class DemoHeap {
 		StdOut.println("-----------------------");
 
 		for (int i = 0; i < 25; i++) {
-
 			Mail mail = new Mail();
 			StdOut.println(mail);
 			mails.insert(mail);
-
 		}
 
 		StdOut.printf("\nMail Delivery:\n");
@@ -32,9 +30,7 @@ public class DemoHeap {
 	
 
 		while (!mails.isEmpty()) {
-
 			StdOut.println(mails.delMax());
-
 		}
 
 	}
