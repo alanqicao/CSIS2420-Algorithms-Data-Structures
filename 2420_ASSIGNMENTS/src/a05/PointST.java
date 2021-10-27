@@ -1,5 +1,6 @@
 package a05;
 
+import edu.princeton.cs.algs4.MinPQ;
 import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.RectHV;
@@ -7,7 +8,7 @@ import edu.princeton.cs.algs4.RedBlackBST;
 
 /**
  * 
- * @author Qi Cao
+ * @author Qi Cao and Peter Kingston
  *
  * @param <Value>
  */
@@ -91,8 +92,15 @@ public class PointST<Value> {
 	    */
 	   public Iterable<Point2D> range(RectHV rect){
 		   
+		   Queue<Point2D> insideRactangle = new Queue<Point2D>();
 		   
-		return null;
+		   for(Point2D el: pointSymbolTable.keys()) {
+			  if(rect.contains(el)) {
+				  insideRactangle.enqueue(el);
+			  }
+		   }
+		   
+		return insideRactangle;
 		   
 	   }
 	   
@@ -102,6 +110,16 @@ public class PointST<Value> {
 	    * @return
 	    */
 	   public Point2D nearest(Point2D p) {
+		   
+		   
+		   Point2D smallest = new Point2D(0, 0);
+		   
+		   for(Point2D el: pointSymbolTable.keys()) {
+			   
+			   
+			   if(el.distanceTo(p))
+			   
+		   }
 		   
 		   return null;
 	   }
