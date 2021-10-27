@@ -60,9 +60,9 @@ public class PetApp {
 		
 		do {
 			
-			id = StdRandom.uniform(0, 19);
+			id = StdRandom.uniform(10, 30);
 			
-		}while(!st.contains(id));
+		}while(st.contains(id));
 		
 		return id;
 	}
@@ -82,7 +82,7 @@ public class PetApp {
 		st.put(getUniquePetId(st), new Pet("Sylvester",7,"cat"));
 		st.put(getUniquePetId(st), new Pet("Strolch",3,"dog"));
 	}
-	
+//	
 //	private static void displayCorespondPet(BinarySearchST<Integer, Pet> st) {
 //		
 //		if(st.contains(key)) {

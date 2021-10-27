@@ -470,14 +470,40 @@ public class BSTdeluxe<Key extends Comparable<Key>, Value> {
      * @return
      */
     public Iterable<Key> preOrder(){
-    	return null;
     	
+    	Queue<Key> queue = new Queue<>();
+    	
+    	preOrder(root, queue);
+    	
+    	
+    	
+    	return queue;
     }
+    
+    /**
+     * recursively adds elements from this BST to the queue 
+     * base on the pre order  traversal
+     * @param rootNode
+     * @param queue
+     */
+    private void preOrder(Node node, Queue<Key> queue) {
+    	//base case: node is null
+		if(node != null) {
+			//do noting
+			queue.enqueue(node.key);
+			preOrder(node.left,queue);
+			preOrder(node.right,queue);
+		}
+		
+	}
+
+	
     /**
      * return the key in in order
      * @return
      */
     public Iterable<Key> inOrder(){
+    	
     	return null;
     }
     /**
@@ -485,6 +511,7 @@ public class BSTdeluxe<Key extends Comparable<Key>, Value> {
      * @return
      */
     public Iterable<Key> postOrder(){
+    	
     	return null;
     }
 
