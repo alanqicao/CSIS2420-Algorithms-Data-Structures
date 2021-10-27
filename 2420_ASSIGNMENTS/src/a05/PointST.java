@@ -127,8 +127,8 @@ public class PointST<Value> {
 			   throw new java.lang.NullPointerException ();
 		   } 
 		   
-		   Double smallest = 100.00;
-		   Point2D smallestPoint = new Point2D(0,0);
+		   Double smallest = Double.MAX_VALUE;
+		   Point2D smallestPoint = p;
 		   
 		   for(Point2D el: pointSymbolTable.keys()) {
 			   
