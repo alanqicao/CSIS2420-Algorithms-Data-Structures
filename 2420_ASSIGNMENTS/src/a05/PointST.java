@@ -1,6 +1,5 @@
 package a05;
 
-import edu.princeton.cs.algs4.MinPQ;
 import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.RectHV;
@@ -47,6 +46,9 @@ public class PointST<Value> {
 	    * @param val
 	    */
 	   public void put(Point2D p, Value val) {
+		   if(p == null||val ==null) {
+			   throw new java.lang.NullPointerException();
+		   }
 		   pointSymbolTable.put(p, val);
 	   }
 	   
@@ -56,6 +58,9 @@ public class PointST<Value> {
 	    * @return
 	    */
 	   public Value get(Point2D p) {
+		   if(p==null) {
+			   throw new java.lang.NullPointerException ();
+		   } 
 		return pointSymbolTable.get(p);
 		   
 	   }
@@ -66,6 +71,9 @@ public class PointST<Value> {
 	    * @return
 	    */
 	   public boolean contains(Point2D p) {
+		   if(p==null) {
+			   throw new java.lang.NullPointerException ();
+		   } 
 		return pointSymbolTable.contains(p);
 		   
 	   }
@@ -92,6 +100,10 @@ public class PointST<Value> {
 	    */
 	   public Iterable<Point2D> range(RectHV rect){
 		   
+		   if(rect==null) {
+			   throw new java.lang.NullPointerException ();
+		   } 
+		   
 		   Queue<Point2D> insideRactangle = new Queue<Point2D>();
 		   
 		   for(Point2D el: pointSymbolTable.keys()) {
@@ -111,17 +123,25 @@ public class PointST<Value> {
 	    */
 	   public Point2D nearest(Point2D p) {
 		   
+		   if(p==null) {
+			   throw new java.lang.NullPointerException ();
+		   } 
 		   
-		   Point2D smallest = new Point2D(0, 0);
+		   Double smallest = 100.00;
+		   Point2D smallestPoint = new Point2D(0,0);
 		   
 		   for(Point2D el: pointSymbolTable.keys()) {
 			   
-			   
-			   if(el.distanceTo(p))
+			 if(el.distanceTo(p) < smallest) {
+				 
+				 smallest = el.distanceTo(p);
+				 
+				 smallestPoint = el;
+			 }
 			   
 		   }
 		   
-		   return null;
+		   return smallestPoint;
 	   }
 	   
 	   /**
