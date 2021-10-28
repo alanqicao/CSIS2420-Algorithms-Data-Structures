@@ -150,6 +150,37 @@ public class PointST<Value> {
 	    */
 	   public static void main(String[] args) {
 		   
+		   PointST <Integer> pointSt;
+		   RectHV rectangle = new RectHV(0.5,0.5,0.8,0.9);
+		   System.out.println("pint[(0,0),(0,0)] distance to rectangle is: "+ rectangle.distanceTo(new Point2D(0.0,0.0)));
+		   
+		   pointSt = new PointST<Integer>();
+		   //test is empty
+		   System.out.println("Is empty?: "+pointSt.isEmpty()); 
+		   //test put
+		   pointSt.put(new Point2D(0,4), 0);
+		   pointSt.put(new Point2D(5,0), 2);
+		   pointSt.put(new Point2D(6,9), 4);
+		   pointSt.put(new Point2D(-3,4), 9);
+		   //test get
+		   System.out.println("Get value of 5,0 = "+pointSt.get(new Point2D(5,0)));
+		   //test size
+		   System.out.println("Size: "+pointSt.size()); 
+		   //test contian
+		   System.out.println("test contian pint (0,4): "+pointSt.contains(new Point2D(0,4))); 
+		   //test all point each point
+		   System.out.println("Test all point:");
+		   for(Point2D el: pointSt.points()) {
+			   System.out.println(el.toString());
+		   }
+		   
+		   //test range
+		   System.out.println("Test range rectangle -3,-4,8,6: "+ pointSt.range(new RectHV(-3,-4,8,6)));
+		   //test nearest
+		   System.out.println("Test nearest point (1,1): "+ pointSt.nearest(new Point2D(1,1)));
+		   
+		   
+		   
 	   } 
 	   
 	   
