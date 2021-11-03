@@ -23,16 +23,13 @@ public class StockApp {
 	//The csv file incluod a header that is ignored
 	/**
 	 * 
-	 * @param fileName
+	 * @param myFile
 	 * @param keyField
 	 * @param valField
 	 * @return
 	 */
-	private ST<java.util.Date, Double> readCSV(String fileName,int keyField,int valField) {
-		
-		
-		
-		
+	private ST<java.util.Date, Double> readCSV(File myFile,int keyField,int valField) {
+	
 		ST <java.util.Date,Double> st = new ST<>();
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -66,12 +63,13 @@ public class StockApp {
 		return st;
 	}
 	
-	// main
-	File myFile = new File("src/ceStock/resources/AMZN.csv");
-	int keyField =0;
-	int valField =4;
-	St<Date, Double> st = readCSV(fileName,ketField,valField);
-	
-	
-	
+	public static void main(String[] args) {
+		// main
+		File myFile = new File("src/ceStock/resources/AMZN.csv");
+		int keyField = 0;
+		int valField = 4;
+		ST <Date, Double> st = readCSV(myFile, keyField, valField);
+
+	}
+
 }
