@@ -473,9 +473,7 @@ public class BSTdeluxe<Key extends Comparable<Key>, Value> {
     	
     	Queue<Key> queue = new Queue<>();
     	
-    	preOrder(root, queue);
-    	
-    	
+    	preOrder(root, queue);   	
     	
     	return queue;
     }
@@ -504,16 +502,48 @@ public class BSTdeluxe<Key extends Comparable<Key>, Value> {
      */
     public Iterable<Key> inOrder(){
     	
-    	return null;
+    	Queue<Key> queue = new Queue<>();
+    	
+    	inOrder(root, queue);
+    	
+    	return queue;
     }
+    
+    private void inOrder(Node node, Queue<Key> queue) {
+    	
+    	if(node != null) {
+    		inOrder(node.left,queue);
+    		queue.enqueue(node.key);
+    		inOrder(node.right,queue);
+    		
+    	}
+    }
+    
+    
     /**
      * return the key in post order
      * @return
      */
     public Iterable<Key> postOrder(){
     	
-    	return null;
+    	Queue<Key> queue = new Queue<>();
+    	
+    	postOrder(root,queue);
+    	
+    	return queue;
     }
+    
+    private void postOrder(Node node, Queue<Key> queue) {
+    	
+    	if(node != null) {
+    		
+    		postOrder(node.left,queue);
+    		postOrder(node.right,queue);
+    		queue.enqueue(node.key);
+    		
+    	}
+    }
+    
 
   /*************************************************************************
     *  Check integrity of BST data structure.

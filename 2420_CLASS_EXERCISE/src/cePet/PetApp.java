@@ -13,7 +13,7 @@ import edu.princeton.cs.algs4.StdRandom;
  *
  */
 public class PetApp {
-
+	
 	/**
 	 * 
 	 * @param args
@@ -35,24 +35,17 @@ public class PetApp {
 		
 		StdOut.println();
 		
-		if(st.contains(10)||st.contains(17)||st.contains(23)) {
-			
-			StdOut.println("\nPet associated with 10: "+st.get(10));
-		}else {
-			StdOut.println("Given key was not found in the symbol table");
-		}
 		
 		Integer[] containNumbers = {10,17,23};
 		
-		for(Integer key: st.keys()) {
-			
-			checkForContain(key,containNumber);
-			
+		for (Integer el : containNumbers) {
+			if (st.contains(el)) {
+				System.out.println("\nPet associated with " + el + ": " + st.get(el));
+			}
+			else
+				System.out.println("\nThe key " + el + " was not found in the symbol table.");
 		}
-		
-		private  checkForContain(Integer key,Integer[] contianNumbers) {
-			
-		}
+
 		
 		StdOut.println("\nSmalest pet ID: "+st.min());
 			 
@@ -79,6 +72,8 @@ public class PetApp {
 		
 	}
 	
+
+
 	private static Integer getUniquePetId(BinarySearchST <Integer,Pet> st) {
 		
 		if(st.size()>=20) {
