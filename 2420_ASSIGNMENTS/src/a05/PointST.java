@@ -6,25 +6,25 @@ import edu.princeton.cs.algs4.RectHV;
 import edu.princeton.cs.algs4.RedBlackBST;
 
 /**
- * 
+ * Mutable data type implementation red-black BST for 2d points
  * @author Qi Cao and Peter Kingston
  *
  * @param <Value>
  */
 public class PointST<Value> {
 	
-		private final RedBlackBST<Point2D,Value> pointSymbolTable;
+	  private final RedBlackBST<Point2D,Value> pointSymbolTable;
 	
 		/**
-		 * construct an empty symbol table of points 
+		 * Construct an empty symbol table of points 
 		 */
 	   public PointST() {
 		   pointSymbolTable = new RedBlackBST<Point2D,Value>();
 	   }  
 	   
 	   /**
-	    * is the symbol table empty? 
-	    * @return
+	    * Is the symbol table empty? 
+	    * @return True if table is empty otherwise false
 	    */
 	   public boolean isEmpty() {
 		return pointSymbolTable.isEmpty();
@@ -32,8 +32,8 @@ public class PointST<Value> {
 	   } 
 	   
 	   /**
-	    * number of points 
-	    * @return
+	    * Returns the number of the points 
+	    * @return number of points
 	    */
 	   public int size() {
 		return pointSymbolTable.size();
@@ -41,9 +41,9 @@ public class PointST<Value> {
 	   }   
 	   
 	   /**
-	    * associate the value val with point p
-	    * @param p
-	    * @param val
+	    * Associate the value with point p
+	    * @param p key point
+	    * @param val value
 	    */
 	   public void put(Point2D p, Value val) {
 		   if(p == null||val ==null) {
@@ -53,34 +53,36 @@ public class PointST<Value> {
 	   }
 	   
 	   /**
-	    * value associated with point p 
-	    * @param p
-	    * @return
+	    * Return the value associated with the given key
+	    * @param p key
+	    * @return Value associated with key
 	    */
 	   public Value get(Point2D p) {
 		   if(p==null) {
 			   throw new java.lang.NullPointerException ();
 		   } 
+		   
 		return pointSymbolTable.get(p);
 		   
 	   }
 	   
 	   /**
-	    * does the symbol table contain point p? 
-	    * @param p
-	    * @return
+	    * Does the symbol table contain point p? 
+	    * @param p the key
+	    * @return True if contain otherwise false.
 	    */
 	   public boolean contains(Point2D p) {
 		   if(p==null) {
 			   throw new java.lang.NullPointerException ();
 		   } 
+		   
 		return pointSymbolTable.contains(p);
 		   
 	   }
 	   
 	   /**
-	    * all points in the symbol table 
-	    * @return
+	    * Returns all points in the symbol table 
+	    * @return 
 	    */
 	   public Iterable<Point2D> points(){
 		   
@@ -89,13 +91,14 @@ public class PointST<Value> {
 		   for(Point2D el: pointSymbolTable.keys()) {
 			   allPoints.enqueue(el);
 		   }
+		   
 		return allPoints;
 		   
 	   }
 	   
 	   /**
-	    * all points that are inside the rectangle 
-	    * @param rect
+	    * Return all points that are inside the rectangle 
+	    * @param rect given rectangle
 	    * @return
 	    */
 	   public Iterable<Point2D> range(RectHV rect){
@@ -117,9 +120,9 @@ public class PointST<Value> {
 	   }
 	   
 	   /**
-	    *  a nearest neighbor to point p; null if the symbol table is empty 
-	    * @param p
-	    * @return
+	    *  Return a nearest neighbor to given point p;  
+	    * @param p point key
+	    * @return nearest point null if the symbol table is empty
 	    */
 	   public Point2D nearest(Point2D p) {
 		   
@@ -130,17 +133,12 @@ public class PointST<Value> {
 		   Double smallest = Double.MAX_VALUE;
 		   Point2D smallestPoint = p;
 		   
-		   for(Point2D el: pointSymbolTable.keys()) {
-			   
-			 if(el.distanceTo(p) < smallest) {
-				 
-				 smallest = el.distanceTo(p);
-				 
+		   for(Point2D el: pointSymbolTable.keys()) {			   
+			 if(el.distanceTo(p) < smallest) {			 
+				 smallest = el.distanceTo(p);			 
 				 smallestPoint = el;
-			 }
-			   
-		   }
-		   
+			 }			   
+		   }		   
 		   return smallestPoint;
 	   }
 	   
