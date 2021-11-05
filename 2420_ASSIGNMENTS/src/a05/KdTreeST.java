@@ -10,7 +10,7 @@ import edu.princeton.cs.algs4.StdOut;
 
 /**
  * Mutable data type KdTreeST using BST with points in the nodes and X and y coordinates of the points
- * @author Qi and Peter
+ * @author Qi Cao and Peter Kingston
  *
  */
 public class KdTreeST<Value> {
@@ -21,7 +21,7 @@ public class KdTreeST<Value> {
 	
 	/**
 	 * Helper class nodes
-	 * @author Qi and Peter
+	 * @author Qi Cao and Peter Kingston
 	 *
 	 */
 	private class Node {
@@ -248,18 +248,34 @@ public class KdTreeST<Value> {
 	 * @return closet point
 	 */
 	public Point2D nearest(Point2D key) {
+		if(key == null) {
+			throw new NullPointerException();
+		}
 		
-		return nearest(key, root);
+		Point2D nearestPoint = root.key;
+		
+		return nearest(key, root, nearestPoint);
 	}
 	
 	//helper method for search both subtrees
-	private Point2D nearest(Point2D key, Node node) {
+	private Point2D nearest(Point2D key, Node node,Point2D nearestPoint) {
 		
 		if(node == null) {
-			return node.key;
+			return nearestPoint;
+		}
+		if(node.rect.distanceSquaredTo(key) > nearestPoint.distanceSquaredTo(key)) {
+			return nearestPoint;
+		}
+		if(key.distanceSquaredTo(node.key) < key.distanceSquaredTo(nearestPoint)) {
+			nearestPoint= node.key;		
 		}
 		
-		return null;
+		if(node.lb !=null && node.lb.rect.contains(key)) {
+			nearestPoint = nearest(key,node.lb,nearestPoint);
+			nearestPoint = nearest(key,node.rt,nearestPoint);
+		}
+		
+		return nearestPoint;
 	}
 
 	/**
