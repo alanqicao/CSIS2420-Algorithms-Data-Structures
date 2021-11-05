@@ -3,8 +3,6 @@
  */
 package a05;
 
-import java.awt.Rectangle;
-
 import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.RectHV;
@@ -65,11 +63,12 @@ public class KdTreeST<Value> {
 		if(isEmpty()) {
 			root = new Node(key, val, new RectHV(Double.NEGATIVE_INFINITY,
 					Double.NEGATIVE_INFINITY,Double.POSITIVE_INFINITY,Double.POSITIVE_INFINITY));
+			size++;
 		}else {			
 			put(root,key,val,root);
 			
 		}
-		size++;
+		
 	}
 	
 	/**
@@ -82,7 +81,9 @@ public class KdTreeST<Value> {
 	 */
 	private Node put(Node x, Point2D key, Value val,Node parent) {		
 		if (x == null) {
+			size++;
 			return new Node(key, val, newRectangle(key, parent));
+			
 		}
 		double cmp = key.compareTo(x.key);
 		if (cmp == 0) {
@@ -209,9 +210,7 @@ public class KdTreeST<Value> {
 	            queue.enqueue(x.lb);
 	            queue.enqueue(x.rt);
 	        }
-	        return keys;
-		
-	
+	        return keys;	
 	}
 
 	
@@ -224,30 +223,47 @@ public class KdTreeST<Value> {
 		
 		Queue<Point2D> points = new Queue<Point2D>();
 		range(rect,points,root);
+		System.out.println("debug range: "+points);
 		return points;
 	}
 	
 	//helper method for recursively search for points 
 	private void range(RectHV rect, Queue<Point2D> points,Node node) {
-		if(node == null) 
-			return;
-		if(rect.intersects(node.rect)) 
-			return;
-		if(rect.contains(node.key)) 
-			points.enqueue(node.key);
-	
-			range(rect,points,node.lb);
-     		range(rect, points, node.rt);
+		if(rect == null) throw new java.lang.NullPointerException("Rectangle cannot be null!");
+		if(node == null) throw new java.lang.NullPointerException("Node cannot be null!");
 		
+		if(rect.contains(node.key)) {
+			points.enqueue(node.key);
+		}
+		if(node.lb != null  && rect.intersects(node.lb.rect)) {
+			range(rect,points,node.lb);
+		}
+		if(node.rt !=null && rect.intersects(node.rt.rect)) {
+     		range(rect, points, node.rt);
+		}
 	}
 	
-	//nearest
-	public Point2D nearest() {
+	/**
+	 * Find closest point to a given query point 
+	 * @return closet point
+	 */
+	public Point2D nearest(Point2D key) {
+		
+		return nearest(key, root);
+	}
+	
+	//helper method for search both subtrees
+	private Point2D nearest(Point2D key, Node node) {
+		
+		if(node == null) {
+			return node.key;
+		}
+		
 		return null;
 	}
-	
 
 	/**
+	 * testing
 	 * @param args
 	 */
 	public static void main(String[] args) {
@@ -256,6 +272,11 @@ public class KdTreeST<Value> {
 		testKdTreeST.put(new Point2D(8,4), 0);
 		testKdTreeST.put(new Point2D(5,3), 1);
 		testKdTreeST.put(new Point2D(4,7), 2);
+		testKdTreeST.put(new Point2D(4,0), 3);
+		testKdTreeST.put(new Point2D(3,7), 4);
+		testKdTreeST.put(new Point2D(-4,2), 5);
+		testKdTreeST.put(new Point2D(-5,0), 6);
+		
 		//test get
 		StdOut.println("value at (8, 4) = " + testKdTreeST.get(new Point2D(8, 4)));
 		//test contain
@@ -263,7 +284,7 @@ public class KdTreeST<Value> {
 		//test points
 		StdOut.println("the points in level-order: " + testKdTreeST.points());
 		//test range
-		StdOut.println("pointST.range(new RectHV(0, 20, 0, 20)) = " + testKdTreeST.range(new RectHV(0, 20, 0, 20)));
+		StdOut.println("pointST.range(new RectHV(0, 20, 0, 20)) = " + testKdTreeST.range(new RectHV(-3, -5, 5, 7)));
 	}
 
 }
