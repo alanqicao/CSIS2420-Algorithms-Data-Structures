@@ -31,6 +31,15 @@ public class KdTreeST<Value> {
 		   private Node lb;        // the left/bottom subtree
 		   private Node rt;        // the right/top subtree
 		   private Node(Point2D key, Value val, RectHV rect) {
+			   if(key == null) {
+					throw new java.lang.NullPointerException("key can not be null!");
+				}
+			   if(val == null) {
+					throw new java.lang.NullPointerException("Value can not be null!");
+				}
+			   if(rect == null) {
+					throw new java.lang.NullPointerException("Rectangle can not be null!");
+				}
 			   this.key = key;
 			   this.value = val;
 			   this.rect = rect;
@@ -60,6 +69,12 @@ public class KdTreeST<Value> {
 	 * @param val the value
 	 */
 	public void put(Point2D key, Value val) {
+		if(key == null) {
+			throw new java.lang.NullPointerException("key can not be null!");
+		}
+		if(val == null) {
+			throw new java.lang.NullPointerException("Value can not be null!");
+		}
 		if(isEmpty()) {
 			root = new Node(key, val, new RectHV(Double.NEGATIVE_INFINITY,
 					Double.NEGATIVE_INFINITY,Double.POSITIVE_INFINITY,Double.POSITIVE_INFINITY));
@@ -79,7 +94,16 @@ public class KdTreeST<Value> {
 	 * @param parent the parent node
 	 * @return node
 	 */
-	private Node put(Node x, Point2D key, Value val,Node parent) {		
+	private Node put(Node x, Point2D key, Value val,Node parent) {	
+		if(key == null) {
+			throw new java.lang.NullPointerException("key can not be null!");
+		}
+		if(val == null) {
+			throw new java.lang.NullPointerException("Value can not be null!");
+		}
+		if(parent == null) {
+			throw new java.lang.NullPointerException("Parent can not be null!");
+		}
 		if (x == null) {
 			size++;
 			return new Node(key, val, newRectangle(key, parent));
@@ -112,6 +136,12 @@ public class KdTreeST<Value> {
 	 * @return
 	 */
 	private RectHV newRectangle(Point2D key, Node parent) {		
+		if(key == null) {
+			throw new java.lang.NullPointerException("key can not be null!");
+		}
+		if(parent == null) {
+			throw new java.lang.NullPointerException("Parent can not be null!");
+		}
 		double xMin, xMax, yMin, yMax;
 		if(level % 2 ==0) {
 			xMin = parent.rect.xmin();
@@ -145,6 +175,9 @@ public class KdTreeST<Value> {
 	 * @return
 	 */
 	 public Value get(Point2D key) {
+			if(key == null) {
+				throw new java.lang.NullPointerException("key can not be null!");
+			}
 		 return get(root,key);
 	 }
 	 
@@ -156,6 +189,10 @@ public class KdTreeST<Value> {
 	  * @return
 	  */
 		private Value get(Node x, Point2D key) {
+			if(key == null) {
+				throw new java.lang.NullPointerException("key can not be null!");
+			}
+
 			if (x == null) {
 				level = 0;
 				return null;
@@ -187,7 +224,10 @@ public class KdTreeST<Value> {
 	 * @param key the key
 	 * @return
 	 */
-	public boolean contains(Point2D key) {		
+	public boolean contains(Point2D key) {	
+		if(key == null) {
+			throw new java.lang.NullPointerException("key can not be null!");
+		}
 		return get(key)!=null;
 	}
 		
@@ -223,7 +263,7 @@ public class KdTreeST<Value> {
 		
 		Queue<Point2D> points = new Queue<Point2D>();
 		range(rect,points,root);
-		System.out.println("debug range: "+points);
+		//System.out.println("debug range: "+points);
 		return points;
 	}
 	
@@ -237,6 +277,7 @@ public class KdTreeST<Value> {
 		}
 		if(node.lb != null  && rect.intersects(node.lb.rect)) {
 			range(rect,points,node.lb);
+			
 		}
 		if(node.rt !=null && rect.intersects(node.rt.rect)) {
      		range(rect, points, node.rt);
@@ -274,6 +315,11 @@ public class KdTreeST<Value> {
 			nearestPoint = nearest(key,node.lb,nearestPoint);
 			nearestPoint = nearest(key,node.rt,nearestPoint);
 		}
+		else if(node.rt !=null && node.rt.rect.contains(key)) {
+			nearestPoint = nearest(key,node.rt,nearestPoint);
+			nearestPoint = nearest(key,node.lb,nearestPoint);
+		}
+		
 		
 		return nearestPoint;
 	}
@@ -294,13 +340,15 @@ public class KdTreeST<Value> {
 		testKdTreeST.put(new Point2D(-5,0), 6);
 		
 		//test get
-		StdOut.println("value at (8, 4) = " + testKdTreeST.get(new Point2D(8, 4)));
+		StdOut.println("Value at (8, 4): " + testKdTreeST.get(new Point2D(8, 4)));
 		//test contain
-		StdOut.println("test contain (8, 4) = "+testKdTreeST.contains(new Point2D(8, 4)));
+		StdOut.println("Test contain (8, 4): "+testKdTreeST.contains(new Point2D(8, 4)));
 		//test points
-		StdOut.println("the points in level-order: " + testKdTreeST.points());
+		StdOut.println("The points in level-order: " + testKdTreeST.points());
 		//test range
-		StdOut.println("pointST.range(new RectHV(0, 20, 0, 20)) = " + testKdTreeST.range(new RectHV(-3, -5, 5, 7)));
+		StdOut.println("PointST.range(new RectHV(0, 20, 0, 20)): " + testKdTreeST.range(new RectHV(-3, -5, 5, 7)));
+		//test nearest
+		StdOut.println("Nearest point to (2,3) is: "+testKdTreeST.nearest(new Point2D(2,3)));
 	}
 
 }
