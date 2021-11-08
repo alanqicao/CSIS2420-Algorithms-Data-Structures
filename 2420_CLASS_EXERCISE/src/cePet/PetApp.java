@@ -20,24 +20,19 @@ public class PetApp {
 	 */
 	public static void main(String[] args) {
 		
-		BinarySearchST<Integer,Pet> st = new BinarySearchST<>();
+		BinarySearchST<Integer,Pet> st = new BinarySearchST<>();		
+		fillST(st);	
 		
-		extracted(st);	
-		
-		StdOut.println("All keys: "+st.keys());
-				
-		StdOut.print("\nAll names: ");
-		
+		StdOut.println("All keys: "+st.keys());				
+		StdOut.print("\nAll names: ");		
 		for(Integer key: st.keys()) {
 			StdOut.print(st.get(key).getName()+" ");
 			
-		}
-		
+		}		
 		StdOut.println();
 		
 		
-		Integer[] containNumbers = {10,17,23};
-		
+		Integer[] containNumbers = {10,17,23};	
 		for (Integer el : containNumbers) {
 			if (st.contains(el)) {
 				System.out.println("\nPet associated with " + el + ": " + st.get(el));
@@ -45,34 +40,26 @@ public class PetApp {
 			else
 				System.out.println("\nThe key " + el + " was not found in the symbol table.");
 		}
+		StdOut.println();
 
 		
-		StdOut.println("\nSmalest pet ID: "+st.min());
-			 
-	    StdOut.println("\nSmallest pet ID greater or equal to 17: "+ st.ceiling(17));
-			
-		StdOut.println("\nNumber of pets: "+st.size());
-		
-		StdOut.println("\nPet IDs smaller 25: "+st.rank(25));
-		
-		StdOut.println("\nPet with ID 30: " +st.get(30));
-		
+		StdOut.println("\nSmalest pet ID: "+st.min());			 
+	    StdOut.println("\nSmallest pet ID greater or equal to 17: "+ st.ceiling(17));			
+		StdOut.println("\nNumber of pets: "+st.size());		
+		StdOut.println("\nPet IDs smaller 25: "+st.rank(25));		
+		StdOut.println("\nPet with ID 30: " +st.get(30));		
 		StdOut.println("\nSecond smallest pet ID:"+st.select(1));
+		StdOut.println();
 		
 		st.put(30, new Pet("Strolch",3,"dog"));
-		
+
 		StdOut.println("\nIDs  Pets");
-		StdOut.println("---   -------------");
-		
+		StdOut.println("---   -------------");		
 		for(Integer key: st.keys()) {
-			StdOut.println(key+"  "+st.get(key));
-			
-		}
-		
+			StdOut.println(key+"  "+st.get(key));	
+		}		
 		
 	}
-	
-
 
 	private static Integer getUniquePetId(BinarySearchST <Integer,Pet> st) {
 		
@@ -97,7 +84,7 @@ public class PetApp {
 	/**
 	 * @param st
 	 */
-	private static void extracted(BinarySearchST<Integer, Pet> st) {
+	private static void fillST(BinarySearchST<Integer, Pet> st) {
 		st.put(getUniquePetId(st), new Pet("Buddy",8,"dog"));
 		st.put(getUniquePetId(st), new Pet("Bobo",50,"tortoise"));
 		st.put(getUniquePetId(st), new Pet("Hazel",4,"rat"));

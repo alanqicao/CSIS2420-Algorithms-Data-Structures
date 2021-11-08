@@ -500,12 +500,9 @@ public class BSTdeluxe<Key extends Comparable<Key>, Value> {
      * return the key in in order
      * @return
      */
-    public Iterable<Key> inOrder(){
-    	
-    	Queue<Key> queue = new Queue<>();
-    	
-    	inOrder(root, queue);
-    	
+    public Iterable<Key> inOrder(){    	
+    	Queue<Key> queue = new Queue<>();  	
+    	inOrder(root, queue);   	
     	return queue;
     }
     
@@ -514,8 +511,7 @@ public class BSTdeluxe<Key extends Comparable<Key>, Value> {
     	if(node != null) {
     		inOrder(node.left,queue);
     		queue.enqueue(node.key);
-    		inOrder(node.right,queue);
-    		
+    		inOrder(node.right,queue); 		
     	}
     }
     

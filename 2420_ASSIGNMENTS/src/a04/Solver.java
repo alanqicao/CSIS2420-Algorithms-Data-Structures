@@ -115,7 +115,7 @@ public class Solver {
 	public static void main(String[] args) {
 		
 		 // create initial board from file
-		int[] testArray1D = {0,1,3,4,2,5,7,8,6};
+		int[] testArray1D = {1,2,3,7,0,6,5,4,8};
 		int[][] testArray2D = new int[3][3];
 
 		int counter = 0;
