@@ -18,7 +18,7 @@ public class Midterm1 {
 		Stack<String> newString = new Stack<>();
 		Queue<String> newQueue = new Queue<>();
 		
-	int size = s.size();
+	    int size = s.size();
 	
 //		
 //		for(int i = 0; i < s.size();i++) {
@@ -69,9 +69,7 @@ public class Midterm1 {
 		   s.push("a");
 		   s.push("b");
 		   s.push("c");
-		   
-		   
-		 
+		   		 
 		   StdOut.println(s + "=> " + transform(s)); // expected output: c b a => c C b B a A
 		   StdOut.println("old S= "+s);
 	}
