@@ -263,7 +263,7 @@ public class KdTreeST<Value> {
 		
 		Queue<Point2D> points = new Queue<Point2D>();
 		range(rect,points,root);
-		//System.out.println("debug range: "+points);
+		//System.out.println("Debug range: " + points);
 		return points;
 	}
 	
@@ -288,36 +288,37 @@ public class KdTreeST<Value> {
 	 * Find closest point to a given query point 
 	 * @return closet point
 	 */
-	public Point2D nearest(Point2D key) {
-		if(key == null) {
+	public Point2D nearest(Point2D point) {
+		if(point == null) {
 			throw new NullPointerException();
 		}
 		
 		Point2D nearestPoint = root.key;
 		
-		return nearest(key, root, nearestPoint);
+		return nearest(point, root, nearestPoint);
 	}
 	
 	//helper method for search both subtrees
-	private Point2D nearest(Point2D key, Node node,Point2D nearestPoint) {
+	//bug some where
+	private Point2D nearest(Point2D point, Node root,Point2D nearestPoint) {
 		
-		if(node == null) {
+		if(root == null) {
 			return nearestPoint;
 		}
-		if(node.rect.distanceSquaredTo(key) > nearestPoint.distanceSquaredTo(key)) {
+		if(root.rect.distanceSquaredTo(point) > nearestPoint.distanceSquaredTo(point)) {
 			return nearestPoint;
 		}
-		if(key.distanceSquaredTo(node.key) < key.distanceSquaredTo(nearestPoint)) {
-			nearestPoint= node.key;		
+		if(point.distanceSquaredTo(root.key) < point.distanceSquaredTo(nearestPoint)) {
+			nearestPoint= root.key;		
 		}
 		
-		if(node.lb !=null && node.lb.rect.contains(key)) {
-			nearestPoint = nearest(key,node.lb,nearestPoint);
-			nearestPoint = nearest(key,node.rt,nearestPoint);
+		if(root.lb !=null && root.lb.rect.contains(point)) {
+			nearestPoint = nearest(point,root.lb,nearestPoint);
+			nearestPoint = nearest(point,root.rt,nearestPoint);
 		}
-		else if(node.rt !=null && node.rt.rect.contains(key)) {
-			nearestPoint = nearest(key,node.rt,nearestPoint);
-			nearestPoint = nearest(key,node.lb,nearestPoint);
+		else  {
+			nearestPoint = nearest(point,root.rt,nearestPoint);
+			nearestPoint = nearest(point,root.lb,nearestPoint);
 		}
 		
 		

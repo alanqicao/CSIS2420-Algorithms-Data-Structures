@@ -4,6 +4,8 @@ import java.util.Iterator;
 
 import java.util.NoSuchElementException;
 
+import a05.KdTreeST.Node;
+import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.StdRandom;
 
 /**
@@ -216,4 +218,43 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 		
 		
 	}
+	
+	/*
+	public Point2D nearest(Point2D point) {
+		if(point == null) {
+			throw new NullPointerException();
+		}
+		
+		Point2D nearestPoint = root.key;
+		
+		return nearest(point, root, nearestPoint);
+	}
+	
+	//helper method for search both subtrees
+	//bug some where
+	private Point2D nearest(Point2D point, Node root,Point2D nearestPoint) {
+		
+		if(root == null) {
+			return nearestPoint;
+		}
+		if(root.rect.distanceSquaredTo(point) > nearestPoint.distanceSquaredTo(point)) {
+			return nearestPoint;
+		}
+		if(point.distanceSquaredTo(root.key) < point.distanceSquaredTo(nearestPoint)) {
+			nearestPoint= root.key;		
+		}
+		
+		if(root.lb !=null && root.lb.rect.contains(point)) {
+			nearestPoint = nearest(point,root.lb,nearestPoint);
+			nearestPoint = nearest(point,root.rt,nearestPoint);
+		}
+		else if(root.rt !=null && root.rt.rect.contains(point)) {
+			nearestPoint = nearest(point,root.rt,nearestPoint);
+			nearestPoint = nearest(point,root.lb,nearestPoint);
+		}
+		
+		
+		return nearestPoint;
+	}
+*/
 }

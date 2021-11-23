@@ -143,7 +143,7 @@ public class PointST<Value> {
 	   }
 	   
 	   /**
-	    * unit testing of the methods (not graded) 
+	    * testing 
 	    * @param args
 	    */
 	   public static void main(String[] args) {
