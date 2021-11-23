@@ -25,6 +25,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 
 public class MazeUI extends JFrame {
 	private Image img_go = new ImageIcon(MazeUI.class.getResource("/finalProject_Maze/source/go.png")).getImage().getScaledInstance(90, 30, Image.SCALE_SMOOTH);
@@ -41,8 +42,6 @@ public class MazeUI extends JFrame {
 	private Image img_steps = new ImageIcon(MazeUI.class.getResource("/finalProject_Maze/source/steps.png")).getImage().getScaledInstance(40, 50, Image.SCALE_SMOOTH);
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
 
 	/**
 	 * Launch the application.
@@ -291,16 +290,20 @@ public class MazeUI extends JFrame {
 		lblNewLabel_4_2_2.setBounds(10, 0, 41, 42);
 		panel_4_2_2.add(lblNewLabel_4_2_2);
 		
-		textField = new JTextField();
-		textField.setBounds(143, 11, 86, 20);
-		panel_4_2_2.add(textField);
-		textField.setColumns(10);
-		
 		JLabel lblNewLabel_6_1 = new JLabel("Time:");
 		lblNewLabel_6_1.setForeground(Color.WHITE);
 		lblNewLabel_6_1.setFont(new Font("Dialog", Font.BOLD, 14));
 		lblNewLabel_6_1.setBounds(58, 14, 46, 14);
 		panel_4_2_2.add(lblNewLabel_6_1);
+		
+		JLabel lblNewLabel_7 = new JLabel("00:00:00");
+		lblNewLabel_7.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_7.setFont(new Font("Dialog", Font.BOLD, 14));
+		lblNewLabel_7.setOpaque(true);
+		lblNewLabel_7.setForeground(new Color(0, 0, 255));
+		lblNewLabel_7.setBackground(new Color(255, 255, 255));
+		lblNewLabel_7.setBounds(114, 11, 96, 19);
+		panel_4_2_2.add(lblNewLabel_7);
 		
 		JPanel panel_4_2_2_1 = new JPanel();
 		panel_4_2_2_1.setLayout(null);
@@ -320,9 +323,13 @@ public class MazeUI extends JFrame {
 		lblNewLabel_6.setBounds(49, 11, 46, 14);
 		panel_4_2_2_1.add(lblNewLabel_6);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(118, 10, 86, 20);
-		panel_4_2_2_1.add(textField_1);
-		textField_1.setColumns(10);
+		JLabel lblNewLabel_7_1 = new JLabel("0");
+		lblNewLabel_7_1.setOpaque(true);
+		lblNewLabel_7_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_7_1.setForeground(new Color(220, 20, 60));
+		lblNewLabel_7_1.setFont(new Font("Dialog", Font.BOLD, 14));
+		lblNewLabel_7_1.setBackground(Color.WHITE);
+		lblNewLabel_7_1.setBounds(116, 9, 96, 19);
+		panel_4_2_2_1.add(lblNewLabel_7_1);
 	}
 }
