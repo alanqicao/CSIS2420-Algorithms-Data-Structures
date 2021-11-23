@@ -36,6 +36,7 @@ public class PetApp {
 		for (Integer el : containNumbers) {
 			if (st.contains(el)) {
 				System.out.println("\nPet associated with " + el + ": " + st.get(el));
+				
 			}
 			else
 				System.out.println("\nThe key " + el + " was not found in the symbol table.");
