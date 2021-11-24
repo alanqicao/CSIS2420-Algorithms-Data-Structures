@@ -1,22 +1,15 @@
 package finalProject_Maze;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-
-import java.awt.GridBagLayout;
 import java.awt.Image;
-import java.awt.FlowLayout;
-import javax.swing.SpringLayout;
 import javax.swing.JLabel;
 import java.awt.Color;
+
+import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
-import java.awt.CardLayout;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JSpinner;
@@ -24,10 +17,15 @@ import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextField;
-import javax.swing.JTextPane;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.BorderLayout;
 
 public class MazeUI extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Image img_go = new ImageIcon(MazeUI.class.getResource("/finalProject_Maze/source/go.png")).getImage().getScaledInstance(90, 30, Image.SCALE_SMOOTH);
 	private Image img_quit = new ImageIcon(MazeUI.class.getResource("/finalProject_Maze/source/quit.png")).getImage().getScaledInstance(100, 50, Image.SCALE_SMOOTH);
 	private Image img_logo = new ImageIcon(MazeUI.class.getResource("/finalProject_Maze/source/logo.png")).getImage().getScaledInstance(290, 120, Image.SCALE_SMOOTH);
@@ -40,8 +38,8 @@ public class MazeUI extends JFrame {
 	private Image img_computer = new ImageIcon(MazeUI.class.getResource("/finalProject_Maze/source/computer.png")).getImage().getScaledInstance(50, 60, Image.SCALE_SMOOTH);
 	private Image img_time = new ImageIcon(MazeUI.class.getResource("/finalProject_Maze/source/time.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 	private Image img_steps = new ImageIcon(MazeUI.class.getResource("/finalProject_Maze/source/steps.png")).getImage().getScaledInstance(40, 50, Image.SCALE_SMOOTH);
-
 	private JPanel contentPane;
+    int size;
 
 	/**
 	 * Launch the application.
@@ -63,9 +61,10 @@ public class MazeUI extends JFrame {
 	 * Create the frame.
 	 */
 	public MazeUI() {
+		size = 6;//defalu
 		setBackground(new Color(47, 79, 79));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1213, 720);
+		setBounds(100, 100, 1213, 897);
 		setUndecorated(true);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(47, 79, 79));
@@ -75,7 +74,7 @@ public class MazeUI extends JFrame {
 		
 		JPanel panelMenu = new JPanel();
 		panelMenu.setBackground(new Color(0, 128, 128));
-		panelMenu.setBounds(0, 0, 336, 720);
+		panelMenu.setBounds(0, 0, 336, 897);
 		contentPane.add(panelMenu);
 		panelMenu.setLayout(null);
 		
@@ -100,6 +99,8 @@ public class MazeUI extends JFrame {
 		JSpinner spinner = new JSpinner();
 		spinner.setBounds(203, 51, 74, 33);
 		panel.add(spinner);
+		
+		//size = (int) spinner.getValue();
 		
 		JLabel lblNewLabel_2 = new JLabel("Size:");
 		lblNewLabel_2.setForeground(new Color(255, 255, 255));
@@ -170,6 +171,16 @@ public class MazeUI extends JFrame {
 		panel_4.setLayout(null);
 		
 		JLabel lblNewLabel_4 = new JLabel("");
+		lblNewLabel_4.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				MazeModified maze = new MazeModified(size);
+				StdDraw.enableDoubleBuffering();
+				maze.draw();
+				maze.solveDFS();
+				maze.solveBFS();
+			}
+		});
 		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_4.setIcon(new ImageIcon(img_go));
 		lblNewLabel_4.setBounds(10, 11, 119, 58);
@@ -182,6 +193,12 @@ public class MazeUI extends JFrame {
 		panelMenu.add(panel_4_1);
 		
 		JLabel lblNewLabel_4_1 = new JLabel("");
+		lblNewLabel_4_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO QUIT!!! BUTTON
+			}
+		});
 		lblNewLabel_4_1.setIcon(new ImageIcon(img_quit));
 		lblNewLabel_4_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_4_1.setBounds(10, 11, 119, 58);
@@ -200,6 +217,12 @@ public class MazeUI extends JFrame {
 		panel_3.add(panel_4_2);
 		
 		JLabel lblNewLabel_4_2 = new JLabel("");
+		lblNewLabel_4_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				//TODO Restart!!!!!!Button
+			}
+		});
 		lblNewLabel_4_2.setIcon(new ImageIcon(img_restart));
 		lblNewLabel_4_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_4_2.setBounds(10, 11, 119, 58);
@@ -217,6 +240,12 @@ public class MazeUI extends JFrame {
 		panel_3.add(panel_4_2_1);
 		
 		JLabel lblNewLabel_4_2_1 = new JLabel("");
+		lblNewLabel_4_2_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				//TODO Pause!!!!Button
+			}
+		});
 		lblNewLabel_4_2_1.setIcon(new ImageIcon(img_pause));
 		lblNewLabel_4_2_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_4_2_1.setBounds(10, 11, 119, 58);
@@ -247,6 +276,7 @@ public class MazeUI extends JFrame {
 		JButton lblNewLabel_5 = new JButton("Human Play");
 		lblNewLabel_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//TODO human play!!!!!
 			}
 		});
 		lblNewLabel_5.setFont(new Font("Dialog", Font.BOLD, 15));
@@ -272,6 +302,11 @@ public class MazeUI extends JFrame {
 		panel_4_2_1_1_1.add(lblNewLabel_4_3_1_1_1);
 		
 		JButton lblNewLabel_5_1 = new JButton("Computer Play");
+		lblNewLabel_5_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//TODO Computer Play!!!!
+			}
+		});
 		lblNewLabel_5_1.setBackground(new Color(0, 139, 139));
 		lblNewLabel_5_1.setForeground(Color.BLACK);
 		lblNewLabel_5_1.setFont(new Font("Dialog", Font.BOLD, 15));
@@ -331,5 +366,16 @@ public class MazeUI extends JFrame {
 		lblNewLabel_7_1.setBackground(Color.WHITE);
 		lblNewLabel_7_1.setBounds(116, 9, 96, 19);
 		panel_4_2_2_1.add(lblNewLabel_7_1);
+		
+		JPanel panel_5 = new JPanel();
+		panel_5.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		panel_5.setBackground(new Color(0, 128, 128));
+		panel_5.setBounds(335, 170, 862, 727);
+		contentPane.add(panel_5);
+		panel_5.setLayout(new BorderLayout(0, 0));
+		
+		
+		
+		
 	}
 }

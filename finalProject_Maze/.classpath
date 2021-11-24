@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="C:/Users/caose_000/.p2/pool/plugins/org.eclipse.osgi_3.16.100.v20201030-1916.jar" sourcepath="C:/Users/caose_000/.p2/pool/plugins/org.eclipse.osgi_3.16.100.v20201030-1916.jar"/>
 	<classpathentry kind="lib" path="C:/Users/caose_000/.p2/pool/plugins/org.eclipse.core.commands_3.9.800.v20201021-1339.jar" sourcepath="C:/Users/caose_000/.p2/pool/plugins/org.eclipse.core.commands_3.9.800.v20201021-1339.jar"/>
 	<classpathentry kind="lib" path="C:/Users/caose_000/.p2/pool/plugins/org.eclipse.equinox.common_3.14.0.v20201102-2053.jar" sourcepath="C:/Users/caose_000/.p2/pool/plugins/org.eclipse.equinox.common_3.14.0.v20201102-2053.jar"/>
@@ -20,5 +20,6 @@
 	<classpathentry kind="lib" path="C:/Users/caose_000/.p2/pool/plugins/org.eclipse.ui.forms_3.11.0.v20201025-0656.jar" sourcepath="C:/Users/caose_000/.p2/pool/plugins/org.eclipse.ui.forms_3.11.0.v20201025-0656.jar"/>
 	<classpathentry kind="lib" path="swing2swt.jar"/>
 	<classpathentry kind="lib" path="jgoodies-forms-1.8.0.jar" sourcepath="jgoodies-forms-1.8.0-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/caose_000/Documents/Github/CSIS2420-Algorithms-Data-Structures/finalProject_Maze/lib/algs4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
