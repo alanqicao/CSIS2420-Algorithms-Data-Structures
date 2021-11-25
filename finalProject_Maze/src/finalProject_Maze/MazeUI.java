@@ -10,6 +10,9 @@ import java.awt.Color;
 
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JSpinner;
@@ -104,8 +107,15 @@ public class MazeUI extends JFrame {
 		JSpinner spinner = new JSpinner();
 		spinner.setBounds(203, 51, 74, 33);
 		panel.add(spinner);
+		spinner.setValue(6);
+		spinner.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				size = (int) spinner.getValue();
+				
+			}
+		});
 		
-		//size = (int) spinner.getValue();
 		
 		JLabel lblNewLabel_2 = new JLabel("Size:");
 		lblNewLabel_2.setForeground(new Color(255, 255, 255));
@@ -177,7 +187,7 @@ public class MazeUI extends JFrame {
 		
 		//create thread
 		Runnable runnable=()->{
-			MazeModified starMaze=new MazeModified(size);
+			new MazeModified(size);
 
 		};
 		
@@ -204,12 +214,8 @@ public class MazeUI extends JFrame {
 		JLabel lblNewLabel_4_1 = new JLabel("");
 		lblNewLabel_4_1.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
-			
-				System.exit(0);
-				
-				
-			
+			public void mouseClicked(MouseEvent e) {			
+				System.exit(0);		
 				// TODO QUIT!!! BUTTON
 			}
 		});
