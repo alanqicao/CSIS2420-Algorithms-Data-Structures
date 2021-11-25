@@ -19,8 +19,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
 import java.awt.BorderLayout;
-
+/**
+ * 
+ * @author Danny and Qi
+ *
+ */
 public class MazeUI extends JFrame {
 	/**
 	 * 
@@ -61,7 +66,7 @@ public class MazeUI extends JFrame {
 	 * Create the frame.
 	 */
 	public MazeUI() {
-		size = 6;//defalu
+		size = 10;//defalu
 		setBackground(new Color(47, 79, 79));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1213, 897);
@@ -170,12 +175,10 @@ public class MazeUI extends JFrame {
 		panelMenu.add(panel_4);
 		panel_4.setLayout(null);
 		
+		//create thread
 		Runnable runnable=()->{
-			MazeModified maze = new MazeModified(size);
-			StdDraw.enableDoubleBuffering();
-			maze.draw();
-			maze.solveDFS();
-			maze.solveBFS();
+			new MazeModified(size);
+
 		};
 		
 		JLabel lblNewLabel_4 = new JLabel("");
@@ -184,6 +187,7 @@ public class MazeUI extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				Thread thread = new Thread(runnable);
 				thread.start();
+				//Go button!!!!
 			}
 		});
 		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
@@ -201,6 +205,9 @@ public class MazeUI extends JFrame {
 		lblNewLabel_4_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				dispose();
+				
+				
 				// TODO QUIT!!! BUTTON
 			}
 		});
@@ -278,17 +285,6 @@ public class MazeUI extends JFrame {
 		lblNewLabel_4_3_1_1.setBounds(10, 11, 74, 58);
 		panel_4_2_1_1.add(lblNewLabel_4_3_1_1);
 		
-		JButton lblNewLabel_5 = new JButton("Human Play");
-		lblNewLabel_5.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//TODO human play!!!!!
-			}
-		});
-		lblNewLabel_5.setFont(new Font("Dialog", Font.BOLD, 15));
-		lblNewLabel_5.setForeground(new Color(0, 0, 0));
-		lblNewLabel_5.setBounds(76, 21, 129, 37);
-		panel_4_2_1_1.add(lblNewLabel_5);
-		
 		JPanel panel_4_2_1_1_1 = new JPanel();
 		panel_4_2_1_1_1.setLayout(null);
 		panel_4_2_1_1_1.setBackground(new Color(0, 139, 139));
@@ -305,18 +301,6 @@ public class MazeUI extends JFrame {
 		lblNewLabel_4_3_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_4_3_1_1_1.setBounds(10, 11, 74, 58);
 		panel_4_2_1_1_1.add(lblNewLabel_4_3_1_1_1);
-		
-		JButton lblNewLabel_5_1 = new JButton("Computer Play");
-		lblNewLabel_5_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//TODO Computer Play!!!!
-			}
-		});
-		lblNewLabel_5_1.setBackground(new Color(0, 139, 139));
-		lblNewLabel_5_1.setForeground(Color.BLACK);
-		lblNewLabel_5_1.setFont(new Font("Dialog", Font.BOLD, 15));
-		lblNewLabel_5_1.setBounds(76, 21, 165, 37);
-		panel_4_2_1_1_1.add(lblNewLabel_5_1);
 		
 		JPanel panel_4_2_2 = new JPanel();
 		panel_4_2_2.setLayout(null);

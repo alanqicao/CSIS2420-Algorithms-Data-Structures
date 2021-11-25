@@ -447,7 +447,7 @@ import javax.swing.KeyStroke;
  *  @author Robert Sedgewick
  *  @author Kevin Wayne
  */
-public final class StdDraw implements ActionListener, MouseListener, MouseMotionListener, KeyListener,Runnable {
+public final class StdDraw implements ActionListener, MouseListener, MouseMotionListener, KeyListener {
 
     /**
      *  The color black.
@@ -672,6 +672,8 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         // frame stuff
         RetinaImageIcon icon = new RetinaImageIcon(onscreenImage);
         JLabel draw = new JLabel(icon);
+        draw.setOpaque(true);
+        draw.setBackground(new Color(0, 139, 139));
 
         draw.addMouseListener(std);
         draw.addMouseMotionListener(std);
@@ -681,9 +683,10 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         frame.setFocusTraversalKeysEnabled(false);  // allow VK_TAB with isKeyPressed()
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);            // closes all windows
+        frame.setUndecorated(true);
         // frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);      // closes only current window
-        frame.setTitle("Standard Draw");
-        frame.setJMenuBar(createMenuBar());
+        //frame.setTitle("");
+        //frame.setJMenuBar(createMenuBar());
         frame.pack();
         frame.requestFocusInWindow();
         frame.setLocation(450,300);
@@ -2068,10 +2071,6 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         StdDraw.text(0.8, 0.8, "white text");
     }
 
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 }

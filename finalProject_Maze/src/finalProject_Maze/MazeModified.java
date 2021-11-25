@@ -1,7 +1,5 @@
 package finalProject_Maze;
 
-
-
 import edu.princeton.cs.algs4.Queue;
 
 
@@ -66,7 +64,7 @@ public class MazeModified  {
 		StdDraw.setYscale(0, n + 2);
 		init();
 		generate();
-		//start();
+		start();
 	}
 
 	private void init() {
