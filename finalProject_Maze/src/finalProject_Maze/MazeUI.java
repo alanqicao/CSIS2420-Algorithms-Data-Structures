@@ -177,7 +177,7 @@ public class MazeUI extends JFrame {
 		
 		//create thread
 		Runnable runnable=()->{
-			new MazeModified(size);
+			MazeModified starMaze=new MazeModified(size);
 
 		};
 		
@@ -205,9 +205,11 @@ public class MazeUI extends JFrame {
 		lblNewLabel_4_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				dispose();
+			
+				System.exit(0);
 				
 				
+			
 				// TODO QUIT!!! BUTTON
 			}
 		});
