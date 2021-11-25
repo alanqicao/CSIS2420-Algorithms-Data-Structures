@@ -447,7 +447,7 @@ import javax.swing.KeyStroke;
  *  @author Robert Sedgewick
  *  @author Kevin Wayne
  */
-public final class StdDraw implements ActionListener, MouseListener, MouseMotionListener, KeyListener {
+public final class StdDraw implements ActionListener, MouseListener, MouseMotionListener, KeyListener,Runnable {
 
     /**
      *  The color black.
@@ -598,7 +598,8 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 
     // set of key codes currently pressed down
     private static TreeSet<Integer> keysDown;
-
+    
+    private Thread thread = null;
     // singleton pattern: client can't instantiate
     private StdDraw() { }
 
@@ -687,7 +688,6 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         frame.requestFocusInWindow();
         frame.setLocation(450,300);
         frame.setAlwaysOnTop(true);;
-        frame.setAutoRequestFocus(true);
         frame.setVisible(true);
     }
 
@@ -2067,5 +2067,11 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         StdDraw.setPenColor(StdDraw.WHITE);
         StdDraw.text(0.8, 0.8, "white text");
     }
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

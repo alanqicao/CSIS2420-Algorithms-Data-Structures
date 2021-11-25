@@ -40,7 +40,7 @@ public class MazeUI extends JFrame {
 	private Image img_steps = new ImageIcon(MazeUI.class.getResource("/finalProject_Maze/source/steps.png")).getImage().getScaledInstance(40, 50, Image.SCALE_SMOOTH);
 	private JPanel contentPane;
     int size;
-
+    
 	/**
 	 * Launch the application.
 	 */
@@ -170,15 +170,20 @@ public class MazeUI extends JFrame {
 		panelMenu.add(panel_4);
 		panel_4.setLayout(null);
 		
+		Runnable runnable=()->{
+			MazeModified maze = new MazeModified(size);
+			StdDraw.enableDoubleBuffering();
+			maze.draw();
+			maze.solveDFS();
+			maze.solveBFS();
+		};
+		
 		JLabel lblNewLabel_4 = new JLabel("");
 		lblNewLabel_4.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				MazeModified maze = new MazeModified(size);
-				StdDraw.enableDoubleBuffering();
-				maze.draw();
-				maze.solveDFS();
-				maze.solveBFS();
+				Thread thread = new Thread(runnable);
+				thread.start();
 			}
 		});
 		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
@@ -374,8 +379,8 @@ public class MazeUI extends JFrame {
 		contentPane.add(panel_5);
 		panel_5.setLayout(new BorderLayout(0, 0));
 		
-		
-		
-		
+
 	}
+
+	
 }
