@@ -86,26 +86,14 @@ public class MazeUI extends JFrame {
 		lblcone.setIcon(new ImageIcon(img_logo));
 		lblcone.setBounds(25, 65, 287, 123);
 		
-		panelMenu.add(lblcone);
+		panelMenu.add(lblcone);	
 		
 		JPanel panel = panel(panelMenu);
 		
 		lbNewLabel_1(panel);
 		
-		JSpinner spinner = new JSpinner();
-		spinner.setBounds(203, 51, 74, 33);
-		panel.add(spinner);
-		spinner.setValue(15);
-		
-		spinner.addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				size = (int) spinner.getValue();
-				
-			}
-		});
-		
-		
+		spinner(panel);
+			
 		JLabel lblNewLabel_2 = new JLabel("Size:");
 		lblNewLabel_2.setForeground(new Color(255, 255, 255));
 		lblNewLabel_2.setFont(new Font("Dialog", Font.BOLD, 17));
@@ -364,6 +352,21 @@ public class MazeUI extends JFrame {
 		panel_5.setLayout(new BorderLayout(0, 0));
 		
 
+	}
+
+	private void spinner(JPanel panel) {
+		JSpinner spinner = new JSpinner();
+		spinner.setBounds(203, 51, 74, 33);
+		panel.add(spinner);
+		spinner.setValue(15);
+		
+		spinner.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				size = (int) spinner.getValue();
+				
+			}
+		});
 	}
 
 	private void lbNewLabel_1(JPanel panel) {
