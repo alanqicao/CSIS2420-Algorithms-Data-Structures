@@ -3,10 +3,12 @@
  */
 package grapDFSvsBFS;
 
+import edu.princeton.cs.algs4.BreadthFirstPaths;
 import edu.princeton.cs.algs4.DepthFirstPaths;
 import edu.princeton.cs.algs4.DepthFirstSearch;
 import edu.princeton.cs.algs4.Graph;
 import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.Queue;
 
 
 /**
@@ -42,27 +44,68 @@ public class DFSvsBFS {
 				}
 				System.out.println();
 			
-				//DFS				
+				//DFS		
+				Queue<String> dfsQueue= new Queue<>();
+				String dfsString="";
 				DepthFirstPaths dfs = new DepthFirstPaths(G,source);
 				System.out.println("Paths DFS:              Shortest Paths BFS:");
 				System.out.println("---------------         -------------------");
+				
 				for(int v = 0; v<G.V();v++) {
 					if(dfs.hasPathTo(v)) {
 						for(int x: dfs.pathTo(v)) {
 			
 							if(x == source) {
-								System.out.print(""+x);
+								dfsString = dfsString+x;
 							}else {
-								System.out.print(".."+x);
+								dfsString=dfsString+".."+x;
 							}
-							System.out.println();
+							
 						}
-						
+						dfsQueue.enqueue(dfsString);
+						dfsString="";
 					}
 				}
-				//BFS
+			
 				
-		
+				System.out.println();
+				//BFS				
+				BreadthFirstPaths bfp= new BreadthFirstPaths(G,source);
+				Queue<String> bfpQueue= new Queue<>();
+				
+				for(int v = 0; v<G.V();v++) {
+					if(bfp.hasPathTo(v)) {
+						for(int x: bfp.pathTo(v)) {
+			
+							if(x == source) {
+								dfsString = dfsString+x;
+							}else {
+								dfsString=dfsString+".."+x;
+
+							}
+							
+						}
+						bfpQueue.enqueue(dfsString);
+						dfsString="";
+					}
+				}
+				StringBuilder dfsVsBfs = new StringBuilder();
+				Queue<String> printQueue = new Queue<>();
+				
+				for(int v = 0; v<G.V();v++) {
+					
+					System.out.format("%4d", i);
+				}
+				
+			
+				
+				//System.out.println(dfsVsBfs);
+				
+				
+//				dfsQueue.forEach(System.out::println);
+//				bfpQueue.forEach(System.out::println);
+				
 	}
+	
 
 }

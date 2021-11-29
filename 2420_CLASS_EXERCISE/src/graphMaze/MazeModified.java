@@ -138,7 +138,7 @@ public class MazeModified {
 	        StdDraw.circle(x + 0.5, y + 0.5, 0.25);
 
 	        StdDraw.show();
-	        StdDraw.pause(250);
+	        StdDraw.pause(50);
 	    }
 
 	    // solve the maze starting from the start state
@@ -174,7 +174,7 @@ public class MazeModified {
 	    // a test client
 	    public static void main(String[] args) {
 	       // int n = Integer.parseInt(args[0]);
-	    	int n = 50;
+	    	int n = 30;
 	        MazeModified maze = new MazeModified(n);
 	        StdDraw.enableDoubleBuffering();
 	        maze.draw();
