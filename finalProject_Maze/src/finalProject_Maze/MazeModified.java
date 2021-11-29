@@ -337,7 +337,7 @@ public class MazeModified {
 		draw();
 
 	}
-
+//
 	// a test client
 	public static void main(String[] args) {
 		int n = 25;

@@ -91,7 +91,7 @@ public class MazeUI extends JFrame {
 		JPanel panel = panel(panelMenu);
 		
 		lbNewLabel_1(panel);
-		
+	
 		spinner(panel);
 			
 		JLabel lblNewLabel_2 = new JLabel("Size:");
