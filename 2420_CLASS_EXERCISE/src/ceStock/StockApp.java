@@ -92,8 +92,8 @@ public class StockApp {
 			e.printStackTrace();
 		}
 		
-		System.out.printf("\n\nD) Closing price from 08/31/18: $%.2f",st.get(date1));
-		System.out.printf("\nE) Closing price from 03/10/20: $%.2f",st.get(date2));
+		System.out.printf("\n\nD) Closing price from 08/31/18: $%.2f.",st.get(date1));
+		System.out.printf("\nE) Closing price from 03/10/20: $%.2f.",st.get(date2));
 		condition = st.get(date2)-st.get(date1)>0? "increased":"decreased";
 		System.out.printf("\nF) The closing price %s by $%.2f.",condition,Math.abs(st.get(date2)-st.get(date1)));
 				
