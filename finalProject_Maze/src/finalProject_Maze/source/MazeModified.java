@@ -1,7 +1,8 @@
-package finalProject_Maze;
+package finalProject_Maze.source;
 
 import edu.princeton.cs.algs4.Queue;
-import edu.princeton.cs.algs4.Stack;
+
+
 import edu.princeton.cs.algs4.StdRandom;
 
 /******************************************************************************
@@ -18,7 +19,11 @@ import edu.princeton.cs.algs4.StdRandom;
  *
  ******************************************************************************/
 
-public class MazeModified {
+public class MazeModified  {
+	/**
+	 * 
+	 */
+
 	private int n; // dimension of maze
 	private boolean[][] north; // is there a wall to north of cell i, j
 	private boolean[][] east;
@@ -27,6 +32,7 @@ public class MazeModified {
 	private boolean[][] visited;
 	private boolean done = false;
 	static final int INFINITE = Integer.MAX_VALUE;
+	static final int UNDEFINED = -1;
 
 	/**
 	 * Private class to create a point
@@ -37,13 +43,10 @@ public class MazeModified {
 	private class Point {
 		int x; // stores x value
 		int y; // stores y value
-		int distance; // distance from start
-		Point predecessor;
 
 		Point(int x, int y) {
 			this.x = x;
 			this.y = y;
-			this.distance = INFINITE;
 		}
 
 		public int getX() {
@@ -53,19 +56,6 @@ public class MazeModified {
 		public int getY() {
 			return y;
 		}
-
-		public Point getPredecessor() {
-			return predecessor;
-		}
-
-		public int getDistance() {
-			return distance;
-		}
-
-		@Override
-		public String toString() {
-			return "(" + x + "," + y + ") | Predecessor: " + predecessor;
-		}
 	}
 
 	public MazeModified(int n) {
@@ -74,6 +64,7 @@ public class MazeModified {
 		StdDraw.setYscale(0, n + 2);
 		init();
 		generate();
+		start();
 	}
 
 	private void init() {
@@ -198,101 +189,72 @@ public class MazeModified {
 	private void solveBFS(int x, int y) {
 		// Queue to store points for BFS
 		Queue<Point> q = new Queue<>();
-		Stack<Point> endPoint = new Stack<>();
 
-		for(int i = 0; i < n+2; i++) {
-			for(int j = 0; j < n+2; j++) {
-				visited[i][j] = false;
+		// Arrays to store approximate distances
+		int[][] distances = new int[n+2][n+2];
+		int[][] predecessors = new int[n+2][n+2];
+
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				distances[i][j] = INFINITE;
+				predecessors[i][j] = UNDEFINED;
 			}
 		}
-		
+
+		// Store the first node
 		visited[x][y] = true;
-		Point start = new Point(x, y);
-		start.distance = 0;
-		q.enqueue(start);
+		q.enqueue(new Point(x, y));
+		distances[x][y] = 0;
+		predecessors[x][y] = -1;
 
-		// Loop through the maze and visit each node
 		while (!q.isEmpty()) {
-			Point point = q.dequeue();
+			Point b = q.dequeue();
 
+			System.out.println(b.getX() + " " + b.getY());
 			StdDraw.setPenColor(StdDraw.ORANGE);
-			StdDraw.filledCircle(point.getX() + 0.5, point.getY() + 0.5, 0.25);
+			StdDraw.filledCircle(b.getX() + 0.5, b.getY() + 0.5, 0.25);
 			StdDraw.show();
-			StdDraw.pause(5);
+			StdDraw.pause(30);
 
 			// calculate the new distances
-			int newDistance = point.distance + 1;
+			int newDistance = distances[b.getX()][b.getY()] + 1;
+			int newPredecessor = distances[b.getX()][b.getY()];
 
-			// NORTH
-			if (!north[point.getX()][point.getY()] && !visited[point.getX()][point.getY() + 1]) {
-				Point c = new Point(point.getX(), point.getY() + 1);
-				visited[point.getX()][point.getY() + 1] = true;
-				c.distance = newDistance;
-				c.predecessor = point;
-				if (c.getX() == n / 2 && c.getY() == n / 2)
-					endPoint.push(c);
+			if (!north[b.getX()][b.getY()] && !visited[b.getX()][b.getY() + 1]) {
+				Point c = new Point(b.getX(), b.getY() + 1);
+				visited[b.getX()][b.getY() + 1] = true;
+				distances[b.getX()][b.getY() + 1] = newDistance;
+				predecessors[b.getX()][b.getY() + 1] = newPredecessor;
 				q.enqueue(c);
-				//allPoints.push(c);
 			}
-			// EAST
-			if (!east[point.getX()][point.getY()] && !visited[point.getX() + 1][point.getY()]) {
-				Point c = new Point(point.getX() + 1, point.getY());
-				visited[point.getX() + 1][point.getY()] = true;
-				c.distance = newDistance;
-				c.predecessor = point;
-				if (c.getX() == n / 2 && c.getY() == n / 2)
-					endPoint.push(c);
+			if (!east[b.getX()][b.getY()] && !visited[b.getX() + 1][b.getY()]) {
+				Point c = new Point(b.getX() + 1, b.getY());
+				visited[b.getX() + 1][b.getY()] = true;
+				distances[b.getX() + 1][b.getY()] = newDistance;
+				predecessors[b.getX() + 1][b.getY()] = newPredecessor;
 				q.enqueue(c);
-				//allPoints.push(c);
 			}
-			// SOUTH
-			if (!south[point.getX()][point.getY()] && !visited[point.getX()][point.getY() - 1]) {
-				Point c = new Point(point.getX(), point.getY() - 1);
-				visited[point.getX()][point.getY() - 1] = true;
-				c.distance = newDistance;
-				c.predecessor = point;
-				if (c.getX() == n / 2 && c.getY() == n / 2)
-					endPoint.push(c);
+			if (!south[b.getX()][b.getY()] && !visited[b.getX()][b.getY() - 1]) {
+				Point c = new Point(b.getX(), b.getY() - 1);
+				visited[b.getX()][b.getY() - 1] = true;
+				distances[b.getX()][b.getY() - 1] = newDistance;
+				predecessors[b.getX()][b.getY() - 1] = newPredecessor;
 				q.enqueue(c);
-				//allPoints.push(c);
 			}
-			// WEST
-			if (!west[point.getX()][point.getY()] && !visited[point.getX() - 1][point.getY()]) {
-				Point c = new Point(point.getX() - 1, point.getY());
-				visited[point.getX() - 1][point.getY()] = true;
-				c.distance = newDistance;
-				c.predecessor = point;
-				if (c.getX() == n / 2 && c.getY() == n / 2)
-					endPoint.push(c);
+			if (!west[b.getX()][b.getY()] && !visited[b.getX() - 1][b.getY()]) {
+				Point c = new Point(b.getX() - 1, b.getY());
+				visited[b.getX() - 1][b.getY()] = true;
+				distances[b.getX() - 1][b.getY()] = newDistance;
+				predecessors[b.getX() - 1][b.getY()] = newPredecessor;
 				q.enqueue(c);
-				//allPoints.push(c);
 			}
+
+			// TODO: Color the shortest path red
+			
 		}
-		
-		// TODO: Reconstruct path and color the shortest path red
-		Stack<Point> path = new Stack<>();
-		Point shortestPath = new Point(-1, -1);
-		shortestPath.distance = -1;
-		for(Point p : endPoint) {
-			if(p.distance > shortestPath.distance)
-				shortestPath = p;
-		}
-		//for(Point p : endPoint) {
-			path.push(shortestPath);
-			while(shortestPath.getPredecessor() != null) {
-				path.push(shortestPath);
-				shortestPath = shortestPath.predecessor;
-			}
-		//}
-		for(Point p : path) {
-			StdDraw.setPenColor(StdDraw.RED);
-			StdDraw.filledCircle(p.getX() + 0.5, p.getY() + 0.5, 0.25);
-			StdDraw.show();
-			StdDraw.pause(15);
-		}
-		System.out.println("done");
 	}
-	// solve the maze using DFS starting from the start state
+
+	// solve the maze starting from the start state
 	public void solveDFS() {
 		for (int x = 1; x <= n; x++)
 			for (int y = 1; y <= n; y++)
@@ -301,7 +263,6 @@ public class MazeModified {
 		solveDFS(1, 1);
 	}
 
-	// solve the maze using BFS starting from the start state
 	public void solveBFS() {
 		for (int x = 1; x <= n; x++)
 			for (int y = 1; y <= n; y++)
@@ -335,16 +296,17 @@ public class MazeModified {
 	public void start() {
 		StdDraw.enableDoubleBuffering();
 		draw();
-
+		solveDFS();
+		solveBFS();
 	}
-
 	// a test client
 	public static void main(String[] args) {
-		int n = 25;
+//      int n = Integer.parseInt(args[0]);
+		int n = 6;
 		MazeModified maze = new MazeModified(n);
 		StdDraw.enableDoubleBuffering();
 		maze.draw();
-//		maze.solveDFS();
+		maze.solveDFS();
 		maze.solveBFS();
 	}
 

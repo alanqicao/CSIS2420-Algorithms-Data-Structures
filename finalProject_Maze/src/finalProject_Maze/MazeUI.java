@@ -69,7 +69,7 @@ public class MazeUI extends JFrame {
 	 * Create the frame.
 	 */
 	public MazeUI() {
-		size = 10;//defalu
+		size = 15;//defalu
 		setBackground(new Color(47, 79, 79));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1213, 897);
@@ -80,11 +80,7 @@ public class MazeUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JPanel panelMenu = new JPanel();
-		panelMenu.setBackground(new Color(0, 128, 128));
-		panelMenu.setBounds(0, 0, 336, 897);
-		contentPane.add(panelMenu);
-		panelMenu.setLayout(null);
+		JPanel panelMenu = panelMenu();
 		
 		JLabel lblcone = new JLabel("");
 		lblcone.setIcon(new ImageIcon(img_logo));
@@ -92,22 +88,15 @@ public class MazeUI extends JFrame {
 		
 		panelMenu.add(lblcone);
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(0, 139, 139));
-		panel.setBounds(25, 199, 301, 123);
-		panelMenu.add(panel);
-		panel.setLayout(null);
+		JPanel panel = panel(panelMenu);
 		
-		JLabel lblNewLabel_1 = new JLabel("Please set the size of the Maze");
-		lblNewLabel_1.setForeground(new Color(255, 255, 255));
-		lblNewLabel_1.setFont(new Font("Dialog", Font.BOLD, 13));
-		lblNewLabel_1.setBounds(38, 11, 206, 14);
-		panel.add(lblNewLabel_1);
+		lbNewLabel_1(panel);
 		
 		JSpinner spinner = new JSpinner();
 		spinner.setBounds(203, 51, 74, 33);
 		panel.add(spinner);
-		spinner.setValue(6);
+		spinner.setValue(15);
+		
 		spinner.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
@@ -187,7 +176,9 @@ public class MazeUI extends JFrame {
 		
 		//create thread
 		Runnable runnable=()->{
-			new MazeModified(size);
+			MazeModified newMaze=new MazeModified(size);
+			newMaze.start();
+			newMaze.solveBFS();
 
 		};
 		
@@ -226,7 +217,7 @@ public class MazeUI extends JFrame {
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(new Color(0, 128, 128));
-		panel_3.setBounds(335, 0, 862, 170);
+		panel_3.setBounds(335, 0, 878, 170);
 		contentPane.add(panel_3);
 		panel_3.setLayout(null);
 		
@@ -240,6 +231,7 @@ public class MazeUI extends JFrame {
 		lblNewLabel_4_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
 				//TODO Restart!!!!!!Button
 			}
 		});
@@ -367,11 +359,37 @@ public class MazeUI extends JFrame {
 		JPanel panel_5 = new JPanel();
 		panel_5.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		panel_5.setBackground(new Color(0, 128, 128));
-		panel_5.setBounds(335, 170, 862, 727);
+		panel_5.setBounds(335, 170, 878, 727);
 		contentPane.add(panel_5);
 		panel_5.setLayout(new BorderLayout(0, 0));
 		
 
+	}
+
+	private void lbNewLabel_1(JPanel panel) {
+		JLabel lblNewLabel_1 = new JLabel("Please set the size of the Maze");
+		lblNewLabel_1.setForeground(new Color(255, 255, 255));
+		lblNewLabel_1.setFont(new Font("Dialog", Font.BOLD, 13));
+		lblNewLabel_1.setBounds(38, 11, 206, 14);
+		panel.add(lblNewLabel_1);
+	}
+
+	private JPanel panel(JPanel panelMenu) {
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(0, 139, 139));
+		panel.setBounds(25, 199, 301, 123);
+		panelMenu.add(panel);
+		panel.setLayout(null);
+		return panel;
+	}
+
+	private JPanel panelMenu() {
+		JPanel panelMenu = new JPanel();
+		panelMenu.setBackground(new Color(0, 128, 128));
+		panelMenu.setBounds(0, 0, 336, 897);
+		contentPane.add(panelMenu);
+		panelMenu.setLayout(null);
+		return panelMenu;
 	}
 
 	
