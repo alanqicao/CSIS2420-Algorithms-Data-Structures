@@ -10,7 +10,7 @@ import edu.princeton.cs.algs4.KruskalMST;
 
 /**
  * @author Qi Cao
- *
+ * Find minimum weight path to connect every vertex
  */
 public class InternetCE {
 
@@ -18,29 +18,27 @@ public class InternetCE {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String fileString = "/Volumes/GoogleDrive/My Drive/SLCC/Fall2021/CISI2420/Code/2420_CLASS_EXERCISE/src/graphlneternet/Graphlnternet.txt";
+		String fileString = "src\\graphlneternet\\source\\Graphlnternet.txt";
 		In in = new In(fileString);
 		EdgeWeightedGraph G = new EdgeWeightedGraph(in);
-		
 		KruskalMST office = new KruskalMST(G);
 		int verualnode = 8;
-		System.out.println(office.weight());
 		
-		
-		for(Edge el: office.edges()) {
-			
-			if(el.other(el.either())==verualnode) 
-				System.out.println("router"+el.either());				
-			
-			
-			
-			
+		System.out.print("Offices needing to be connected: ");
+		for (Edge el : office.edges()) {
+			if(el.other(el.either()) != verualnode) {
+			System.out.print(el.either() + "-" + el.other(el.either()));
+			System.out.print(" ");}
 		}
 		
-		for(Edge el: office.edges()) {
-			System.out.print(el.either()+"-"+el.other(el.either()));
-			System.out.print(" ");
+		System.out.println();
+		System.out.print("Offices needing a router: ");
+		for (Edge el : office.edges()) {
+			if (el.other(el.either()) == verualnode)
+				System.out.print(el.either()+" ");
 		}
+		System.out.println("\nTotal cost: $"+office.weight());
+		
 		
 
 	}

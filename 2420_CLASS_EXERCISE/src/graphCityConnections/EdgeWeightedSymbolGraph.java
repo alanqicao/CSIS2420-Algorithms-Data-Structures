@@ -59,9 +59,10 @@ public class EdgeWeightedSymbolGraph {
 	            String[] a = in.readLine().split(delimiter);
 	            int v = st.get(a[0]);	            
 	            int w = st.get(a[1]);
-	            double weight = st.get(a[2]);                
+	            double weight =  Double.parseDouble(a[2]);                
 	            Edge e = new Edge(v,w,weight);               
 	            graph.addEdge(e);
+
 	            
 	        }
 	    }
