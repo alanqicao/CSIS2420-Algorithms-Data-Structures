@@ -5,14 +5,15 @@ package grapDFSvsBFS;
 
 import edu.princeton.cs.algs4.BreadthFirstPaths;
 import edu.princeton.cs.algs4.DepthFirstPaths;
-import edu.princeton.cs.algs4.DepthFirstSearch;
 import edu.princeton.cs.algs4.Graph;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Queue;
 
 
 /**
- * @author Alan
+ * @author Qi Cao
+ * This class is to compare DFS and BFS
+ * 
  *
  */
 public class DFSvsBFS {
@@ -21,8 +22,8 @@ public class DFSvsBFS {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String fileString = "/Volumes/GoogleDrive/My Drive/SLCC/Fall2021/CISI2420/Code/2420_CLASS_EXERCISE/src/grapDFSvsBFS/Resocuces/SimpleGraph.txt";
-		In in = new In(fileString); // TODO
+		String fileString = "src/grapDFSvsBFS/Resocuces/SimpleGraph.txt";
+		In in = new In(fileString); 
 		Graph G = new Graph(in);
 		int source = 1;
 		
@@ -53,57 +54,40 @@ public class DFSvsBFS {
 				
 				for(int v = 0; v<G.V();v++) {
 					if(dfs.hasPathTo(v)) {
-						for(int x: dfs.pathTo(v)) {
-			
+						for(int x: dfs.pathTo(v)) {		
 							if(x == source) {
 								dfsString = dfsString+x;
 							}else {
 								dfsString=dfsString+".."+x;
-							}
-							
+							}							
 						}
 						dfsQueue.enqueue(dfsString);
 						dfsString="";
 					}
-				}
+				}				
 			
-				
-				System.out.println();
 				//BFS				
 				BreadthFirstPaths bfp= new BreadthFirstPaths(G,source);
 				Queue<String> bfpQueue= new Queue<>();
 				
 				for(int v = 0; v<G.V();v++) {
 					if(bfp.hasPathTo(v)) {
-						for(int x: bfp.pathTo(v)) {
-			
+						for(int x: bfp.pathTo(v)) {		
 							if(x == source) {
 								dfsString = dfsString+x;
 							}else {
 								dfsString=dfsString+".."+x;
-
-							}
-							
+							}						
 						}
 						bfpQueue.enqueue(dfsString);
 						dfsString="";
 					}
 				}
-				StringBuilder dfsVsBfs = new StringBuilder();
-				Queue<String> printQueue = new Queue<>();
-				
-				for(int v = 0; v<G.V();v++) {
-					
-						System.out.format("%10s %10s\n", dfsQueue.dequeue(),bfpQueue.dequeue());
+				//print
+				for(int v = 0; v<G.V();v++) {				
+					System.out.format("%-23s %-23s\n", dfsQueue.dequeue(),bfpQueue.dequeue());
 				}
-				
-				
-				
-				//System.out.println(dfsVsBfs);
-				
-				
-//				dfsQueue.forEach(System.out::println);
-//				bfpQueue.forEach(System.out::println);
+
 				
 	}
 	

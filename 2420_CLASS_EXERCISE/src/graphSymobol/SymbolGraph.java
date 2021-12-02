@@ -174,7 +174,7 @@ public class SymbolGraph {
 	     * @param args the command-line arguments
 	     */
 	    public static void main(String[] args) {
-	        String filename  = "/Volumes/GoogleDrive/My Drive/SLCC/Fall2021/CISI2420/Code/2420_CLASS_EXERCISE/src/graphSymobol/resource/routes.txt";// args[0];
+	        String filename  = "src/graphSymobol/resource/routes.txt";// args[0];
 	        String delimiter = " ";  // args[1];
 	        SymbolGraph sg = new SymbolGraph(filename, delimiter);
 	        Graph graph = sg.graph();
