@@ -17,7 +17,7 @@ public class DirectedCE {
 	
 	public static void main(String[] args) {
 		
-		String fileString = "/Volumes/GoogleDrive/My Drive/SLCC/Fall2021/CISI2420/Code/2420_CLASS_EXERCISE/src/graphDirected/Resources/TopologicalOrderGraph.txt";
+		String fileString = "src/graphDirected/Resources/TopologicalOrderGraph.txt";
 		In in = new In(fileString);
 		Digraph D = new Digraph(in);
 		
