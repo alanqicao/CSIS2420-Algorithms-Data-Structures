@@ -1,47 +1,25 @@
 /**
  * 
  */
-package graphSymobol;
+package graphCityConnections;
 
+import edu.princeton.cs.algs4.Edge;
+import edu.princeton.cs.algs4.EdgeWeightedGraph;
 import edu.princeton.cs.algs4.Graph;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.ST;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.SymbolGraph;
 
 /**
- * @author Alan
+ * @author Qi
  *
  */
-public class SymbolGraph {
-
-	
-	/**
-	 *  The {@code SymbolGraph} class represents an undirected graph, where the
-	 *  vertex names are arbitrary strings.
-	 *  By providing mappings between string vertex names and integers,
-	 *  it serves as a wrapper around the
-	 *  {@link Graph} data type, which assumes the vertex names are integers
-	 *  between 0 and <em>V</em> - 1.
-	 *  It also supports initializing a symbol graph from a file.
-	 *  <p>
-	 *  This implementation uses an {@link ST} to map from strings to integers,
-	 *  an array to map from integers to strings, and a {@link Graph} to store
-	 *  the underlying graph.
-	 *  The <em>indexOf</em> and <em>contains</em> operations take time 
-	 *  proportional to log <em>V</em>, where <em>V</em> is the number of vertices.
-	 *  The <em>nameOf</em> operation takes constant time.
-	 *  <p>
-	 *  For additional documentation, see <a href="https://algs4.cs.princeton.edu/41graph">Section 4.1</a> of
-	 *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
-	 *
-	 *  @author Robert Sedgewick
-	 *  @author Kevin Wayne
-	 */
-	
-	    private ST<String, Integer> st;  // string -> index
+public class EdgeWeightedSymbolGraph {
+	 private ST<String, Integer> st;  // string -> index
 	    private String[] keys;           // index  -> string
-	    private Graph graph;             // the underlying graph
+	    private EdgeWeightedGraph graph;             // the underlying graph
 
 	    /**  
 	     * Initializes a graph from a file using the specified delimiter.
@@ -51,7 +29,7 @@ public class SymbolGraph {
 	     * @param filename the name of the file
 	     * @param delimiter the delimiter between fields
 	     */
-	    public SymbolGraph(String filename, String delimiter) {
+	    public EdgeWeightedSymbolGraph(String filename, String delimiter) {
 	        st = new ST<String, Integer>();
 
 	        // First pass builds the index by reading strings to associate
@@ -74,15 +52,17 @@ public class SymbolGraph {
 
 	        // second pass builds the graph by connecting first vertex on each
 	        // line to all others
-	        graph = new Graph(st.size());
+	        graph = new EdgeWeightedGraph(st.size());
 	        in = new In(filename);
+	        
 	        while (in.hasNextLine()) {
 	            String[] a = in.readLine().split(delimiter);
-	            int v = st.get(a[0]);
-	            for (int i = 1; i < a.length; i++) {
-	                int w = st.get(a[i]);
-	                graph.addEdge(v, w);
-	            }
+	            int v = st.get(a[0]);	            
+	            int w = st.get(a[1]);
+	            double weight = st.get(a[2]);                
+	            Edge e = new Edge(v,w,weight);               
+	            graph.addEdge(e);
+	            
 	        }
 	    }
 
@@ -95,17 +75,6 @@ public class SymbolGraph {
 	        return st.contains(s);
 	    }
 
-	    /**
-	     * Returns the integer associated with the vertex named {@code s}.
-	     * @param s the name of a vertex
-	     * @return the integer (between 0 and <em>V</em> - 1) associated with the vertex named {@code s}
-	     * @deprecated Replaced by {@link #indexOf(String)}.
-	     */
-	    @Deprecated
-	    public int index(String s) {
-	        return st.get(s);
-	    }
-
 
 	    /**
 	     * Returns the integer associated with the vertex named {@code s}.
@@ -116,18 +85,6 @@ public class SymbolGraph {
 	        return st.get(s);
 	    }
 
-	    /**
-	     * Returns the name of the vertex associated with the integer {@code v}.
-	     * @param  v the integer corresponding to a vertex (between 0 and <em>V</em> - 1) 
-	     * @return the name of the vertex associated with the integer {@code v}
-	     * @throws IllegalArgumentException unless {@code 0 <= v < V}
-	     * @deprecated Replaced by {@link #nameOf(int)}.
-	     */
-	    @Deprecated
-	    public String name(int v) {
-	        validateVertex(v);
-	        return keys[v];
-	    }
 
 	    /**
 	     * Returns the name of the vertex associated with the integer {@code v}.
@@ -140,23 +97,13 @@ public class SymbolGraph {
 	        return keys[v];
 	    }
 
-	    /**
-	     * Returns the graph assoicated with the symbol graph. It is the client's responsibility
-	     * not to mutate the graph.
-	     * @return the graph associated with the symbol graph
-	     * @deprecated Replaced by {@link #graph()}.
-	     */
-	    @Deprecated
-	    public Graph G() {
-	        return graph;
-	    }
 
 	    /**
 	     * Returns the graph assoicated with the symbol graph. It is the client's responsibility
 	     * not to mutate the graph.
 	     * @return the graph associated with the symbol graph
 	     */
-	    public Graph graph() {
+	    public EdgeWeightedGraph graph() {
 	        return graph;
 	    }
 
@@ -174,22 +121,16 @@ public class SymbolGraph {
 	     * @param args the command-line arguments
 	     */
 	    public static void main(String[] args) {
-	        String filename  = "/Volumes/GoogleDrive/My Drive/SLCC/Fall2021/CISI2420/Code/2420_CLASS_EXERCISE/src/graphSymobol/resource/routes.txt";// args[0];
-	        String delimiter = " ";  // args[1];
+	        String filename  = args[0];
+	        String delimiter = args[1];
 	        SymbolGraph sg = new SymbolGraph(filename, delimiter);
 	        Graph graph = sg.graph();
-	        
-	        System.out.println("Please enter a airport: ");
 	        while (StdIn.hasNextLine()) {
 	            String source = StdIn.readLine();
 	            if (sg.contains(source)) {
-	                int s = sg.indexOf(source);
+	                int s = sg.index(source);
 	                for (int v : graph.adj(s)) {
-	                    StdOut.println("   " + sg.nameOf(v));
-	                    for(int el: graph.adj(v)) {
-	                    	System.out.println("relate: "+sg.nameOf(el));
-	                    }
-	                    
+	                    StdOut.println("   " + sg.name(v));
 	                }
 	            }
 	            else {
@@ -197,7 +138,5 @@ public class SymbolGraph {
 	            }
 	        }
 	    }
-	
-
 
 }

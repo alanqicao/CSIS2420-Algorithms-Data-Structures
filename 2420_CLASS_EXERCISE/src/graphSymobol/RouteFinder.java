@@ -1,10 +1,41 @@
 package graphSymobol;
 
+import edu.princeton.cs.algs4.Graph;
+import edu.princeton.cs.algs4.StdIn;
+import edu.princeton.cs.algs4.StdOut;
+
 public class RouteFinder {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		
+		 String filename  = "/Volumes/GoogleDrive/My Drive/SLCC/Fall2021/CISI2420/Code/2420_CLASS_EXERCISE/src/graphSymobol/resource/routes.txt";// args[0];
+	        String delimiter = " ";  // args[1];
+	        SymbolGraph sg = new SymbolGraph(filename, delimiter);
+	        Graph graph = sg.graph();
+	        
+	        System.out.println("Please enter a airport: ");
+	        
+	        while (StdIn.hasNextLine()) {
+	        	
+	            String source = StdIn.readLine();
+	            
+	            if (sg.contains(source)) {	            	
+	                int s = sg.indexOf(source);
+	                for (int v : graph.adj(s)) {
+	                	
+	                	for(int el: graph.adj(v)) {
+	                		System.out.println(sg.nameOf(el));
+	                	}
+	                	
+	                    StdOut.println("   " + sg.nameOf(v));
+	                }
+	            }
+	            else {
+	                StdOut.println("The departure'" + source + "could not be found. ");
+	            }
+	        }
+	    }
 
-	}
+	
 
 }

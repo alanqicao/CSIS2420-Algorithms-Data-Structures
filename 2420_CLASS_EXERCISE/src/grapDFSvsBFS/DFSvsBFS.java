@@ -94,10 +94,10 @@ public class DFSvsBFS {
 				
 				for(int v = 0; v<G.V();v++) {
 					
-					System.out.format("%4d", i);
+						System.out.format("%10s %10s\n", dfsQueue.dequeue(),bfpQueue.dequeue());
 				}
 				
-			
+				
 				
 				//System.out.println(dfsVsBfs);
 				
