@@ -13,7 +13,6 @@ import edu.princeton.cs.algs4.Queue;
 /**
  * @author Qi Cao
  * This class is to compare DFS and BFS
- * 
  *
  */
 public class DFSvsBFS {

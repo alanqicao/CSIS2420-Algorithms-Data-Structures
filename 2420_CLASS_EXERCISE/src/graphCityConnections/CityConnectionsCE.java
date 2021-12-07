@@ -8,7 +8,13 @@ import edu.princeton.cs.algs4.PrimMST;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.SymbolGraph;
-
+/**
+ * 
+ * @author Qi Cao
+ * This class is to find minimizing distance to connect all cities
+ * using modifi SymbolGraph with EdgeWeighted graph and PrimMST
+ *
+ */
 public class CityConnectionsCE {
 
 	public static void main(String[] args) {
