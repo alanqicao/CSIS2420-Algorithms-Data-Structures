@@ -3,6 +3,8 @@ package finalProject_Maze;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import java.awt.Image;
 import javax.swing.JLabel;
@@ -12,6 +14,8 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+
 
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -26,8 +30,8 @@ import java.awt.event.WindowEvent;
 import java.awt.BorderLayout;
 import javax.swing.JTextField;
 /**
- * 
- * @author Danny and Qi
+ * GUI class control the program 
+ * @author Qi Cao and Danny Dwyer
  *
  */
 public class MazeUI extends JFrame {
@@ -47,14 +51,23 @@ public class MazeUI extends JFrame {
 	private Image img_computer = new ImageIcon(MazeUI.class.getResource("/finalProject_Maze/source/computer.png")).getImage().getScaledInstance(50, 60, Image.SCALE_SMOOTH);
 	private Image img_time = new ImageIcon(MazeUI.class.getResource("/finalProject_Maze/source/time.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 	private Image img_steps = new ImageIcon(MazeUI.class.getResource("/finalProject_Maze/source/steps.png")).getImage().getScaledInstance(40, 50, Image.SCALE_SMOOTH);
+	private Image img_reset = new ImageIcon(MazeUI.class.getResource("/finalProject_Maze/source/reSet.png")).getImage().getScaledInstance(90, 30, Image.SCALE_SMOOTH);
+
 	private JPanel contentPane;
-    int size;
+    private int size;
     private boolean startTiming = false;
-    private JTextField timeText = new Timers();
-    private JTextField textField_1 = new JTextField("0");
-    
-    
-    
+    private static JTextField timeText = new Timers();
+    private boolean radionButton = false;
+    private JRadioButton dFSRadioButton;
+    private JRadioButton bFSRadioButton;
+    private Thread thread = null;
+	private mazeRunnable mazeRun;
+	private Thread mazeThread;
+	private boolean paseToggle = false;
+	private boolean done=false;
+	private int stepNumber =0;
+	private static JTextField stepText = new StepNumber();
+	private boolean firtRun = true;
 	/**
 	 * Launch the application.
 	 */
@@ -75,7 +88,7 @@ public class MazeUI extends JFrame {
 	 * Create the frame.
 	 */
 	public MazeUI() {
-		size = 15;//defalu
+		size = 20;//defalu
 		setBackground(new Color(47, 79, 79));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1213, 897);
@@ -86,7 +99,7 @@ public class MazeUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		getTimeText().setForeground(Color.BLUE);
-		getTimeText().setFont(new Font("ËÎÌו", Font.PLAIN, 14));
+		getTimeText().setFont(new Font("Dialog", Font.PLAIN, 14));
 		getTimeText().setHorizontalAlignment(JTextField.CENTER);
 		
 		JPanel panelMenu = panelMenu();
@@ -95,80 +108,44 @@ public class MazeUI extends JFrame {
 		lblcone.setIcon(new ImageIcon(img_logo));
 		lblcone.setBounds(25, 65, 287, 123);
 		
-		panelMenu.add(lblcone);	
-		
-		JPanel panel = panel(panelMenu);
-		
-		lbNewLabel_1(panel);
-		
-		spinner(panel);
-			
-		lblNewLabel_2(panel);
-		
-		lblNewLabel_4_2_1_2(panel);
-		
-		JPanel panel_1 = panel_1(panelMenu);
-		
+		panelMenu.add(lblcone);			
+		JPanel panel = panel(panelMenu);		
+		lbNewLabel_1(panel);	
+		spinner(panel);			
+		lblNewLabel_2(panel);		
+		lblNewLabel_4_2_1_2(panel);		
+		JPanel panel_1 = panel_1(panelMenu);		
 		lblNewLabel(panel_1);
-		
-		JPanel panel_2 = panel_2(panelMenu);
-		
-		lblNewLabel_3(panel_2);
-		
-		rdbtnNewRadioButton(panel_2);
-		
-		rdbtnNewRadioButton_1(panel_2);
-		
-		lblNewLabel_4_2_1_2_1(panel_2);
-		
+		//panel 2
+		JPanel panel_2 = panel_2(panelMenu);	
+		lblNewLabel_3(panel_2);		
+		radioButton(panel_2);		
+		lblNewLabel_4_2_1_2_1(panel_2);	
 		lblNewLabel_4_2_1_2_1_1(panel_2);
-		
-		JPanel panel_4 = panel_4(panelMenu);
-		
-		//create thread
-		Runnable runnable=()->{
-			MazeModified newMaze=new MazeModified(size);
-			newMaze.start();
-			newMaze.solveBFS();;
-
-		};
-		
-		lblNewLabel_4(panel_4, runnable);
-		
-		JPanel panel_4_1 = panel_4_1(panelMenu);
-		
+		//panel 4
+		JPanel panel_4 = panel_4(panelMenu);				
+		lblNewLabel_4(panel_4,mazeRun);	
+		JPanel panel_4_1 = panel_4_1(panelMenu);		
 		lblNewLabel_4_1(panel_4_1);
-		
-		JPanel panel_3 = panel_3();
-		
-		JPanel panel_4_2 = panel_4_2(panel_3);
-		
-		lblNewLabel_4_2(panel_4_2);
-		
-		lblNewLabel_4_3(panel_4_2);
-		
-		JPanel panel_4_2_1 = panel_4_2_1(panel_3);
-		
-		lblNewLabel_4_2_1(panel_4_2_1);
-		
+		//panel3
+		JPanel panel_3 = panel_3();		
+		JPanel panel_4_2 = panel_4_2(panel_3);	
+		//panel4_2
+		lblNewLabel_4_2(panel_4_2);	
+		lblNewLabel_4_3(panel_4_2);		
+		JPanel panel_4_2_1 = panel_4_2_1(panel_3);	
+		lblNewLabel_4_2_1(panel_4_2_1);	
 		lblNewLabel_4_3(panel_4_2_1);
-		
-		JPanel panel_4_2_1_1 = panel_4_2_1_1(panel_3);
-		
-		lblNewLabel_4_2_1_1(panel_4_2_1_1);
-		
-		lblNewLabel_4_3_1_1(panel_4_2_1_1);
-		
-		JPanel panel_4_2_1_1_1 = panel_4_2_1_1_1(panel_3);
-		
-		lblNewLabel_4_2_1_1_1(panel_4_2_1_1_1);
-		
+		//panel 4_2_1_1
+		JPanel panel_4_2_1_1 = panel_4_2_1_1(panel_3);		
+		lblNewLabel_4_2_1_1(panel_4_2_1_1);	
+		lblNewLabel_4_3_1_1(panel_4_2_1_1);		
+		JPanel panel_4_2_1_1_1 = panel_4_2_1_1_1(panel_3);		
+		lblNewLabel_4_2_1_1_1(panel_4_2_1_1_1);		
 		lblNewLabel_4_3_1_1(panel_4_2_1_1_1);
-		
-		JPanel panel_4_2_2 = panel_4_2_2(panel_3);
-		
-		lblNewLabel_4_2_2(panel_4_2_2);
-		
+		//panel 4_2_2_2
+		JPanel panel_4_2_2 = panel_4_2_2(panel_3);		
+		lblNewLabel_4_2_2(panel_4_2_2);		
 		lblNewLabel_6_1(panel_4_2_2);
 		
 		
@@ -176,20 +153,50 @@ public class MazeUI extends JFrame {
 		panel_4_2_2.add(timeText);
 		timeText.setColumns(10);
 		
-		JPanel panel_4_2_2_1 = panel_4_2_2_1(panel_3);
-		
-		lblNewLabel_4_2_2_1(panel_4_2_2_1);
-		
-		lblNewLabel_6(panel_4_2_2_1);
-		
-		
-		textField_1.setBounds(107, 10, 86, 20);
-		panel_4_2_2_1.add(textField_1);
-		textField_1.setColumns(10);
-		
+		JPanel panel_4_2_2_1 = panel_4_2_2_1(panel_3);		
+		lblNewLabel_4_2_2_1(panel_4_2_2_1);		
+		lblNewLabel_6(panel_4_2_2_1);		
 		panel_5();
 		
 
+	}
+
+	private void radioButton(JPanel panel_2) {
+		dFSRadioButton = new JRadioButton("Depth First Search");
+		dFSRadioButton.setBackground(new Color(0, 139, 139));
+		dFSRadioButton.setForeground(new Color(255, 255, 255));
+		dFSRadioButton.setFont(new Font("Dialog", Font.BOLD, 15));
+		dFSRadioButton.setBounds(122, 51, 164, 36);
+		panel_2.add(dFSRadioButton);
+		dFSRadioButton.setSelected(true);
+
+		bFSRadioButton = new JRadioButton("Breadth First Search");
+		bFSRadioButton.setBackground(new Color(0, 139, 139));
+		bFSRadioButton.setForeground(new Color(255, 255, 255));
+		bFSRadioButton.setFont(new Font("Dialog", Font.BOLD, 15));
+		bFSRadioButton.setBounds(120, 101, 173, 23);
+		panel_2.add(bFSRadioButton);
+		bFSRadioButton.setSelected(false);
+		ButtonGroup group = new ButtonGroup();
+		group.add(bFSRadioButton);
+		group.add(dFSRadioButton);
+		
+		dFSRadioButton.addActionListener(new ActionListener() {	 
+
+			@Override
+		    public void actionPerformed(ActionEvent event) {	 
+	    	    radionButton = false;		    
+		    	System.out.println(radionButton);
+		    }
+	});
+	
+			bFSRadioButton.addActionListener(new ActionListener() {				 
+			    @Override
+			    public void actionPerformed(ActionEvent event) {		 
+		    	radionButton = true;
+			    System.out.println(radionButton);
+			    }
+		});
 	}
 
 	private void panel_5() {
@@ -223,6 +230,11 @@ public class MazeUI extends JFrame {
 		panel_4_2_2_1.setBackground(new Color(0, 139, 139));
 		panel_4_2_2_1.setBounds(476, 117, 239, 42);
 		panel_3.add(panel_4_2_2_1);
+		
+		
+		stepText.setBounds(99, 10, 86, 20);
+		panel_4_2_2_1.add(stepText);
+		stepText.setColumns(10);
 		return panel_4_2_2_1;
 	}
 
@@ -289,15 +301,44 @@ public class MazeUI extends JFrame {
 		panel_4_2_1_1.setBackground(new Color(0, 139, 139));
 		panel_4_2_1_1.setBounds(319, 26, 215, 80);
 		panel_3.add(panel_4_2_1_1);
+		{
+			JLabel lblNewLabel_4_2 = new JLabel("");
+			lblNewLabel_4_2.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					resetTimer();
+					mazeRun.setRadionButton(radionButton);
+					mazeRun.setSize(size);
+					mazeRun.setMenu(3);
+					mazeThread = new Thread(mazeRun);
+					mazeThread.start();
+					setStartTiming(!isStartTiming());
+					((Timers) getTimeText()).start();
+					//Reset button
+				}
+			});
+			lblNewLabel_4_2.setIcon(new ImageIcon(img_reset));
+			lblNewLabel_4_2.setHorizontalAlignment(SwingConstants.CENTER);
+			lblNewLabel_4_2.setBounds(82, 11, 123, 58);
+			panel_4_2_1_1.add(lblNewLabel_4_2);
+		}
 		return panel_4_2_1_1;
 	}
 
 	private void lblNewLabel_4_2_1(JPanel panel_4_2_1) {
 		JLabel lblNewLabel_4_2_1 = new JLabel("");
+		
 		lblNewLabel_4_2_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//TODO Pause!!!!Button
+				paseToggle = !paseToggle;
+				if(paseToggle) {
+					mazeThread.suspend();;
+					((Timers) getTimeText()).stop();
+				}else {
+					mazeThread.resume();
+					((Timers) getTimeText()).proceed();
+				}				
 			}
 		});
 		lblNewLabel_4_2_1.setIcon(new ImageIcon(img_pause));
@@ -327,8 +368,14 @@ public class MazeUI extends JFrame {
 		lblNewLabel_4_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
-				//TODO Restart!!!!!!Button
+				resetTimer();
+				mazeRun.setRadionButton(radionButton);
+				mazeRun.setMenu(2);
+				mazeThread = new Thread(mazeRun);
+				mazeThread.start();
+				setStartTiming(!isStartTiming());
+				((Timers) getTimeText()).start();
+				// restart button
 			}
 		});
 		lblNewLabel_4_2.setIcon(new ImageIcon(img_restart));
@@ -384,10 +431,25 @@ public class MazeUI extends JFrame {
 		lblNewLabel_4.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Thread thread = new Thread(runnable);
-				thread.start();
+				if(firtRun) {
+				mazeRun = new mazeRunnable(size,radionButton);
+				mazeRun.setMenu(1);;
+				mazeThread = new Thread(mazeRun);
+				
+				mazeThread.start();
 				setStartTiming(!isStartTiming());
 				((Timers) getTimeText()).start();
+				firtRun = false;
+				}else {
+					resetTimer();
+					mazeRun.setRadionButton(radionButton);
+					mazeRun.setSize(size);
+					mazeRun.setMenu(3);
+					mazeThread = new Thread(mazeRun);
+					mazeThread.start();
+					setStartTiming(!isStartTiming());
+					((Timers) getTimeText()).start();
+				}
 				//Go button!!!!
 			}
 		});
@@ -422,23 +484,7 @@ public class MazeUI extends JFrame {
 		panel_2.add(lblNewLabel_4_2_1_2_1);
 	}
 
-	private void rdbtnNewRadioButton_1(JPanel panel_2) {
-		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Breadth First Search");
-		rdbtnNewRadioButton_1.setBackground(new Color(0, 139, 139));
-		rdbtnNewRadioButton_1.setForeground(new Color(255, 255, 255));
-		rdbtnNewRadioButton_1.setFont(new Font("Dialog", Font.BOLD, 15));
-		rdbtnNewRadioButton_1.setBounds(120, 101, 173, 23);
-		panel_2.add(rdbtnNewRadioButton_1);
-	}
 
-	private void rdbtnNewRadioButton(JPanel panel_2) {
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("Depth First Search");
-		rdbtnNewRadioButton.setBackground(new Color(0, 139, 139));
-		rdbtnNewRadioButton.setForeground(new Color(255, 255, 255));
-		rdbtnNewRadioButton.setFont(new Font("Dialog", Font.BOLD, 15));
-		rdbtnNewRadioButton.setBounds(122, 51, 164, 23);
-		panel_2.add(rdbtnNewRadioButton);
-	}
 
 	private void lblNewLabel_3(JPanel panel_2) {
 		JLabel lblNewLabel_3 = new JLabel("Select the  Algorithm to solve the Maze");
@@ -446,6 +492,7 @@ public class MazeUI extends JFrame {
 		lblNewLabel_3.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblNewLabel_3.setBounds(0, 11, 293, 21);
 		panel_2.add(lblNewLabel_3);
+		
 	}
 
 	private JPanel panel_2(JPanel panelMenu) {
@@ -490,7 +537,7 @@ public class MazeUI extends JFrame {
 		panel.add(lblNewLabel_2);
 	}
 	
-	public JTextField getTimeText() {
+	public static JTextField getTimeText() {
 		return timeText;
 	}
 	public boolean isStartTiming() {
@@ -506,6 +553,11 @@ public class MazeUI extends JFrame {
 		getTimeText().setText("00:00:00");
 		((Timers) timeText).restart();
 	}
+	
+	public static JTextField getstepNumber() {
+		return stepText;
+	}
+	
 	//game stop
 	public void GameOver() {
 		((Timers) getTimeText()).stop();
@@ -515,7 +567,7 @@ public class MazeUI extends JFrame {
 		JSpinner spinner = new JSpinner();
 		spinner.setBounds(203, 51, 74, 33);
 		panel.add(spinner);
-		spinner.setValue(15);
+		spinner.setValue(20);
 		
 		spinner.addChangeListener(new ChangeListener() {
 			@Override
@@ -550,5 +602,31 @@ public class MazeUI extends JFrame {
 		contentPane.add(panelMenu);
 		panelMenu.setLayout(null);
 		return panelMenu;
+	}
+	
+	/**
+	 * @return the thread
+	 */
+	public Thread getThread() {
+		return thread;
+	}
+
+	/**
+	 * @param thread the thread to set
+	 */
+	private void setThread(Thread thread) {
+		this.thread = thread;
+	}
+
+	public void setThreadStop() {
+		if (getThread() != null) {
+
+			thread.interrupt();
+			setThread(null);
+		}
+	}
+
+	public int getStepNumber() {
+		return stepNumber;
 	}
 }
